@@ -1,0 +1,46 @@
+<RCC>
+  <qresource prefix="/qt/qml/QuantaCleaner/">
+    <file alias="Qml/AboutAppPage.qml">D:/qt_apps/QuantaCleaner/Qml/AboutAppPage.qml</file>
+    <file alias="Qml/HoverButton.qml">D:/qt_apps/QuantaCleaner/Qml/HoverButton.qml</file>
+    <file alias="Qml/Main.qml">D:/qt_apps/QuantaCleaner/Qml/Main.qml</file>
+    <file alias="Qml/MainPage.qml">D:/qt_apps/QuantaCleaner/Qml/MainPage.qml</file>
+    <file alias="Qml/ParametersPage.qml">D:/qt_apps/QuantaCleaner/Qml/ParametersPage.qml</file>
+    <file alias="Qml/SettingsPage.qml">D:/qt_apps/QuantaCleaner/Qml/SettingsPage.qml</file>
+    <file alias="Qml/assets/fonts/ScadaBold.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/ScadaBold.ttf</file>
+    <file alias="Qml/assets/fonts/ScadaBoldItalic.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/ScadaBoldItalic.ttf</file>
+    <file alias="Qml/assets/fonts/ScadaItalic.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/ScadaItalic.ttf</file>
+    <file alias="Qml/assets/fonts/ScadaRegular.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/ScadaRegular.ttf</file>
+    <file alias="Qml/assets/fonts/Ubuntu-Bold.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/Ubuntu-Bold.ttf</file>
+    <file alias="Qml/assets/fonts/Ubuntu-Medium.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/Ubuntu-Medium.ttf</file>
+    <file alias="Qml/assets/fonts/Ubuntu-Regular.ttf">D:/qt_apps/QuantaCleaner/Qml/assets/fonts/Ubuntu-Regular.ttf</file>
+    <file alias="Qml/assets/icons/my_ico.png">D:/qt_apps/QuantaCleaner/Qml/assets/icons/my_ico.png</file>
+    <file alias="Qml/assets/icons/myapp.ico">D:/qt_apps/QuantaCleaner/Qml/assets/icons/myapp.ico</file>
+    <file alias="Qml/assets/images/bug_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/bug_black.png</file>
+    <file alias="Qml/assets/images/bug_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/bug_white.png</file>
+    <file alias="Qml/assets/images/cpu_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/cpu_black.png</file>
+    <file alias="Qml/assets/images/cpu_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/cpu_white.png</file>
+    <file alias="Qml/assets/images/exchange_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/exchange_black.png</file>
+    <file alias="Qml/assets/images/exchange_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/exchange_white.png</file>
+    <file alias="Qml/assets/images/fire_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/fire_black.png</file>
+    <file alias="Qml/assets/images/fire_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/fire_white.png</file>
+    <file alias="Qml/assets/images/git_last.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/git_last.png</file>
+    <file alias="Qml/assets/images/lang_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/lang_black.png</file>
+    <file alias="Qml/assets/images/lang_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/lang_white.png</file>
+    <file alias="Qml/assets/images/moon_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/moon_black.png</file>
+    <file alias="Qml/assets/images/moon_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/moon_white.png</file>
+    <file alias="Qml/assets/images/par_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/par_black.png</file>
+    <file alias="Qml/assets/images/par_black2.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/par_black2.png</file>
+    <file alias="Qml/assets/images/par_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/par_white.png</file>
+    <file alias="Qml/assets/images/star_white.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/star_white.png</file>
+    <file alias="Qml/assets/images/star_black.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/star_black.png</file>
+    <file alias="Qml/assets/images/circle.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/circle.png</file>
+    <file alias="Qml/assets/images/parametrs/chevron.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/chevron.png</file>
+    <file alias="Qml/assets/images/parametrs/cross.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/cross.png</file>
+    <file alias="Qml/assets/images/parametrs/eye.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/eye.png</file>
+    <file alias="Qml/assets/images/parametrs/geer.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/geer.png</file>
+    <file alias="Qml/assets/images/parametrs/rocket.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/rocket.png</file>
+    <file alias="Qml/assets/images/parametrs/sign.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/sign.png</file>
+    <file alias="Qml/assets/images/parametrs/trash.png">D:/qt_apps/QuantaCleaner/Qml/assets/images/parametrs/trash.png</file>
+  </qresource>
+</RCC>
+

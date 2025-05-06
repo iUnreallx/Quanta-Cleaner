@@ -1,0 +1,29 @@
+{
+    "classes": [
+        {
+            "className": "AppController",
+            "methods": [
+                {
+                    "access": "public",
+                    "name": "addToAutostart",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "removeFromAutostart",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "AppController",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "appcontroller.h",
+    "outputRevision": 68
+}

@@ -1,0 +1,86 @@
+{
+    "classes": [
+        {
+            "className": "recycleBinCleaner",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "name": "RecycleBinMode",
+                    "values": [
+                        "FAST",
+                        "NORMAL",
+                        "DEBUG"
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "mode",
+                            "type": "RecycleBinMode"
+                        },
+                        {
+                            "name": "isNotTap",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "cleanRecycleBin",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "calculateRecycleBinRemovableSize",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "recycleBinCleaner",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "recycleBinCleaned",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "recycleBinCleanedTap",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "sizeDelete",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "recyclebincleaner.h",
+    "outputRevision": 68
+}

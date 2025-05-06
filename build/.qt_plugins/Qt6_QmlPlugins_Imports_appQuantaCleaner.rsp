@@ -1,0 +1,14 @@
+-rootPath
+D:/qt_apps/QuantaCleaner
+-cmake-output
+-output-file
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.qt_plugins/Qt6_QmlPlugins_Imports_appQuantaCleaner.cmake
+-importPath
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/QuantaCleaner
+-importPath
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release
+-importPath
+D:/Qt/6.6.3/mingw_64/./qml
+-qrcFiles
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/qmake_QuantaCleaner.qrc
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/appQuantaCleaner_raw_qml_0.qrc
