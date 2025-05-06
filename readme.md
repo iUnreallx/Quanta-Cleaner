@@ -2,4 +2,4 @@ Quanta Cleaner beta
 
 soon.
 
-![preview](app.gif)
+![preview](app.mp4)
