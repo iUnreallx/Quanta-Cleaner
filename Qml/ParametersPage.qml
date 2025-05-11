@@ -108,30 +108,14 @@ Rectangle {
             flickableDirection: Flickable.VerticalFlick
             clip: true
 
-            // Rectangle {
-            //     z: 5
-            //     anchors.fill: parent
-            //     color: "transparent"
-            //     border.color: parametrs.border_block1 ? "#5acc90" : "#282928"
-            //     border.width: 2
-
-            //     Behavior on border.color {
-            //             ColorAnimation {
-            //                 duration: 200
-            //             }
-            //         }
-            // }
-
-
             Flow {
-
                 id: flowLayout
                 width: parent.width - 230
                 spacing: 10
                 flow: Flow.LeftToRight
 
 
-                //ПЕРВЫЙ
+                //FIRST GLOBAL OBJECT
                 Rectangle {
                     id: glowRect1
                     width: parent.width <= 470 ? 453 : 220
@@ -268,8 +252,147 @@ Rectangle {
                         }
                     }
                 }
+
+
+            //SECOND GLOBAL OBJECT
+            Rectangle {
+                id: glowRect2
+                width: parent.width <= 470 ? 453 : 220
+                border.color: "#282928"
+                border.width: 2
+                height: 220
+                color: "black"
+                clip: true
+                z: 2
+                property bool justClosed: false
+
+                Image {
+                    source: "assets/images/parametrs/notes_white.png"
+                    width: 90
+                    height: 90
+                    y: 20
+                    x: 10
+                    z: 2
+                }
+
+                Text {
+                    id: box_2
+                    color: "white"
+                    text: qsTr("Управление логами")
+                    font.pixelSize: 18
+                    font.bold: true
+                    font.family: cleanerFont.name
+                    y: 130
+                    x: 15
+                    z: 5
+                }
+
+                Text {
+                    id: box_2_gray
+                    color: "gray"
+                    text: qsTr("Управление параметрами и\nповедением логов")
+                    font.pixelSize: 13
+                    font.bold: false
+                    font.family: cleanerFont.name
+                    y: 155
+                    x: 15
+                    z: 5
+                }
+
+                Canvas {
+                    id: gradientCanvas2
+                    anchors.fill: parent
+                    z: 10
+                    visible: glowArea2.containsMouse && !glowArea2.pressed && !parametersDialog.visible
+
+                    property real currentMouseX: glowArea2.mouseX
+                    property real currentMouseY: glowArea2.mouseY
+
+                    onCurrentMouseXChanged: if (visible) requestPaint()
+                    onCurrentMouseYChanged: if (visible) requestPaint()
+                    onVisibleChanged: if (visible) requestPaint()
+
+                    onPaint: {
+                        if (animationEnabled) {
+                            if (!visible) return;
+
+                            const ctx = getContext("2d");
+                            ctx.clearRect(0, 0, width, height);
+
+                            const gradient = ctx.createRadialGradient(
+                                currentMouseX, currentMouseY, 0,
+                                currentMouseX, currentMouseY, Math.max(width, height) / 2
+                            );
+                            gradient.addColorStop(0, "gold");
+                            gradient.addColorStop(1, "transparent");
+
+                            ctx.strokeStyle = gradient;
+                            ctx.lineWidth = 3;
+                            ctx.strokeRect(1, 1, width - 2, height - 2);
+                        }
+                    }
+                }
+
+                Canvas {
+                    id: glowCircle2
+                    width: 100
+                    height: 100
+                    visible: glowArea2.containsMouse && !glowArea2.pressed && !parametersDialog.visible
+                    z: 0
+                    x: Math.max(-width / 2, Math.min(glowArea2.mouseX - width / 2, glowArea2.width - width / 2))
+                    y: Math.max(-height / 2, Math.min(glowArea2.mouseY - height / 2, glowArea2.height - height / 2))
+
+                    onXChanged: requestPaint()
+                    onYChanged: requestPaint()
+                    onVisibleChanged: requestPaint()
+
+                    onPaint: {
+                        if (animationEnabled) {
+                            if (!visible) return;
+
+                            const ctx = getContext("2d");
+                            ctx.clearRect(0, 0, width, height);
+
+                            const gradient = ctx.createRadialGradient(
+                                width / 2, height / 2, 0,
+                                width / 2, height / 2, 50
+                            );
+
+                            gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
+                            gradient.addColorStop(1.0, "rgba(0, 0, 0, 0.8)");
+
+                            ctx.fillStyle = gradient;
+                            ctx.beginPath();
+                            ctx.arc(width / 2, height / 2, 50, 0, Math.PI * 2);
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                    }
+                }
+
+                MouseArea {
+                    id: glowArea2
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    z: 4
+
+                    onClicked: {
+                        // main_window.isOverlayVisible = true;
+                        // parametersDialog.open();
+                    }
+
+                    onEntered: {
+                        parametrs.border_block1 = true;
+                    }
+
+                    onExited: {
+                        parametrs.border_block1 = false;
+                    }
+                }
             }
         }
+    }
 
         Popup {
             id: parametersDialog
@@ -283,8 +406,6 @@ Rectangle {
             onClosed: {
                 main_window.isOverlayVisible = false;
             }
-
-
 
 
             background: Rectangle {
@@ -5296,11 +5417,6 @@ WinSxS")
 
 
 
-
-
-
-
-
         // temp_logs_viewer
         Component {
             id: logPopupComponent
@@ -5308,13 +5424,13 @@ WinSxS")
             Popup {
                 id: tempLogView
                 focus: true
-                clip: true
+                // clip: true
                 z: 30
 
-                width: parametrs.width
-                height: parametrs.height - 5
-                x: (parametrs.width - width) / 2 - 460
-                y: (parametrs.height - height) / 2 - 200
+                width: parametrs.width - 30
+                height: parametrs.height - 20
+                x: -333
+                y: -160
 
                 exit: Transition { }
                 background: Rectangle { color: "transparent" }
@@ -5341,6 +5457,44 @@ WinSxS")
                         }
                     })
                 }
+
+                Rectangle {
+                    width: 20
+                    height: 20
+                    color: "#382022"
+                    anchors.right: parent.right
+                    anchors.rightMargin: -22
+                    anchors.top: parent.top
+                    anchors.topMargin: -17
+                    radius: 10
+                    z: 2
+                    Image {
+                        source: "assets/images/parametrs/cross.png"
+                        anchors.centerIn: parent
+                        width: parent.width - 2
+                        height: parent.height - 2
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            logText.text = ""
+                            lineNumbers.text = ""
+                            logsviewer.clearLogs()
+
+                            var popup = parametrs.tempLogPopup
+                            parametrs.tempLogPopup = null
+
+                            Qt.callLater(function() {
+                                if (popup) {
+                                    popup.destroy()
+                                    gc()
+                                }
+                            })
+                        }
+                    }
+                }
+
 
                 Rectangle {
                     anchors.fill: parent
@@ -5481,11 +5635,36 @@ WinSxS")
              console.log("closed")
              global_close_prm_logs.visible = false
          }
-         clip: true
+         // clip: true
          z: 30
          exit: Transition { }
 
          background: Rectangle { color: "transparent" }
+
+         Rectangle {
+             width: 20
+             height: 20
+             color: "#382022"
+             anchors.right: parent.right
+             anchors.rightMargin: -27
+             anchors.top: parent.top
+             anchors.topMargin: -29
+             radius: 10
+             z: 2
+             Image {
+                 source: "assets/images/parametrs/cross.png"
+                 anchors.centerIn: parent
+                 width: parent.width - 2
+                 height: parent.height - 2
+             }
+             MouseArea {
+                 anchors.fill: parent
+                 cursorShape: Qt.PointingHandCursor
+                 onClicked: {
+                     xsxLogView.close()
+                 }
+             }
+         }
 
          Rectangle {
              width: parametrs.width - 50
