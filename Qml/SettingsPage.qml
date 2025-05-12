@@ -81,23 +81,56 @@ import Qt.labs.settings 1.1
                     color: isButtonHover ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainer
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent
                         Rectangle {
-                            id: rippleRect
+                            id: rippleInstance
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform
-                                origin.x: rippleRect.width / 2
-                                origin.y: rippleRect.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_1.width - x)
+                                const dy = Math.max(y, button_1.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance
+                                property: "diameter"
+                                to: rippleInstance.targetDiameter
+                                duration: 1000
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance
+                                property: "opacity"
+                                to: 0
+                                duration: 1000
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance.destroy()
                             }
                         }
                     }
@@ -108,69 +141,26 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRect.width = 2 * maxD;
-                                rippleRect.height = 2 * maxD;
-                                rippleRect.x = mx - maxD;
-                                rippleRect.y = my - maxD;
-                                scaleTransform.xScale = 0;
-                                scaleTransform.yScale = 0;
-                                rippleRect.opacity = 0.2;
-                                rippleRect.visible = true;
-                                rippleAnimation.start();
-                            }
+                        onPressed: function(mouse) {
+                              if (animationEnabled) {
+                                var ripple = rippleComponent.createObject(button_1)
+                                ripple.startAnimation(mouse.x, mouse.y)
+                              }
                         }
 
                         onExited: {
-                            rippleAnimation.stop();
-                            fadeOutAnimation.start();
-                            button_1.isButtonHover = false;
+                            button_1.isButtonHover = false
                         }
 
                         onEntered: {
-                            button_1.isButtonHover = true;
+                            button_1.isButtonHover = true
                         }
 
                         onClicked: {
                             if (containsMouse) {
-                                main_window.isOverlayVisible = true;
-                                languageDialog.open();
+                                main_window.isOverlayVisible = true
+                                languageDialog.open()
                             }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation
-                        target: scaleTransform
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform.xScale >= 1 && !mouseArea.pressed) {
-                                fadeOutAnimation.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation
-                        target: rippleRect
-                        property: "opacity"
-                        from: rippleRect.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect.visible = false;
                         }
                     }
 
@@ -222,23 +212,56 @@ import Qt.labs.settings 1.1
                     color: isButtonHover2 ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainer2
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent2
                         Rectangle {
-                            id: rippleRect2
+                            id: rippleInstance2
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform2
-                                origin.x: rippleRect2.width / 2
-                                origin.y: rippleRect2.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_2.width - x)
+                                const dy = Math.max(y, button_2.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance2
+                                property: "diameter"
+                                to: rippleInstance2.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance2.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance2
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance2.destroy()
                             }
                         }
                     }
@@ -249,68 +272,25 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
+                        onPressed: function(mouse) {
                             if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRect2.width = 2 * maxD;
-                                rippleRect2.height = 2 * maxD;
-                                rippleRect2.x = mx - maxD;
-                                rippleRect2.y = my - maxD;
-                                scaleTransform2.xScale = 0;
-                                scaleTransform2.yScale = 0;
-                                rippleRect2.opacity = 0.2;
-                                rippleRect2.visible = true;
-                                rippleAnimation2.start();
+                                var ripple = rippleComponent2.createObject(button_2)
+                                ripple.startAnimation(mouse.x, mouse.y)
                             }
                         }
 
                         onExited: {
-                            rippleAnimation2.stop();
-                            fadeOutAnimation2.start();
-                            button_2.isButtonHover2 = false;
+                            button_2.isButtonHover2 = false
                         }
 
                         onEntered: {
-                            button_2.isButtonHover2 = true;
+                            button_2.isButtonHover2 = true
                         }
 
                         onClicked: {
                             if (containsMouse) {
                                 // main_window.isOverlayVisible = true;
                             }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation2
-                        target: scaleTransform2
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform2.xScale >= 1 && !mouseArea2.pressed) {
-                                fadeOutAnimation2.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation2
-                        target: rippleRect2
-                        property: "opacity"
-                        from: rippleRect2.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect2.visible = false;
                         }
                     }
 
@@ -365,23 +345,56 @@ import Qt.labs.settings 1.1
                     color: isButtonHover3 ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainer3
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent3
                         Rectangle {
-                            id: rippleRect3
+                            id: rippleInstance3
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform3
-                                origin.x: rippleRect3.width / 2
-                                origin.y: rippleRect3.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_3.width - x)
+                                const dy = Math.max(y, button_3.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance3
+                                property: "diameter"
+                                to: rippleInstance3.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance3.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance3
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance3.destroy()
                             }
                         }
                     }
@@ -392,53 +405,20 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            var mx = mouseX;
-                            var my = mouseY;
-                            var d1 = Math.sqrt(mx * mx + my * my);
-                            var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                            var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                            var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                            var maxD = Math.max(d1, d2, d3, d4);
-                            rippleRect3.width = 2 * maxD;
-                            rippleRect3.height = 2 * maxD;
-                            rippleRect3.x = mx - maxD;
-                            rippleRect3.y = my - maxD;
-                            scaleTransform3.xScale = 0;
-                            scaleTransform3.yScale = 0;
-                            rippleRect3.visible = true;
-                            rippleAnimation3.duration = 500;
-                            rippleAnimation3.start();
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimation.running) {
                                 settings.animationEnabled = !settings.animationEnabled
+                                var ripple = rippleComponent3.createObject(button_3)
+                                ripple.startAnimation(mouse.x, mouse.y)
                             }
                         }
 
                         onExited: {
-                            rippleAnimation3.stop();
-                            rippleRect3.visible = false;
-                            button_3.isButtonHover3 = false;
+                            button_3.isButtonHover3 = false
                         }
 
                         onEntered: {
-                            button_3.isButtonHover3 = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation3
-                        target: scaleTransform3
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform3.xScale >= 1 && !mouseArea3.pressed) {
-                                rippleRect3.visible = false;
-                            }
+                            button_3.isButtonHover3 = true
                         }
                     }
 
@@ -471,7 +451,6 @@ import Qt.labs.settings 1.1
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-
                         Switch {
                             id: animationSwitch
                             property bool disableAnimationInit: true
@@ -484,6 +463,17 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 18
                             checked: settings.animationEnabled
+
+                            MouseArea {
+                                id: mouseAreaAn
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.animationEnabled = !settings.animationEnabled
+                                  }
+                                }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -581,29 +571,61 @@ import Qt.labs.settings 1.1
                 Rectangle {
                     id: button_reload
                     property bool isButtonHoverrel: false
-
                     width: columnContainer.width
                     height: 65
                     color: isButtonHoverrel ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainerReload
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentReload
                         Rectangle {
-                            id: rippleRectReload
+                            id: rippleInstanceReload
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformReload
-                                origin.x: rippleRectReload.width / 2
-                                origin.y: rippleRectReload.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_reload.width - x)
+                                const dy = Math.max(y, button_reload.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceReload
+                                property: "diameter"
+                                to: rippleInstanceReload.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceReload.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceReload
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceReload.destroy()
                             }
                         }
                     }
@@ -614,28 +636,7 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectReload.width = 2 * maxD;
-                                rippleRectReload.height = 2 * maxD;
-                                rippleRectReload.x = mx - maxD;
-                                rippleRectReload.y = my - maxD;
-                                scaleTransformReload.xScale = 0;
-                                scaleTransformReload.yScale = 0;
-                                rippleRectReload.visible = true;
-                                rippleAnimationReload.duration = 500;
-                                rippleAnimationReload.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationReload.running) {
                                 settings.reloadEnabled = !settings.reloadEnabled
                                 if (settings.reloadEnabled) {
@@ -643,32 +644,19 @@ import Qt.labs.settings 1.1
                                 } else {
                                     app.removeFromAutostart()
                                 }
+                                  if (animationEnabled) {
+                                    var ripple = rippleComponentReload.createObject(button_reload)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                    }
                             }
                         }
 
-
                         onExited: {
-                            rippleAnimationReload.stop();
-                            rippleRectReload.visible = false;
-                            button_reload.isButtonHoverrel = false;
+                            button_reload.isButtonHoverrel = false
                         }
 
                         onEntered: {
-                            button_reload.isButtonHoverrel = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationReload
-                        target: scaleTransformReload
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformReload.xScale >= 1 && !mouseAreaReload.pressed) {
-                                rippleRectReload.visible = false;
-                            }
+                            button_reload.isButtonHoverrel = true
                         }
                     }
 
@@ -690,7 +678,7 @@ import Qt.labs.settings 1.1
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width - reloadSwitch.width - 110
                             anchors.left: parent.left
-                            anchors.leftMargin:  49
+                            anchors.leftMargin: 49
 
                             Text {
                                 text: qsTr("Автозагрузка")
@@ -712,6 +700,22 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 38
                             checked: settings.reloadEnabled
+
+                            MouseArea {
+                                id: mouseAreaReload2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.reloadEnabled = !settings.reloadEnabled
+                                        if (settings.reloadEnabled) {
+                                            app.addToAutostart()
+                                        } else {
+                                            app.removeFromAutostart()
+                                        }
+                                }
+                            }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -814,23 +818,84 @@ import Qt.labs.settings 1.1
                     color: isButtonHover5 ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainer5
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent5
                         Rectangle {
-                            id: rippleRect5
+                            id: rippleInstance5
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform5
-                                origin.x: rippleRect5.width / 2
-                                origin.y: rippleRect5.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_5.width - x)
+                                const dy = Math.max(y, button_5.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance5
+                                property: "diameter"
+                                to: rippleInstance5.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance5.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance5
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance5.destroy()
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        id: mouseArea5
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+
+                        onPressed: function(mouse) {
+                            if (animationEnabled) {
+                                var ripple = rippleComponent5.createObject(button_5)
+                                ripple.startAnimation(mouse.x, mouse.y)
+                            }
+                        }
+
+                        onExited: {
+                            button_5.isButtonHover5 = false
+                        }
+
+                        onEntered: {
+                            button_5.isButtonHover5 = true
+                        }
+
+                        onClicked: {
+                            if (containsMouse) {
+                                // обработка клика
                             }
                         }
                     }
@@ -863,84 +928,9 @@ import Qt.labs.settings 1.1
                         }
                     }
 
-                    MouseArea {
-                        id: mouseArea5
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        hoverEnabled: true
-
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-
-                                rippleRect5.width = 2 * maxD;
-                                rippleRect5.height = 2 * maxD;
-                                rippleRect5.x = mx - maxD;
-                                rippleRect5.y = my - maxD;
-
-                                scaleTransform5.xScale = 0;
-                                scaleTransform5.yScale = 0;
-
-                                rippleRect5.opacity = 0.2;
-                                rippleRect5.visible = true;
-
-                                rippleAnimation5.start();
-                            }
-                        }
-
-                        onExited: {
-                            rippleAnimation5.stop();
-                            fadeOutAnimation5.start();
-                            button_5.isButtonHover5 = false;
-                        }
-
-                        onEntered: {
-                            button_5.isButtonHover5 = true;
-                        }
-
-                        onClicked: {
-                            if (containsMouse) {
-                                //
-                            }
-                        }
-                    }
-
                     HoverHandler {
                         id: hoverHandler5
                         onHoveredChanged: button_5.isButtonHover5 = hoverHandler5.hovered
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation5
-                        target: scaleTransform5
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform5.xScale >= 1 && !mouseArea5.pressed) {
-                                fadeOutAnimation5.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation5
-                        target: rippleRect5
-                        property: "opacity"
-                        from: rippleRect5.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect5.visible = false;
-                        }
                     }
                 }
 
@@ -949,29 +939,61 @@ import Qt.labs.settings 1.1
                 Rectangle {
                     id: button_notify
                     property bool isButtonHoverNotify: false
-
                     width: columnContainer.width
                     height: 65
                     color: isButtonHoverNotify ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainerNotify
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentNotify
                         Rectangle {
-                            id: rippleRectNotify
+                            id: rippleInstanceNotify
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformNotify
-                                origin.x: rippleRectNotify.width / 2
-                                origin.y: rippleRectNotify.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_notify.width - x)
+                                const dy = Math.max(y, button_notify.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceNotify
+                                property: "diameter"
+                                to: rippleInstanceNotify.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceNotify.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceNotify
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceNotify.destroy()
                             }
                         }
                     }
@@ -982,56 +1004,18 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectNotify.width = 2 * maxD;
-                                rippleRectNotify.height = 2 * maxD;
-                                rippleRectNotify.x = mx - maxD;
-                                rippleRectNotify.y = my - maxD;
-                                scaleTransformNotify.xScale = 0;
-                                scaleTransformNotify.yScale = 0;
-                                rippleRectNotify.visible = true;
-                                rippleAnimationNotify.duration = 500;
-                                rippleAnimationNotify.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationNotify.running) {
                                 settings.notifyEnabled = !settings.notifyEnabled
+                                if (animationEnabled) {
+                                    var ripple = rippleComponentNotify.createObject(button_notify)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                }
                             }
                         }
 
-                        onExited: {
-                            rippleAnimationNotify.stop();
-                            rippleRectNotify.visible = false;
-                            button_notify.isButtonHoverNotify = false;
-                        }
-
-                        onEntered: {
-                            button_notify.isButtonHoverNotify = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationNotify
-                        target: scaleTransformNotify
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformNotify.xScale >= 1 && !mouseAreaNotify.pressed) {
-                                rippleRectNotify.visible = false;
-                            }
-                        }
+                        onExited: button_notify.isButtonHoverNotify = false
+                        onEntered: button_notify.isButtonHoverNotify = true
                     }
 
                     Row {
@@ -1074,6 +1058,18 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 38
                             checked: settings.notifyEnabled
+
+                            MouseArea {
+                                id: mouseAreaNotify2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.notifyEnabled = !settings.notifyEnabled
+
+                              }
+                            }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -1176,23 +1172,56 @@ import Qt.labs.settings 1.1
                     color: isButtonHoverDebug ? "#111111" : "black"
                     clip: true
 
-                    Item {
-                        id: rippleContainerDebug
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentDebug
                         Rectangle {
-                            id: rippleRectDebug
+                            id: rippleInstanceDebug
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
                             color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformDebug
-                                origin.x: rippleRectDebug.width / 2
-                                origin.y: rippleRectDebug.height / 2
-                                xScale: 0
-                                yScale: 0
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_debug_mode.width - x)
+                                const dy = Math.max(y, button_debug_mode.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceDebug
+                                property: "diameter"
+                                to: rippleInstanceDebug.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceDebug.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceDebug
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceDebug.destroy()
                             }
                         }
                     }
@@ -1203,56 +1232,18 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectDebug.width = 2 * maxD;
-                                rippleRectDebug.height = 2 * maxD;
-                                rippleRectDebug.x = mx - maxD;
-                                rippleRectDebug.y = my - maxD;
-                                scaleTransformDebug.xScale = 0;
-                                scaleTransformDebug.yScale = 0;
-                                rippleRectDebug.visible = true;
-                                rippleAnimationDebug.duration = 500;
-                                rippleAnimationDebug.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationDebug.running) {
                                 settings.debugModeEnabled = !settings.debugModeEnabled
+                                if (animationEnabled) {
+                                    var ripple = rippleComponentDebug.createObject(button_debug_mode)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                }
                             }
                         }
 
-                        onExited: {
-                            rippleAnimationDebug.stop();
-                            rippleRectDebug.visible = false;
-                            button_debug_mode.isButtonHoverDebug = false;
-                        }
-
-                        onEntered: {
-                            button_debug_mode.isButtonHoverDebug = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationDebug
-                        target: scaleTransformDebug
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformDebug.xScale >= 1 && !mouseAreaDebug.pressed) {
-                                rippleRectDebug.visible = false;
-                            }
-                        }
+                        onExited: button_debug_mode.isButtonHoverDebug = false
+                        onEntered: button_debug_mode.isButtonHoverDebug = true
                     }
 
                     Row {
@@ -1304,6 +1295,17 @@ import Qt.labs.settings 1.1
                                 border.width: 2
                             }
 
+                            MouseArea {
+                                id: mouseAreaDebug2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onReleased: function(mouse) {
+                                        settings.debugModeEnabled = !settings.debugModeEnabled
+                                    }
+                                }
+
+
                             indicator: Rectangle {
                                 color: "transparent"
                                 border.color: "transparent"
@@ -1313,6 +1315,8 @@ import Qt.labs.settings 1.1
                                 id: hoverHandlerDebug
                                 onHoveredChanged: debugSwitch.isHover = hovered
                             }
+
+
 
                             Rectangle {
                                 id: debug_animation
@@ -1385,9 +1389,9 @@ import Qt.labs.settings 1.1
                         id: hoverHandlerDebugMode
                         onHoveredChanged: button_debug_mode.isButtonHoverDebug = hoverHandlerDebugMode.hovered
                     }
-
-
                 }
+
+
             }
         }
     }
