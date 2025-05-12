@@ -152,7 +152,8 @@ ApplicationWindow {
         notificationCounter++;
         const notifId = notificationCounter;
 
-        notificationModel.append({ "message": message, "id": notifId });
+        let side = (notificationModel.count > 0) ? notificationModel.get(0).side : quanta_settings.settings_notify;
+        notificationModel.append({ "message": message, "id": notifId, "side": side });
 
         const timer = Qt.createQmlObject(
             'import QtQuick 2.15; Timer { interval: 5000; running: true; repeat: false; }',
@@ -192,7 +193,7 @@ ApplicationWindow {
         Binding {
             target: notificationsPopup
             property: "x"
-            value: quanta_settings.settings_notify ? main_window.width - notificationsPopup.width - 25 : 10
+            value: notificationModel.count > 0 ? (notificationModel.get(0).side ? main_window.width - notificationsPopup.width - 25 : 10) : 0
         }
 
         Binding {
@@ -223,7 +224,7 @@ ApplicationWindow {
                         height: parent.height
                         radius: 15
                         color: "#32BC32"
-                        x: quanta_settings.settings_notify ? parent.width + 10 : -width
+                        x: model.side ? parent.width + 10 : -width
                         opacity: 0
 
                         Text {
@@ -261,7 +262,7 @@ ApplicationWindow {
                         NumberAnimation {
                             target: notificationRect
                             property: "x"
-                            to: quanta_settings.settings_notify ? parent.width + 10 : -parent.width
+                            to: model.side ? parent.width + 10 : -parent.width
                             duration: 300
                             easing.type: Easing.OutCubic
                         }
