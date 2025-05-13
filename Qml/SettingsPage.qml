@@ -895,7 +895,8 @@ import Qt.labs.settings 1.1
 
                         onClicked: {
                             if (containsMouse) {
-                                // обработка клика
+                                errorDialog.open()
+                                main_window.isOverlayVisible = true
                             }
                         }
                     }
@@ -1395,6 +1396,218 @@ import Qt.labs.settings 1.1
             }
         }
     }
+
+
+
+
+
+        Popup {
+            id:  errorDialog
+            focus: true
+            width: 500
+            height: 200
+            z: 22
+            x: (parent.width - width) / 2 - 100
+            y: (parent.height - height) / 2
+            onClosed: main_window.isOverlayVisible = false
+
+            background: Rectangle {
+                color: "transparent"
+            }
+
+            Rectangle {
+                width: 24
+                height: 24
+                color: "#382022"
+                anchors.right: parent.right
+                anchors.rightMargin: 17
+                anchors.top: parent.top
+                anchors.topMargin: 12
+                radius: 10
+                z: 2
+                Image {
+                    source: "assets/images/parametrs/cross.png"
+                    anchors.centerIn: parent
+                    width: parent.width - 2
+                    height: parent.height - 2
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main_window.isOverlayVisible = false
+                        errorDialog.visible = false
+                    }
+                }
+            }
+
+
+
+
+            Rectangle {
+                anchors.fill: parent
+                color: "#241415"
+                radius: 30
+
+                Canvas {
+                    id: gradientText1
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: -65
+                    width: 500
+                    height: 50
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+
+                        var gradient = ctx.createLinearGradient(0, 0, width, 0)
+                        gradient.addColorStop(0, "#FF0000")
+                        gradient.addColorStop(1, "#FF8888")
+
+                        ctx.font = "bold 33px '" + cleanerFont.name + "'"
+                        ctx.fillStyle = gradient
+                        ctx.textAlign = "center"
+                        ctx.textBaseline = "middle"
+                        ctx.fillText("Нашли ошибку?", width / 2, height / 2)
+                    }
+
+                    onWidthChanged: requestPaint()
+                    onHeightChanged: requestPaint()
+                }
+
+                Canvas {
+                    id: gradientText2
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: -20
+                    width: 500
+                    height: 50
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+
+                        var gradient = ctx.createLinearGradient(0, 0, width, 0)
+                        gradient.addColorStop(0, "#FF0000")
+                        gradient.addColorStop(1, "#FF8888")
+
+                        ctx.font = "bold 33px '" + cleanerFont.name + "'"
+                        ctx.fillStyle = gradient
+                        ctx.textAlign = "center"
+                        ctx.textBaseline = "middle"
+                        ctx.fillText("Обратитесь в поддержку", width / 2, height / 2)
+                    }
+
+                    onWidthChanged: requestPaint()
+                    onHeightChanged: requestPaint()
+                }
+
+
+                Rectangle {
+                    id: tme
+                    property bool tme_hovered: false
+                    width: 305
+                    height: 57
+                    color: tme_hovered  ? "#60292C" : "#4B2022"
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
+                    anchors.bottomMargin: 25
+                    radius: 10
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: qsTr("t.me//unreallx")
+                        font.bold: true
+                        color: "#FFFFFF"
+                        font.pixelSize: 35
+                        font.family: cleanerFont.name
+                        opacity: 0.8
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                ClipboardHelper.copyText("t.me//unreallx")
+                                main_window.addNotification("Успешно скопировано!")
+                            }
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: tme.tme_hovered = hovered
+                    }
+                }
+
+                Rectangle {
+                    id: clipboard
+                    property bool  clip_hovered: false
+                    width: 57
+                    height: 57
+                    color: clip_hovered  ? "#60292C" : "#4B2022"
+                    radius: 10
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.rightMargin: 90
+                    anchors.bottomMargin: 25
+
+                    Image {
+                        width: 50
+                        height: 50
+                        anchors.centerIn: parent
+                        anchors.verticalCenterOffset: -3
+                        source: "assets/images/clipboard_white.png"
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: clipboard.clip_hovered = hovered
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                ClipboardHelper.copyText("t.me//unreallx")
+                                main_window.addNotification("Успешно скопировано!")
+                            }
+                    }
+                }
+
+                Rectangle {
+                    id: browser_img
+                    property bool browser_hovered: false
+                    width: 57
+                    height: 57
+                    color:  browser_hovered  ? "#60292C" : "#4B2022"
+                    radius: 10
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.rightMargin: 25
+                    anchors.bottomMargin: 25
+                    Image {
+                        width: 50
+                        height: 50
+                        anchors.centerIn: parent
+                        anchors.verticalCenterOffset: -1
+                        source: "assets/images/browser_white.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                Qt.openUrlExternally("https://t.me/unreallx")
+                            }
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: browser_img.browser_hovered = hovered
+                    }
+                }
+
+            }
+        }
+
+
+
+
 }
 
 
