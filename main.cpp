@@ -15,6 +15,7 @@
 #include "Src/Header/crashdump.h"
 #include "Src/Header/point.h"
 #include "Src/Header/appcontroller.h"
+#include "Src/Header/ClipboardHelper.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +33,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("QuantaRxc");
     QCoreApplication::setOrganizationDomain("Quanta.com");
     QCoreApplication::setApplicationName("Quanta");
+
+    ClipboardHelper clipboardHelper;
+    engine.rootContext()->setContextProperty("ClipboardHelper", &clipboardHelper);
 
     AppController appController;
     engine.rootContext()->setContextProperty("app", &appController);
