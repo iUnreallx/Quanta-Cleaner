@@ -5805,11 +5805,36 @@ WinSxS")
              console.log("closed")
              global_close_prm_logs.visible = false
          }
-         clip: true
+         // clip: true
          z: 30
          exit: Transition { }
 
          background: Rectangle { color: "transparent" }
+
+         Rectangle {
+             width: 20
+             height: 20
+             color: "#382022"
+             anchors.right: parent.right
+             anchors.rightMargin: -27
+             anchors.top: parent.top
+             anchors.topMargin: -29
+             radius: 10
+             z: 2
+             Image {
+                 source: "assets/images/parametrs/cross.png"
+                 anchors.centerIn: parent
+                 width: parent.width - 2
+                 height: parent.height - 2
+             }
+             MouseArea {
+                 anchors.fill: parent
+                 cursorShape: Qt.PointingHandCursor
+                 onClicked: {
+                     wintempLogView.close()
+                 }
+             }
+         }
 
          Rectangle {
              width: parametrs.width - 50
@@ -5950,9 +5975,34 @@ WinSxS")
               console.log("closed")
               global_close_prm_logs.visible = false
           }
-          clip: true
+          // clip: true
           z: 30
           exit: Transition { }
+
+          Rectangle {
+              width: 20
+              height: 20
+              color: "#382022"
+              anchors.right: parent.right
+              anchors.rightMargin: -27
+              anchors.top: parent.top
+              anchors.topMargin: -29
+              radius: 10
+              z: 2
+              Image {
+                  source: "assets/images/parametrs/cross.png"
+                  anchors.centerIn: parent
+                  width: parent.width - 2
+                  height: parent.height - 2
+              }
+              MouseArea {
+                  anchors.fill: parent
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                      fontsLogView.close()
+                  }
+              }
+          }
 
           background: Rectangle { color: "transparent" }
 
@@ -6093,9 +6143,34 @@ WinSxS")
            onClosed: {
                global_close_prm_logs.visible = false
            }
-           clip: true
+           // clip: true
            z: 30
            exit: Transition { }
+
+           Rectangle {
+               width: 20
+               height: 20
+               color: "#382022"
+               anchors.right: parent.right
+               anchors.rightMargin: -27
+               anchors.top: parent.top
+               anchors.topMargin: -29
+               radius: 10
+               z: 2
+               Image {
+                   source: "assets/images/parametrs/cross.png"
+                   anchors.centerIn: parent
+                   width: parent.width - 2
+                   height: parent.height - 2
+               }
+               MouseArea {
+                   anchors.fill: parent
+                   cursorShape: Qt.PointingHandCursor
+                   onClicked: {
+                       binLogView.close()
+                   }
+               }
+           }
 
            background: Rectangle { color: "transparent" }
 
@@ -6236,9 +6311,34 @@ WinSxS")
             onClosed: {
                 global_close_prm_logs.visible = false
             }
-            clip: true
+            // clip: true
             z: 30
             exit: Transition { }
+
+            Rectangle {
+                width: 20
+                height: 20
+                color: "#382022"
+                anchors.right: parent.right
+                anchors.rightMargin: -27
+                anchors.top: parent.top
+                anchors.topMargin: -29
+                radius: 10
+                z: 2
+                Image {
+                    source: "assets/images/parametrs/cross.png"
+                    anchors.centerIn: parent
+                    width: parent.width - 2
+                    height: parent.height - 2
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        updateLogView.close()
+                    }
+                }
+            }
 
             background: Rectangle { color: "transparent" }
 
@@ -6379,9 +6479,34 @@ WinSxS")
              onClosed: {
                  global_close_prm_logs.visible = false
              }
-             clip: true
+             // clip: true
              z: 30
              exit: Transition { }
+
+             Rectangle {
+                 width: 20
+                 height: 20
+                 color: "#382022"
+                 anchors.right: parent.right
+                 anchors.rightMargin: -27
+                 anchors.top: parent.top
+                 anchors.topMargin: -29
+                 radius: 10
+                 z: 2
+                 Image {
+                     source: "assets/images/parametrs/cross.png"
+                     anchors.centerIn: parent
+                     width: parent.width - 2
+                     height: parent.height - 2
+                 }
+                 MouseArea {
+                     anchors.fill: parent
+                     cursorShape: Qt.PointingHandCursor
+                     onClicked: {
+                         eventLogView.close()
+                     }
+                 }
+             }
 
              background: Rectangle { color: "transparent" }
 
@@ -6522,9 +6647,34 @@ WinSxS")
               onClosed: {
                   global_close_prm_logs.visible = false
               }
-              clip: true
+              // clip: true
               z: 30
               exit: Transition { }
+
+              Rectangle {
+                  width: 20
+                  height: 20
+                  color: "#382022"
+                  anchors.right: parent.right
+                  anchors.rightMargin: -27
+                  anchors.top: parent.top
+                  anchors.topMargin: -29
+                  radius: 10
+                  z: 2
+                  Image {
+                      source: "assets/images/parametrs/cross.png"
+                      anchors.centerIn: parent
+                      width: parent.width - 2
+                      height: parent.height - 2
+                  }
+                  MouseArea {
+                      anchors.fill: parent
+                      cursorShape: Qt.PointingHandCursor
+                      onClicked: {
+                          dumpsLogView.close()
+                      }
+                  }
+              }
 
               background: Rectangle { color: "transparent" }
 
@@ -6665,9 +6815,34 @@ WinSxS")
                onClosed: {
                    global_close_prm_logs.visible = false
                }
-               clip: true
+               // clip: true
                z: 30
                exit: Transition { }
+
+               Rectangle {
+                   width: 20
+                   height: 20
+                   color: "#382022"
+                   anchors.right: parent.right
+                   anchors.rightMargin: -27
+                   anchors.top: parent.top
+                   anchors.topMargin: -29
+                   radius: 10
+                   z: 2
+                   Image {
+                       source: "assets/images/parametrs/cross.png"
+                       anchors.centerIn: parent
+                       width: parent.width - 2
+                       height: parent.height - 2
+                   }
+                   MouseArea {
+                       anchors.fill: parent
+                       cursorShape: Qt.PointingHandCursor
+                       onClicked: {
+                           pointLogView.close()
+                       }
+                   }
+               }
 
                background: Rectangle { color: "transparent" }
 
