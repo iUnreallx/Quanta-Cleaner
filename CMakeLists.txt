@@ -42,6 +42,7 @@ qt_add_qml_module(appQuantaCleaner
         Src/Header/appcontroller.h
         Src/logs/loghelper.h
         Src/Header/point.h
+        Src/Header/ClipboardHelper.h
         Src/logs/loghelper.cpp
         Src/Source/point.cpp
         Src/Source/crashdump.cpp
@@ -86,6 +87,10 @@ qt_add_qml_module(appQuantaCleaner
         Qml/assets/images/star_white.png
         Qml/assets/images/star_black.png
         Qml/assets/images/circle.png
+        Qml/assets/images/clipboard_black.png
+        Qml/assets/images/clipboard_white.png
+        Qml/assets/images/browser_black.png
+        Qml/assets/images/browser_white.png
         Qml/assets/images/parametrs/chevron.png
         Qml/assets/images/parametrs/cross.png
         Qml/assets/images/parametrs/eye.png
@@ -93,6 +98,8 @@ qt_add_qml_module(appQuantaCleaner
         Qml/assets/images/parametrs/rocket.png
         Qml/assets/images/parametrs/sign.png
         Qml/assets/images/parametrs/trash.png
+        Qml/assets/images/parametrs/notes_black.png
+        Qml/assets/images/parametrs/notes_white.png
 )
 
 
