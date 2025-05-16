@@ -19,10 +19,10 @@
 ## 🖼️ Screenshots
 
 <p>
-  <img src="screenshots/app1.png" alt="Preview 1" width="450" style="float:left; margin-right:10px;" />
-  <img src="screenshots/app2.png" alt="Preview 2" width="450" style="float:right; margin-left:10px;" />
-  <img src="screenshots/app3.png" alt="Preview 3" width="300" style="display:block; margin: 0 auto;" />
-</p>
+  <img src="screenshots/app1.png" alt="Preview 1" width="400" style="float:left; margin-right:10px;" />
+  <img src="screenshots/app2.png" alt="Preview 2" width="400" style="float:right; margin-left:10px;" />
+  <img src="screenshots/app3.png" alt="Preview 3" width="400" style="float:center; margin: 0 auto;" />
+</
 
 ---
 
