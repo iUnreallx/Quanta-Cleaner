@@ -21,14 +21,12 @@
 <p align="center">
   <img src="screenshots/app1.png" alt="Preview 1" width="600" />
 </p>
-
-<p>&nbsp;</p>
+<br>
 
 <p align="center">
   <img src="screenshots/app2.png" alt="Preview 2" width="600" />
 </p>
-
-<p>&nbsp;</p>
+<br>
 
 <p align="center">
   <img src="screenshots/app3.png" alt="Preview 3" width="600" />
