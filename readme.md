@@ -19,9 +19,9 @@
 ## 🖼️ Screenshots
 
 <p align="center">
-  <img src="screenshots/app1.png" alt="Preview 1" width="400" style="display:inline-block; margin-right:10px;" />
-  <img src="screenshots/app2.png" alt="Preview 2" width="400" style="display:inline-block; margin-right:10px;" />
-  <img src="screenshots/app3.png" alt="Preview 3" width="400" style="display:inline-block;" />
+  <img src="screenshots/app1.png" alt="Preview 1" width="350" style="display:inline-block; margin-right:10px;" />
+  <img src="screenshots/app2.png" alt="Preview 2" width="350" style="display:inline-block; margin-right:10px;" />
+  <img src="screenshots/app3.png" alt="Preview 3" width="350" style="display:inline-block;" />
 </p>
 
 ---
