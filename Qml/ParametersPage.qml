@@ -2,6 +2,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtCore
 import QtQuick.Controls.Material 2.15
 
 
@@ -378,8 +379,8 @@ Rectangle {
                     z: 4
 
                     onClicked: {
-                        // main_window.isOverlayVisible = true;
-                        // parametersDialog.open();
+                        main_window.isOverlayVisible = true;
+                         notesPopup.open();
                     }
 
                     onEntered: {
@@ -6970,6 +6971,132 @@ WinSxS")
            }
 
 
+
+           Popup {
+               id: notesPopup
+               focus: true
+               width: 400
+               height: 245
+               z: 22
+               x: (parent.width - width) / 2
+               y: (parent.height - height) / 2
+               onClosed: main_window.isOverlayVisible = false
+
+
+               background: Rectangle {
+                   color: "transparent"
+               }
+
+               Rectangle {
+                   width: 25
+                   height: 25
+                   color: "#382022"
+                   anchors.right: parent.right
+                   anchors.rightMargin: 10
+                   anchors.top: parent.top
+                   anchors.topMargin: 8
+                   radius: 10
+                   z: 2
+                   Image {
+                       source: "assets/images/parametrs/cross.png"
+                       anchors.centerIn: parent
+                       width: parent.width - 2
+                       height: parent.height - 2
+                   }
+                   MouseArea {
+                       anchors.fill: parent
+                       cursorShape: Qt.PointingHandCursor
+                       onClicked: {
+                           main_window.isOverlayVisible = false
+                           notesPopup.visible = false
+                       }
+                   }
+               }
+
+               Rectangle {
+                   anchors.fill: parent
+                   color: "#241415"
+                   radius: 15
+                   clip: true
+
+
+                   Rectangle {
+                       id: open_folder
+                       property bool open_folder_hovered: false
+                       width: 325
+                       height: 70
+                       color: open_folder_hovered  ? "#60292C" : "#4B2022"
+                       anchors.top: parent.top
+                       anchors.left: parent.left
+                       anchors.leftMargin: 25
+                       anchors.topMargin: 40
+                       radius: 10
+
+                       Text {
+                           anchors.centerIn: parent
+                           text: qsTr("Открыть папку")
+                           font.bold: true
+                           color: "#FFFFFF"
+                           font.pixelSize: 24
+                           font.family: cleanerFont.name
+                       }
+
+                       MouseArea {
+                           anchors.fill: parent
+                           cursorShape: Qt.PointingHandCursor
+                           onClicked: {
+                               folderHelper.openLogsFolder()
+                           }
+                       }
+
+
+                       HoverHandler {
+                           onHoveredChanged: open_folder.open_folder_hovered = hovered
+                       }
+                   }
+
+
+
+                   Rectangle {
+                       id: delete_folder
+                       property bool  delete_folder_hovered: false
+                       width: 325
+                       height: 70
+                       color:  delete_folder_hovered  ? "#60292C" : "#4B2022"
+                       anchors.bottom: parent.bottom
+                       anchors.left: parent.left
+                       anchors.leftMargin: 25
+                       anchors.bottomMargin: 25
+                       radius: 10
+
+                       Text {
+                           anchors.centerIn: parent
+                           text: qsTr("Удалить логи")
+                           font.bold: true
+                           color: "#FFFFFF"
+                           font.pixelSize: 24
+                           font.family: cleanerFont.name
+                       }
+
+                       MouseArea {
+                           anchors.fill: parent
+                           cursorShape: Qt.PointingHandCursor
+                           onClicked: {
+                               folderHelper.deleteLogsFolder()
+                               main_window.addNotification("Успешно удалено!")
+                           }
+                       }
+
+
+                       HoverHandler {
+                           onHoveredChanged:  delete_folder.delete_folder_hovered = hovered
+                       }
+                   }
+
+
+
+               }
+           }
 
 }
 
