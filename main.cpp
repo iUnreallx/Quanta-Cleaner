@@ -16,6 +16,7 @@
 #include "Src/Header/point.h"
 #include "Src/Header/appcontroller.h"
 #include "Src/Header/ClipboardHelper.h"
+#include "Src/Header/openFolder.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +34,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("QuantaRxc");
     QCoreApplication::setOrganizationDomain("Quanta.com");
     QCoreApplication::setApplicationName("Quanta");
+
+    FolderOpener opnFolder;
+    engine.rootContext()->setContextProperty("folderHelper", &opnFolder);
 
     ClipboardHelper clipboardHelper;
     engine.rootContext()->setContextProperty("ClipboardHelper", &clipboardHelper);
