@@ -7,7 +7,7 @@ import QtCore
 
 ApplicationWindow {
     id: main_window
-    Material.theme: Material.DeepOrange
+    Material.theme: Material.Dark
     title: "Quanta"
     visible: true
     color: "black"
@@ -85,6 +85,7 @@ ApplicationWindow {
         property bool settings_animation: true
         property bool settings_reload: false
         property bool settings_notify: true
+        property int settings_theme: 2
         property bool debugMode: false
 
         property bool running_clean: false
@@ -93,7 +94,53 @@ ApplicationWindow {
         property bool radioMainMenuBlock: false
     }
 
+    QtObject {
+        id: theme
+
+        property color background
+        property color text
+        property color button
+        property color hover
+        property color backOver
+        property color backOverHover
+        property color backOverRipple
+        property color sidebar
+        property color parametrsPageBackground
+    }
+
+    function applyTheme() {
+        if (quanta_settings.settings_theme === 2) {
+            theme.parametrsPageBackground = "#000"
+
+            theme.background = "#241415"
+            theme.text = "white"
+            theme.button = "#4B2022"
+            theme.hover = "#60292C"
+            theme.backOver = "#000000"
+            theme.backOverRipple = "#caeceb"
+            theme.backOverHover = "#111111"
+
+            theme.sidebar = "#111"
+        } else {
+            theme.parametrsPageBackground = "#FFFFFF"
+
+            theme.background = "white"
+            theme.text = "black"
+            theme.button = "#E0E0E0"
+            theme.hover = "#CCCCCC"
+            theme.backOver = "#caeceb"
+             theme.backOverRipple = "#000000"
+            theme.backOverHover = "#CCCCCC"
+
+            theme.sidebar = "#F0F0F0"
+        }
+    }
+
+
+
+
     Component.onCompleted: {
+        applyTheme()
         quanta_settings.cleanTextCome = false
         quanta_settings.running_clean = false
         quanta_settings.global_functions = 0
@@ -575,6 +622,10 @@ ApplicationWindow {
             z: 20
             MouseArea {
                 anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.AllButtons
+                propagateComposedEvents: false
+                preventStealing: true
                 onClicked: main_window.isOverlayVisible = false
             }
         }
@@ -630,126 +681,6 @@ ApplicationWindow {
         }
     }
 
-
-
-    Popup {
-        id: languageDialog
-        focus: true
-        width: 300
-        height: 400
-        z: 22
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-        onClosed: main_window.isOverlayVisible = false
-        background: Rectangle {
-            color: "transparent"
-        }
-
-        Rectangle {
-            width: 20
-            height: 20
-            color: "transparent"
-            radius: 3
-            anchors.right: parent.right
-            anchors.rightMargin: 17
-            anchors.top: parent.top
-            anchors.topMargin: 12
-            z: 2
-
-            Text {
-                text: "×"
-                anchors.centerIn: parent
-                color: "red"
-                font.pixelSize: 35
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    main_window.isOverlayVisible = false
-                    languageDialog.visible = false
-                }
-            }
-        }
-
-
-
-        Rectangle {
-            anchors.fill: parent
-            color: "#241415"
-            radius: 30
-
-            Column {
-                anchors.fill: parent
-                spacing: 20
-
-                Text {
-                    anchors.top: parent.top
-                    anchors.topMargin: 40
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("Выберите язык")
-                    color: "white"
-                    font.pixelSize: 20
-                    font.bold: true
-                }
-
-                ButtonGroup {
-                    id: buttonGroup
-                }
-
-                RadioButton {
-                    id: russianButton
-                    anchors.top: parent.top
-                    anchors.topMargin: 75
-                    x: 80
-                    text: "Русский"
-                    font.pixelSize: 16
-                    font.bold: true
-                    scale: 1.1
-                    checked: true
-
-                    MouseArea {
-
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked:
-                        {
-                            console.log('rus')
-                            russianButton.checked = true
-                        }
-                    }
-                }
-
-                RadioButton {
-                    id: englishButton
-                    anchors.top: parent.top
-                    anchors.topMargin: 125
-                    x: 80
-                    text: "English"
-                    font.pixelSize: 16
-                    font.bold: true
-                    scale: 1.1
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            console.log('en')
-                            englishButton.checked = true
-                        }
-                    }
-                }
-
-
-                Component.onCompleted: {
-                    buttonGroup.addButton(russianButton)
-                    buttonGroup.addButton(englishButton)
-                }
-            }
-        }
-    }
-
-
     property string currentPage: "MainPage.qml"
 
 
@@ -758,7 +689,7 @@ ApplicationWindow {
         anchors.left: parent.left
         height: parent.height
         width: 215
-        color: "#111"
+        color: theme.sidebar
 
 
         Column {
@@ -830,13 +761,13 @@ ApplicationWindow {
 
         Image {
             id: bottomLeftImage
-            source: "assets/images/git_last.png"
-            width: 35
-            height: 35
+            source: quanta_settings.settings_theme === 2 ? "assets/images/git_last.png" : "assets/images/git_black.png"
+            width: 45
+            height: 45
             anchors.left: parent.left
-            anchors.leftMargin: 37
+            anchors.leftMargin: 35
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 23
+            anchors.bottomMargin: 18
 
             MouseArea {
                 anchors.fill: parent
@@ -852,7 +783,7 @@ ApplicationWindow {
             text: "GitHub"
             font.pixelSize: 26
             font.bold: true
-            color: "gray"
+            color: quanta_settings.settings_theme === 2 ? "gray" : "black"
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 25
