@@ -52,9 +52,9 @@ Rectangle {
         anchors.topMargin: 12
         width: parent.width - 242
         height: mainpage.isOverrideMain ? 75 : 45
-        color: "#111111"
+        color:  quanta_settings.settings_theme === 2 ? "#111111" : "#F0F0F0"
         radius: 10
-        border.color: "#322825"
+        border.color: quanta_settings.settings_theme === 2 ? "#322825" : "transparent"
         anchors.left: parent.left
         anchors.leftMargin: 227
         z: 5
@@ -75,7 +75,7 @@ Rectangle {
             height: 25
             color: "#29211E"
             radius: 10
-            border.color: "#5C3833"
+            border.color: quanta_settings.settings_theme === 2 ? "#5C3833" : "transparent"
 
             Rectangle {
                 id: progressBar
@@ -104,7 +104,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 14
             text: deleteText
-            color: "white"
+            color: theme.text
             font.family: cleanerFontRegular.name
             font.pixelSize: 16
             font.bold: true
@@ -125,7 +125,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 65
             text: cleanedText
-            color: "white"
+            color: theme.text
             font.family: cleanerFontRegular.name
             font.pixelSize: 18
             font.bold: true
@@ -139,7 +139,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 14
             text: cleanFunctions
-            color: "white"
+            color: theme.text
             font.family: cleanerFontRegular.name
             font.pixelSize: 16
             font.bold: true
@@ -176,7 +176,7 @@ Rectangle {
 
             Image {
                 id: chevronImageMain
-                source: "assets/images/parametrs/chevron.png"
+                source: quanta_settings.settings_theme === 2 ? "assets/images/parametrs/chevron.png" : "assets/images/parametrs/chevron_black.png"
                 width: 32
                 height: 32
                 anchors.centerIn: parent
@@ -213,10 +213,22 @@ Rectangle {
         anchors.fill: parent
 
         gradient: Gradient {
-            GradientStop { color: "#000000"; position: 0.0 }
-            GradientStop { color: "#010a2a"; position: 1.0 }
+            GradientStop {
+                position: 0.0
+                color: quanta_settings.settings_theme === 2 ? "#000000" : "#ffffff"
+            }
+            GradientStop {
+                position: quanta_settings.settings_theme === 2 ? 0.8 : 0.6
+                color: quanta_settings.settings_theme === 2 ? "#010a2a" : "#ffffff"
+            }
+            GradientStop {
+                position: 1.0
+                color: quanta_settings.settings_theme === 2 ? "#010a2a" : "#ffffff"
+            }
         }
     }
+
+
 
     ParticleSystem {
         id: particleSystem
@@ -382,19 +394,6 @@ Rectangle {
                        }
 
                                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             }
 

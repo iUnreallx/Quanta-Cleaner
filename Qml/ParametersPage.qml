@@ -9,7 +9,7 @@ import QtQuick.Controls.Material 2.15
 Rectangle {
     id: parametrs
     anchors.fill: parent
-    color: "#000"
+    color: theme.parametrsPageBackground
 
     Component.onCompleted: {
         tempRadio.checked = quanta_settings.parametr_block1_active
@@ -77,13 +77,13 @@ Rectangle {
             anchors.bottom: parent.bottom
             width: parent.width
             height: 70
-            color: "#000"
+            color: theme.parametrsPageBackground
             z: 2
 
             Text {
                 id: parameters_text
                 text: qsTr("Параметры")
-                color: "white"
+                color: theme.text
                 font.pixelSize: 30
                 font.bold: true
                 anchors.top: parent.top
@@ -123,13 +123,13 @@ Rectangle {
                     border.color: "#282928"
                     border.width: 2
                     height: 220
-                    color: "black"
+                    color: theme.parametrsPageBackground
                     clip: true
                     z: 2
                     property bool justClosed: false
 
                     Image {
-                        source: "assets/images/par_black2.png"
+                        source:  quanta_settings.settings_theme === 2 ? "assets/images/par_black2.png" : "assets/images/par_white.png"
                         width: 100
                         height: 100
                         y: 20
@@ -139,7 +139,7 @@ Rectangle {
 
                     Text {
                         id: box_1
-                        color: "white"
+                        color: theme.text
                         text: qsTr("Параметры очистки")
                         font.pixelSize: 18
                         font.bold: true
@@ -151,10 +151,11 @@ Rectangle {
 
                     Text {
                         id: box_1_gray
-                        color: "gray"
+                        color: theme.text
                         text: qsTr("Конфигурация и настройка\nпараметров очистки")
                         font.pixelSize: 13
                         font.bold: false
+                        opacity: 0.7
                         font.family: cleanerFont.name
                         y: 155
                         x: 15
@@ -177,23 +178,24 @@ Rectangle {
                         onPaint: {
                             if (animationEnabled) {
                                 if (!visible) return;
+                                        const ctx = getContext("2d");
+                                        ctx.clearRect(0, 0, width, height);
 
-                                const ctx = getContext("2d");
-                                ctx.clearRect(0, 0, width, height);
+                                        const gradient = ctx.createRadialGradient(
+                                            currentMouseX, currentMouseY, 0,
+                                            currentMouseX, currentMouseY, Math.max(width, height) / 2
+                                        );
+                                        gradient.addColorStop(0, "gold");
+                                        gradient.addColorStop(1, "transparent");
 
-                                const gradient = ctx.createRadialGradient(
-                                    currentMouseX, currentMouseY, 0,
-                                    currentMouseX, currentMouseY, Math.max(width, height) / 2
-                                );
-                                gradient.addColorStop(0, "gold");
-                                gradient.addColorStop(1, "transparent");
+                                        ctx.strokeStyle = gradient;
+                                        ctx.lineWidth = 3;
+                                        ctx.strokeRect(1, 1, width - 2, height - 2);
 
-                                ctx.strokeStyle = gradient;
-                                ctx.lineWidth = 3;
-                                ctx.strokeRect(1, 1, width - 2, height - 2);
                             }
                         }
                     }
+
 
                     Canvas {
                         id: glowCircle1
@@ -220,8 +222,13 @@ Rectangle {
                                     width / 2, height / 2, 50
                                 );
 
-                                gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
-                                gradient.addColorStop(1.0, "rgba(0, 0, 0, 0.8)");
+                                if (quanta_settings.settings_theme === 2) {
+                                    gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
+                                    gradient.addColorStop(1.0, "rgba(0, 0, 0, 0.8)");
+                                } else {
+                                    gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
+                                    gradient.addColorStop(1.0, "rgba(255, 255, 255, 0.8)");
+                                }
 
                                 ctx.fillStyle = gradient;
                                 ctx.beginPath();
@@ -262,13 +269,13 @@ Rectangle {
                 border.color: "#282928"
                 border.width: 2
                 height: 220
-                color: "black"
+                color: theme.parametrsPageBackground
                 clip: true
                 z: 2
                 property bool justClosed: false
 
                 Image {
-                    source: "assets/images/parametrs/notes_white.png"
+                    source: quanta_settings.settings_theme === 2 ? "assets/images/parametrs/notes_white.png" : "assets/images/parametrs/notes_black.png"
                     width: 90
                     height: 90
                     y: 20
@@ -278,7 +285,7 @@ Rectangle {
 
                 Text {
                     id: box_2
-                    color: "white"
+                    color: theme.text
                     text: qsTr("Управление логами")
                     font.pixelSize: 18
                     font.bold: true
@@ -290,10 +297,11 @@ Rectangle {
 
                 Text {
                     id: box_2_gray
-                    color: "gray"
+                    color: theme.text
                     text: qsTr("Управление параметрами и\nповедением логов")
                     font.pixelSize: 13
                     font.bold: false
+                    opacity: 0.7
                     font.family: cleanerFont.name
                     y: 155
                     x: 15
@@ -316,20 +324,21 @@ Rectangle {
                     onPaint: {
                         if (animationEnabled) {
                             if (!visible) return;
+                                 if (quanta_settings.settings_theme === 2) {
+                                    const ctx = getContext("2d");
+                                    ctx.clearRect(0, 0, width, height);
 
-                            const ctx = getContext("2d");
-                            ctx.clearRect(0, 0, width, height);
+                                    const gradient = ctx.createRadialGradient(
+                                        currentMouseX, currentMouseY, 0,
+                                        currentMouseX, currentMouseY, Math.max(width, height) / 2
+                                    );
+                                    gradient.addColorStop(0, "gold");
+                                    gradient.addColorStop(1, "transparent");
 
-                            const gradient = ctx.createRadialGradient(
-                                currentMouseX, currentMouseY, 0,
-                                currentMouseX, currentMouseY, Math.max(width, height) / 2
-                            );
-                            gradient.addColorStop(0, "gold");
-                            gradient.addColorStop(1, "transparent");
-
-                            ctx.strokeStyle = gradient;
-                            ctx.lineWidth = 3;
-                            ctx.strokeRect(1, 1, width - 2, height - 2);
+                                    ctx.strokeStyle = gradient;
+                                    ctx.lineWidth = 3;
+                                    ctx.strokeRect(1, 1, width - 2, height - 2);
+                            }
                         }
                     }
                 }
@@ -359,8 +368,13 @@ Rectangle {
                                 width / 2, height / 2, 50
                             );
 
-                            gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
-                            gradient.addColorStop(1.0, "rgba(0, 0, 0, 0.8)");
+                            if (quanta_settings.settings_theme === 2) {
+                                gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
+                                gradient.addColorStop(1.0, "rgba(0, 0, 0, 0.8)");
+                            } else {
+                                gradient.addColorStop(0.0, "rgba(9, 144, 30, 0.8)");
+                                gradient.addColorStop(1.0, "rgba(255, 255, 255, 0.8)");
+                            }
 
                             ctx.fillStyle = gradient;
                             ctx.beginPath();
@@ -369,6 +383,7 @@ Rectangle {
                             ctx.fill();
                         }
                     }
+
                 }
 
                 MouseArea {
@@ -416,7 +431,7 @@ Rectangle {
             Rectangle {
                 width: 25
                 height: 25
-                color: "#382022"
+                color: theme.button
                 anchors.right: parent.right
                 anchors.rightMargin: 15
                 anchors.top: parent.top
@@ -441,7 +456,7 @@ Rectangle {
 
             Rectangle {
                 anchors.fill: parent
-                color: "#241415"
+                color: theme.background
                 radius: 15
                 clip: true
 
@@ -6990,7 +7005,7 @@ WinSxS")
                Rectangle {
                    width: 25
                    height: 25
-                   color: "#382022"
+                   color: theme.button
                    anchors.right: parent.right
                    anchors.rightMargin: 10
                    anchors.top: parent.top
@@ -7015,7 +7030,7 @@ WinSxS")
 
                Rectangle {
                    anchors.fill: parent
-                   color: "#241415"
+                   color: theme.background
                    radius: 15
                    clip: true
 
@@ -7025,7 +7040,7 @@ WinSxS")
                        property bool open_folder_hovered: false
                        width: 325
                        height: 70
-                       color: open_folder_hovered  ? "#60292C" : "#4B2022"
+                       color: open_folder_hovered  ? theme.hover : theme.button
                        anchors.top: parent.top
                        anchors.left: parent.left
                        anchors.leftMargin: 25
@@ -7036,7 +7051,7 @@ WinSxS")
                            anchors.centerIn: parent
                            text: qsTr("Открыть папку")
                            font.bold: true
-                           color: "#FFFFFF"
+                           color: theme.text
                            font.pixelSize: 24
                            font.family: cleanerFont.name
                        }
@@ -7062,7 +7077,7 @@ WinSxS")
                        property bool  delete_folder_hovered: false
                        width: 325
                        height: 70
-                       color:  delete_folder_hovered  ? "#60292C" : "#4B2022"
+                       color:  delete_folder_hovered  ? theme.hover : theme.button
                        anchors.bottom: parent.bottom
                        anchors.left: parent.left
                        anchors.leftMargin: 25
@@ -7073,7 +7088,7 @@ WinSxS")
                            anchors.centerIn: parent
                            text: qsTr("Удалить логи")
                            font.bold: true
-                           color: "#FFFFFF"
+                           color: theme.text
                            font.pixelSize: 24
                            font.family: cleanerFont.name
                        }
