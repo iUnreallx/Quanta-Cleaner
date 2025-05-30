@@ -173,10 +173,3 @@ void WinSxSCleaner::cleanWinSXS(CleanupMode mode, bool isNotTap) {
         }
     });
 }
-
-
-
-
-
-
-

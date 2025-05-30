@@ -258,7 +258,3 @@ void TempCleaner::calculateTempRemovableSize() {
         }
     });
 }
-
-
-
-
