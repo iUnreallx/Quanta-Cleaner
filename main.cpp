@@ -21,15 +21,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
-    // QTranslator translator;
-    // const QString locale = QLocale::system().name();
-    // if (translator.load("rxc_beta_en_US.ts")) {
-    //     app.installTranslator(&translator);
-    // }
-
     QQmlApplicationEngine engine;
-    // engine.rootContext()->setContextProperty("appTranslator", &translator);
 
     QCoreApplication::setOrganizationName("QuantaRxc");
     QCoreApplication::setOrganizationDomain("Quanta.com");
