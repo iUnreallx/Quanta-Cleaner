@@ -1,0 +1,10 @@
+module QuantaCleaner
+typeinfo appQuantaCleaner.qmltypes
+prefer :/qt/qml/QuantaCleaner/
+AboutAppPage 1.0 Qml/AboutAppPage.qml
+HoverButton 1.0 Qml/HoverButton.qml
+Main 1.0 Qml/Main.qml
+MainPage 1.0 Qml/MainPage.qml
+ParametersPage 1.0 Qml/ParametersPage.qml
+SettingsPage 1.0 Qml/SettingsPage.qml
+

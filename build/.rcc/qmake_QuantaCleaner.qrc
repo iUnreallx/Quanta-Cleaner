@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt/qml/QuantaCleaner">
+    <file alias="qmldir">D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/QuantaCleaner/qmldir</file>
+  </qresource>
+</RCC>
+
