@@ -24,6 +24,8 @@ Rectangle {
     onDebugModeEnabledChanged: quanta_settings.debugMode = debugModeEnabled
 
     Component.onCompleted: {
+        rusButton.checked = quanta_settings.settings_language === "rus"
+        engButton.checked = quanta_settings.settings_language === "eng"
         Qt.callLater(() => {
             animationSwitch.disableAnimationInit = false
             animationSwitch.initialized = true
@@ -37,7 +39,7 @@ Rectangle {
         }
 
         Text {
-            text: qsTr("Настройки")
+            text: qsTr("Settings") + (app.languageVersion ? "" : "")
             color: theme.text
             font.pixelSize: 30
             font.bold: true
@@ -185,14 +187,14 @@ Rectangle {
                             width: parent.width - 35
 
                             Text {
-                                text: qsTr('Язык')
+                                text: qsTr('Language') + (app.languageVersion ? "" : "")
                                 color: theme.text
                                 font.bold: true
                                 font.pixelSize: 18
                             }
 
                             Text {
-                                text: qsTr("Русский")
+                                text: qsTr("ThisLang") + (app.languageVersion ? "" : "")
                                 color: theme.text
                                 font.pixelSize: 14
                             }
@@ -305,14 +307,14 @@ Rectangle {
                         width: parent.width - 70
 
                         Text {
-                            text: qsTr("Оформление")
+                            text: qsTr("ThemeMode") + (app.languageVersion ? "" : "")
                             color: theme.text
                             font.bold: true
                             font.pixelSize: 16
                         }
 
                         Text {
-                            text: quanta_settings.settings_theme === 2 ? "Тёмная тема" : "Светлая тема"
+                            text: quanta_settings.settings_theme === 2 ? (qsTr("DarkTheme") + (app.languageVersion ? "" : "")) : (qsTr("LightTheme") + (app.languageVersion ? "" : ""))
                             color: theme.text
                             font.pixelSize: 12
                         }
@@ -433,7 +435,7 @@ Rectangle {
                         width: parent.width - animationSwitch.width - 110
 
                         Text {
-                            text: qsTr("Анимации")
+                            text: qsTr("Animations") + (app.languageVersion ? "" : "")
                             color: theme.text
                             font.bold: true
                             font.pixelSize: 16
@@ -685,7 +687,7 @@ Rectangle {
                             anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Автозагрузка")
+                                text: qsTr("Autoloading") + (app.languageVersion ? "" : "")
                                 color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
@@ -912,7 +914,7 @@ Rectangle {
                         width: parent.width - 70
 
                         Text {
-                            text: qsTr("Сообщить об ошибке")
+                            text: qsTr("Report") + (app.languageVersion ? "" : "")
                             color: theme.text
                             font.bold: true
                             font.pixelSize: 16
@@ -1044,7 +1046,7 @@ Rectangle {
                             anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Расположение уведомлений")
+                                text: qsTr("Notification") + (app.languageVersion ? "" : "")
                                 color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
@@ -1272,7 +1274,7 @@ Rectangle {
                             anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Режим откладки")
+                                text: qsTr("Debug") + (app.languageVersion ? "" : "")
                                 color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
@@ -1471,7 +1473,7 @@ Rectangle {
                         ctx.fillStyle = gradient
                         ctx.textAlign = "center"
                         ctx.textBaseline = "middle"
-                        ctx.fillText("Нашли ошибку?", width / 2, height / 2)
+                        ctx.fillText(qsTr("FindError"), width / 2, height / 2)
                     }
 
                     onWidthChanged: requestPaint()
@@ -1496,7 +1498,7 @@ Rectangle {
                         ctx.fillStyle = gradient
                         ctx.textAlign = "center"
                         ctx.textBaseline = "middle"
-                        ctx.fillText("Обратитесь в поддержку", width / 2, height / 2)
+                        ctx.fillText(qsTr("Support"), width / 2, height / 2)
                     }
 
                     onWidthChanged: requestPaint()
@@ -1531,7 +1533,7 @@ Rectangle {
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                                 ClipboardHelper.copyText("t.me//unreallx")
-                                main_window.addNotification("Успешно скопировано!")
+                                main_window.addNotification(qsTr("Copied") + (app.languageVersion ? "" : ""))
                             }
                     }
 
@@ -1569,7 +1571,7 @@ Rectangle {
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                                 ClipboardHelper.copyText("t.me//unreallx")
-                                main_window.addNotification("Успешно скопировано!")
+                                main_window.addNotification(qsTr("Copied") + (app.languageVersion ? "" : ""))
                             }
                     }
                 }
@@ -1663,7 +1665,7 @@ Rectangle {
                         anchors.top: parent.top
                         anchors.topMargin: 5
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Выберите оформление")
+                        text: qsTr("ChooseThemeMode") + (app.languageVersion ? "" : "")
                         color: theme.text
                         font.pixelSize: 20
                         font.bold: true
@@ -1689,7 +1691,7 @@ Rectangle {
                         RadioButton {
                             id: whiteButton
                             anchors.centerIn: parent
-                            text: "Светлая тема"
+                            text: qsTr("LightTheme") + (app.languageVersion ? "" : "")
                             font.pixelSize: 20
                             font.bold: true
                             scale: 1.1
@@ -1743,7 +1745,7 @@ Rectangle {
                         RadioButton {
                             id: darkButton
                             anchors.centerIn: parent
-                            text: "Тёмная тема"
+                            text: qsTr("DarkTheme") + (app.languageVersion ? "" : "")
                             font.pixelSize: 20
                             font.bold: true
                             scale: 1.1
@@ -1822,7 +1824,7 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
                         main_window.isOverlayVisible = false
-                        themeDialog.visible = false
+                        languageDialog.visible = false
                     }
                 }
             }
@@ -1838,15 +1840,15 @@ Rectangle {
                         anchors.top: parent.top
                         anchors.topMargin: 5
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Выберите Язык")
+                        text: qsTr("ChooseLang") + (app.languageVersion ? "" : "")
                         color: theme.text
                         font.pixelSize: 20
                         font.bold: true
                     }
 
-                    ButtonGroup {
-                        id: buttonGroupLanguage
-                    }
+                    // ButtonGroup {
+                    //     id: buttonGroupLanguage
+                    // }
 
                     Rectangle {
                         id: rusLangRec
@@ -1867,7 +1869,6 @@ Rectangle {
                             font.pixelSize: 20
                             font.bold: true
                             scale: 1.1
-                            checked: true
 
                             contentItem: Text {
                                 leftPadding: rusButton.indicator && !rusButton.mirrored ? rusButton.indicator.width + rusButton.spacing : 0
@@ -1890,6 +1891,8 @@ Rectangle {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked:  {
+                                app.setLanguage("rus")
+                                quanta_settings.settings_language = "rus"
                                 rusButton.checked = true
                                 engButton.checked = false
                             }
@@ -1939,8 +1942,11 @@ Rectangle {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
+                                app.setLanguage("eng")
+                                quanta_settings.settings_language = "eng"
                                 engButton.checked = true
                                 rusButton.checked = false
+
                             }
                         }
                         HoverHandler {
@@ -1949,10 +1955,4 @@ Rectangle {
                     }
                 }
         }
-
-
-
-
 }
-
-
