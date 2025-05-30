@@ -69,6 +69,10 @@
   	<translation>Cleared garbage from 
 recovery points on</translation>
     </message>
+    <message>
+    	<source>ClearedNotify</source>
+  	<translation>Cleared</translation>
+    </message>
 
 </context>
 
@@ -160,6 +164,110 @@ recovery points on</translation>
         <source>Info</source>
         <translation>info</translation>
     </message>
+    <message>
+        <source>SpotClean</source>
+        <translation> Spot</translation>
+    </message>
+    <message>
+        <source>Clean</source>
+        <translation>cleaning</translation>
+    </message>
+    <message>
+        <source>CleanUP</source>
+        <translation>Cleaning</translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation>Output</translation>
+    </message>
+    <message>
+        <source>Logs</source>
+        <translation>  logs</translation>
+    </message>
+    <message>
+        <source>Temp</source>
+        <translation>Clearing
+temporary files</translation>
+    </message>
+    <message>
+        <source>WinSxS</source>
+        <translation>Cleaning
+WinSxS files</translation>
+    </message>
+    <message>
+        <source>WinTemp</source>
+        <translation>Clearing temporary
+WinTemp files</translation>
+    </message>
+    <message>
+        <source>FontCache</source>
+        <translation>Clearing
+font cache</translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translation>Bin clearing</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Clearing Windows
+Update Cache</translation>
+    </message>
+    <message>
+        <source>Event</source>
+        <translation>Clearing Windows
+Event Log</translation>
+    </message>
+    <message>
+        <source>Dump</source>
+        <translation>Clearing system
+error dump</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation>Clearing restore
+points</translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation>Parameters</translation>
+    </message>
+    <message>
+        <source>CleanOptions</source>
+        <translation>Cleaning options</translation>
+    </message>
+    <message>
+        <source>CleanSetup</source>
+        <translation>Configuration and setup
+of cleaning parameters</translation>
+    </message>
+    <message>
+        <source>LogControl</source>
+        <translation>Log management</translation>
+    </message>
+    <message>
+        <source>BehaviorLogs</source>
+        <translation>Managing Log Parameters
+and Behavior</translation>
+    </message>
+    <message>
+        <source>OpenFolder</source>
+        <translation>Open Folder</translation>
+    </message>
+    <message>
+        <source>RemoveLogs</source>
+        <translation>Delete logs</translation>
+    </message>
+</context>
+
+
+<context>
+    <name>AboutAppPage</name>
+    <message>
+        <source>AboutApp</source>
+        <translation>Quanta Cleaner is a powerful and user—friendly application for cleaning and optimizing your system. It helps to delete temporary files, cache, outdated data and other unnecessary items that slow down the device. The program analyzes the system status and offers recommendations for improving performance. Quanta Cleaner is suitable for both regular and advanced users, providing flexible settings and automatic modes. Using this tool allows you to speed up work, free up disk space and extend the service life of the system.</translation>
+    </message>
+
 </context>
 
 
