@@ -82,7 +82,7 @@ Rectangle {
 
             Text {
                 id: parameters_text
-                text: qsTr("Параметры")
+                text: qsTr("Parametrs")
                 color: theme.text
                 font.pixelSize: 30
                 font.bold: true
@@ -140,7 +140,7 @@ Rectangle {
                     Text {
                         id: box_1
                         color: theme.text
-                        text: qsTr("Параметры очистки")
+                        text: qsTr("CleanOptions")
                         font.pixelSize: 18
                         font.bold: true
                         font.family: cleanerFont.name
@@ -152,7 +152,7 @@ Rectangle {
                     Text {
                         id: box_1_gray
                         color: theme.text
-                        text: qsTr("Конфигурация и настройка\nпараметров очистки")
+                        text: qsTr("CleanSetup")
                         font.pixelSize: 13
                         font.bold: false
                         opacity: 0.7
@@ -191,7 +191,6 @@ Rectangle {
                                         ctx.strokeStyle = gradient;
                                         ctx.lineWidth = 3;
                                         ctx.strokeRect(1, 1, width - 2, height - 2);
-
                             }
                         }
                     }
@@ -286,7 +285,7 @@ Rectangle {
                 Text {
                     id: box_2
                     color: theme.text
-                    text: qsTr("Управление логами")
+                    text: qsTr("LogControl")
                     font.pixelSize: 18
                     font.bold: true
                     font.family: cleanerFont.name
@@ -298,7 +297,7 @@ Rectangle {
                 Text {
                     id: box_2_gray
                     color: theme.text
-                    text: qsTr("Управление параметрами и\nповедением логов")
+                    text: qsTr("BehaviorLogs")
                     font.pixelSize: 13
                     font.bold: false
                     opacity: 0.7
@@ -507,8 +506,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.topMargin: 10
                     anchors.leftMargin: 15
-                    text: qsTr("Очистка временных
-файлов")
+                    text: qsTr("Temp")
                     font.bold: true
                     color: "#66E8A3"
                     font.pixelSize: 33
@@ -543,7 +541,6 @@ Rectangle {
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             parametrs.is_temp_override = !parametrs.is_temp_override
-                            console.log(parametrs.is_temp_override)
                         }
                     }
 
@@ -650,7 +647,7 @@ Rectangle {
                         opacity: parametrs.is_temp_override ? 1 : 0
                         z: 1
                         color: "#66E8A3"
-                        text: "Инфо"
+                        text: qsTr("Info")
                         font.pixelSize: 24
                         font.family: cleanerFontRegular.name
                         font.letterSpacing: -1
@@ -751,7 +748,7 @@ Rectangle {
                             opacity: parametrs.is_temp_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Точечная"
+                            text: qsTr("SpotClean")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -776,7 +773,7 @@ Rectangle {
                             opacity: parametrs.is_temp_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "очистка"
+                           text: qsTr("Clean")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -814,7 +811,6 @@ Rectangle {
                                 anchors.fill: parent
                                 onClicked: {
                                     if (!parametrs.tempLogPopup) {
-                                        console.log("soz")
                                         parametrs.tempLogPopup = logPopupComponent.createObject(parent)
                                     }
                                     parametrs.tempLogPopup.open()
@@ -849,7 +845,7 @@ Rectangle {
                                 opacity: parametrs.is_temp_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Вывод"
+                                text: qsTr("Output")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -874,7 +870,7 @@ Rectangle {
                                 opacity: parametrs.is_temp_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "логов"
+                               text: qsTr("Logs")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -945,7 +941,7 @@ Rectangle {
                                     opacity: parametrs.is_temp_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Очистка"
+                                    text: qsTr("CleanUP")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -970,7 +966,7 @@ Rectangle {
                                     opacity: parametrs.is_temp_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -1036,7 +1032,6 @@ Rectangle {
                         onClicked: {
                             tempRadio.checked = !tempRadio.checked
                             quanta_settings.parametr_block1_active = !quanta_settings.parametr_block1_active
-                            console.log("Состояние:", tempRadio.checked)
                         }
                     }
                 }
@@ -1065,8 +1060,7 @@ Rectangle {
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка файлов
-WinSxS")
+                        text: qsTr("WinSxS")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -1100,7 +1094,6 @@ WinSxS")
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 parametrs.is_xsx_override = !parametrs.is_xsx_override
-                                console.log(parametrs.is_xsx_override)
                             }
                         }
 
@@ -1209,7 +1202,7 @@ WinSxS")
                             opacity: parametrs.is_xsx_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                            text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -1306,7 +1299,7 @@ WinSxS")
                                 opacity: parametrs.is_xsx_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -1331,7 +1324,7 @@ WinSxS")
                                 opacity: parametrs.is_xsx_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -1400,7 +1393,7 @@ WinSxS")
                                     opacity: parametrs.is_xsx_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -1425,7 +1418,7 @@ WinSxS")
                                     opacity: parametrs.is_xsx_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                   text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -1496,7 +1489,7 @@ WinSxS")
                                         opacity: parametrs.is_xsx_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -1521,7 +1514,7 @@ WinSxS")
                                         opacity: parametrs.is_xsx_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -1587,7 +1580,6 @@ WinSxS")
                             onClicked: {
                                 tempRadio2.checked = !tempRadio2.checked
                                 quanta_settings.parametr_block2_active = !quanta_settings.parametr_block2_active
-                                console.log("Состояние:", tempRadio2.checked)
                             }
                         }
                     }
@@ -1616,8 +1608,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка временных
-файлов WinTemp")
+                        text: qsTr("WinTemp")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -1651,7 +1642,6 @@ WinSxS")
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 parametrs.is_wintemp_override = !parametrs.is_wintemp_override
-                                console.log(parametrs.is_xsx_override)
                             }
                         }
 
@@ -1760,7 +1750,7 @@ WinSxS")
                             opacity: parametrs.is_wintemp_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                            text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -1857,7 +1847,7 @@ WinSxS")
                                 opacity: parametrs.is_wintemp_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -1882,7 +1872,7 @@ WinSxS")
                                 opacity: parametrs.is_wintemp_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                               text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -1951,7 +1941,7 @@ WinSxS")
                                     opacity: parametrs.is_wintemp_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -1976,7 +1966,7 @@ WinSxS")
                                     opacity: parametrs.is_wintemp_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -2047,7 +2037,7 @@ WinSxS")
                                         opacity: parametrs.is_wintemp_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -2072,7 +2062,7 @@ WinSxS")
                                         opacity: parametrs.is_wintemp_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -2138,7 +2128,6 @@ WinSxS")
                             onClicked: {
                                 tempRadio3.checked = !tempRadio3.checked
                                 quanta_settings.parametr_block3_active = !quanta_settings.parametr_block3_active
-                                console.log("Состояние:", tempRadio3.checked)
                             }
                         }
                 }
@@ -2166,8 +2155,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка кеша
-шрифтов")
+                        text: qsTr("FontCache")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -2309,7 +2297,7 @@ WinSxS")
                             opacity: parametrs.is_fonts_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                           text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -2406,7 +2394,7 @@ WinSxS")
                                 opacity: parametrs.is_fonts_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                               text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -2431,7 +2419,7 @@ WinSxS")
                                 opacity: parametrs.is_fonts_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -2500,7 +2488,7 @@ WinSxS")
                                     opacity: parametrs.is_fonts_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -2525,7 +2513,7 @@ WinSxS")
                                     opacity: parametrs.is_fonts_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -2596,7 +2584,7 @@ WinSxS")
                                         opacity: parametrs.is_fonts_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -2621,7 +2609,7 @@ WinSxS")
                                         opacity: parametrs.is_fonts_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -2687,7 +2675,6 @@ WinSxS")
                             onClicked: {
                                 tempRadio4.checked = !tempRadio4.checked
                                 quanta_settings.parametr_block4_active = !quanta_settings.parametr_block4_active
-                                console.log("Состояние:", tempRadio4.checked)
                             }
                         }
                 }
@@ -2715,7 +2702,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 30
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка корзины")
+                        text: qsTr("Bin")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -2857,7 +2844,7 @@ WinSxS")
                             opacity: parametrs.is_bin_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                           text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -2954,7 +2941,7 @@ WinSxS")
                                 opacity: parametrs.is_bin_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -2979,7 +2966,7 @@ WinSxS")
                                 opacity: parametrs.is_bin_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -3048,7 +3035,7 @@ WinSxS")
                                     opacity: parametrs.is_bin_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -3073,7 +3060,7 @@ WinSxS")
                                     opacity: parametrs.is_bin_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -3144,7 +3131,7 @@ WinSxS")
                                         opacity: parametrs.is_bin_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -3169,7 +3156,7 @@ WinSxS")
                                         opacity: parametrs.is_bin_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -3235,7 +3222,6 @@ WinSxS")
                             onClicked: {
                                 tempRadio5.checked = !tempRadio5.checked
                                 quanta_settings.parametr_block5_active = !quanta_settings.parametr_block5_active
-                                // console.log("Состояние:", tempRadio4.checked)
                             }
                         }
                 }
@@ -3263,8 +3249,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка кеша
-обновления Windows")
+                        text: qsTr("Update")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -3406,7 +3391,7 @@ WinSxS")
                             opacity: parametrs.is_update_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                            text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -3503,7 +3488,7 @@ WinSxS")
                                 opacity: parametrs.is_update_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -3528,7 +3513,7 @@ WinSxS")
                                 opacity: parametrs.is_update_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -3597,7 +3582,7 @@ WinSxS")
                                     opacity: parametrs.is_update_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -3622,7 +3607,7 @@ WinSxS")
                                     opacity: parametrs.is_update_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -3693,7 +3678,7 @@ WinSxS")
                                         opacity: parametrs.is_update_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -3718,7 +3703,7 @@ WinSxS")
                                         opacity: parametrs.is_update_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -3784,7 +3769,6 @@ WinSxS")
                             onClicked: {
                                 tempRadio6.checked = !tempRadio6.checked
                                 quanta_settings.parametr_block6_active = !quanta_settings.parametr_block6_active
-                                // console.log("Состояние:", tempRadio4.checked)
                             }
                         }
                 }
@@ -3812,8 +3796,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка журнала
-событий Windows")
+                        text: qsTr("Event")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -3955,7 +3938,7 @@ WinSxS")
                             opacity: parametrs.is_event_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                           text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -4052,7 +4035,7 @@ WinSxS")
                                 opacity: parametrs.is_event_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -4077,7 +4060,7 @@ WinSxS")
                                 opacity: parametrs.is_event_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -4146,7 +4129,7 @@ WinSxS")
                                     opacity: parametrs.is_event_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -4171,7 +4154,7 @@ WinSxS")
                                     opacity: parametrs.is_event_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -4242,7 +4225,7 @@ WinSxS")
                                         opacity: parametrs.is_event_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -4267,7 +4250,7 @@ WinSxS")
                                         opacity: parametrs.is_event_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -4355,8 +4338,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка дампа
-ошибок системы")
+                        text: qsTr("Dump")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -4498,7 +4480,7 @@ WinSxS")
                             opacity: parametrs.is_dumps_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                            text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -4595,7 +4577,7 @@ WinSxS")
                                 opacity: parametrs.is_dumps_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -4620,7 +4602,7 @@ WinSxS")
                                 opacity: parametrs.is_dumps_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -4689,7 +4671,7 @@ WinSxS")
                                     opacity: parametrs.is_dumps_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -4714,7 +4696,7 @@ WinSxS")
                                     opacity: parametrs.is_dumps_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -4785,7 +4767,7 @@ WinSxS")
                                         opacity: parametrs.is_dumps_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -4810,7 +4792,7 @@ WinSxS")
                                         opacity: parametrs.is_dumps_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -4898,8 +4880,7 @@ WinSxS")
                         anchors.left: parent.left
                         anchors.topMargin: 10
                         anchors.leftMargin: 15
-                        text: qsTr("Очистка точек
-восстановления")
+                        text: qsTr("Point")
                         font.bold: true
                         color: "#66E8A3"
                         font.pixelSize: 33
@@ -5041,7 +5022,7 @@ WinSxS")
                             opacity: parametrs.is_point_override ? 1 : 0
                             z: 1
                             color: "#66E8A3"
-                            text: "Инфо"
+                            text: qsTr("Info")
                             font.pixelSize: 24
                             font.family: cleanerFontRegular.name
                             font.letterSpacing: -1
@@ -5138,7 +5119,7 @@ WinSxS")
                                 opacity: parametrs.is_point_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "Точечная"
+                                text: qsTr("SpotClean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -5163,7 +5144,7 @@ WinSxS")
                                 opacity: parametrs.is_point_override ? 1 : 0
                                 z: 1
                                 color: "#66E8A3"
-                                text: "очистка"
+                                text: qsTr("Clean")
                                 font.pixelSize: 24
                                 font.family: cleanerFontRegular.name
                                 font.letterSpacing: -1
@@ -5232,7 +5213,7 @@ WinSxS")
                                     opacity: parametrs.is_point_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "Вывод"
+                                    text: qsTr("Output")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -5257,7 +5238,7 @@ WinSxS")
                                     opacity: parametrs.is_point_override ? 1 : 0
                                     z: 1
                                     color: "#66E8A3"
-                                    text: "логов"
+                                    text: qsTr("Logs")
                                     font.pixelSize: 24
                                     font.family: cleanerFontRegular.name
                                     font.letterSpacing: -1
@@ -5328,7 +5309,7 @@ WinSxS")
                                         opacity: parametrs.is_point_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "Очистка"
+                                        text: qsTr("CleanUP")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -5353,7 +5334,7 @@ WinSxS")
                                         opacity: parametrs.is_point_override ? 1 : 0
                                         z: 1
                                         color: "#66E8A3"
-                                        text: "логов"
+                                        text: qsTr("Logs")
                                         font.pixelSize: 24
                                         font.family: cleanerFontRegular.name
                                         font.letterSpacing: -1
@@ -5453,7 +5434,6 @@ WinSxS")
 
                 onOpened: {
                     Qt.callLater(gc)
-                    console.log("opened")
                     logsviewer.loadLogs("tempLog.txt")
                     logText.text = logsviewer.logs.length > 0 ? logsviewer.logs.join("\n") : "Файл пуст"
                 }
@@ -5644,11 +5624,9 @@ WinSxS")
          x: (parametrs.width - width) / 2
          y: (parametrs.height - height) / 2
          onOpened: {
-             console.log("oppend win")
              logsviewer.loadLogs("WinSxSCleaner.txt")
          }
          onClosed: {
-             console.log("closed")
              global_close_prm_logs.visible = false
          }
          // clip: true
@@ -5814,14 +5792,11 @@ WinSxS")
          x: (parametrs.width - width) / 2
          y: (parametrs.height - height) / 2
          onOpened: {
-             console.log("oppend wintemp")
              logsviewer.loadLogs("winTempClean.txt")
          }
          onClosed: {
-             console.log("closed")
              global_close_prm_logs.visible = false
          }
-         // clip: true
          z: 30
          exit: Transition { }
 
@@ -5984,14 +5959,11 @@ WinSxS")
           x: (parametrs.width - width) / 2
           y: (parametrs.height - height) / 2
           onOpened: {
-              console.log("oppend font cache")
               logsviewer.loadLogs("fontCache.txt")
           }
           onClosed: {
-              console.log("closed")
               global_close_prm_logs.visible = false
           }
-          // clip: true
           z: 30
           exit: Transition { }
 
@@ -7049,7 +7021,7 @@ WinSxS")
 
                        Text {
                            anchors.centerIn: parent
-                           text: qsTr("Открыть папку")
+                           text: qsTr("OpenFolder")
                            font.bold: true
                            color: theme.text
                            font.pixelSize: 24
@@ -7086,7 +7058,7 @@ WinSxS")
 
                        Text {
                            anchors.centerIn: parent
-                           text: qsTr("Удалить логи")
+                           text: qsTr("RemoveLogs")
                            font.bold: true
                            color: theme.text
                            font.pixelSize: 24
