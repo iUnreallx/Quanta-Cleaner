@@ -15,12 +15,11 @@ Rectangle {
 
     property var quantaText: "Quanta"
     property var cleanedText: ""
-    property var cleanFunctions: "Ожидание задач..."
-    property var deleteText: "Анализ очистки..."
+    property var cleanFunctions: qsTr("WaitingTask") + (app.languageVersion ? "" : "")
+    property var deleteText: qsTr("CleaningAnalysis") + (app.languageVersion ? "" : "")
 
     property bool fastRespawnProgressBar: false
     property bool resizeAnimationProgressBar: false
-
 
     onQuantaTextChanged: quanta_text.text = quantaText
 
@@ -42,9 +41,6 @@ Rectangle {
     Component.onCompleted: {
         Qt.callLater(() => initialLoadComplete = true)
     }
-
-
-
 
     Rectangle {
         id: myCheck
@@ -309,7 +305,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-
             // 0 - Fast mode, 1 - Normal mode (without time menegment), 2 - Debug Mode - with time menegment
             onClicked: (mouse) => {
                 if (isInsideRoundedRect(mouse.x, mouse.y)) {
@@ -386,15 +381,10 @@ Rectangle {
                                   }
                                   if (!quanta_settings.parametr_block9_active) {
                                       pointQ.cleanRestorePoints(0, false);
-                                  }
-                              }
-
-                                       }else {
-                               console.log("Дождитесь очистки");
-                       }
-
-                                   }
-
+                                }
+                             }
+                         }
+                     }
             }
 
             onPositionChanged: (mouse) => {
