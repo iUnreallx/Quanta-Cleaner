@@ -12,6 +12,7 @@
 - 🎯 **Custom rules** — You decide what stays and what goes.
 - 🧼 **Minimal UI, maximum clarity** — Simple and intuitive interface.
 - 🔐 **Safe by design** — Nothing gets deleted without your permission.
+- 🌍 **Localization** - Eng/Ru
 
 ---
 
