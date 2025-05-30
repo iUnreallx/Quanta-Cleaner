@@ -2,40 +2,45 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.LocalStorage 2.0
+import QtQuick.Controls.Material 2.15
+import QtQuick.Templates as T
+import QtQuick.Controls.Material.impl
 import Qt.labs.settings 1.1
 
 
-    Rectangle {
-        id: settings
-        anchors.fill: parent
-        anchors.leftMargin: 215
-        color: "#000"
+Rectangle {
+    id: settings
+    anchors.fill: parent
+    anchors.leftMargin: 215
+    color: theme.backOver
 
-        property bool animationEnabled: quanta_settings.settings_animation
-        onAnimationEnabledChanged: quanta_settings.settings_animation = animationEnabled
-        property bool reloadEnabled: quanta_settings.settings_reload
-        onReloadEnabledChanged: quanta_settings.settings_reload = reloadEnabled
-        property bool notifyEnabled: quanta_settings.settings_notify
-        onNotifyEnabledChanged: quanta_settings.settings_notify = notifyEnabled
-        property bool debugModeEnabled: quanta_settings.debugMode
-        onDebugModeEnabledChanged: quanta_settings.debugMode = debugModeEnabled
+    property bool animationEnabled: quanta_settings.settings_animation
+    onAnimationEnabledChanged: quanta_settings.settings_animation = animationEnabled
+    property bool reloadEnabled: quanta_settings.settings_reload
+    onReloadEnabledChanged: quanta_settings.settings_reload = reloadEnabled
+    property bool notifyEnabled: quanta_settings.settings_notify
+    onNotifyEnabledChanged: quanta_settings.settings_notify = notifyEnabled
+    property bool debugModeEnabled: quanta_settings.debugMode
+    onDebugModeEnabledChanged: quanta_settings.debugMode = debugModeEnabled
 
-        Component.onCompleted: {
-            Qt.callLater(() => {
-                animationSwitch.disableAnimationInit = false
-                animationSwitch.initialized = true
-                reloadSwitch.disableReloadInit = false
-                reloadSwitch.initialized = true
-                notifySwitch.disableNotifyInit = false
-                notifySwitch.initialized = true
-                debugSwitch.disableDebugInit = false
-                debugSwitch.initialized = true
+    Component.onCompleted: {
+        rusButton.checked = quanta_settings.settings_language === "rus"
+        engButton.checked = quanta_settings.settings_language === "eng"
+        Qt.callLater(() => {
+            animationSwitch.disableAnimationInit = false
+            animationSwitch.initialized = true
+            reloadSwitch.disableReloadInit = false
+            reloadSwitch.initialized = true
+            notifySwitch.disableNotifyInit = false
+            notifySwitch.initialized = true
+            debugSwitch.disableDebugInit = false
+            debugSwitch.initialized = true
             })
         }
 
         Text {
-            text: qsTr("Настройки")
-            color: "white"
+            text: qsTr("Settings") + (app.languageVersion ? "" : "")
+            color: theme.text
             font.pixelSize: 30
             font.bold: true
             anchors.top: parent.top
@@ -78,26 +83,59 @@ import Qt.labs.settings 1.1
                     property bool isButtonHover: false
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHover ? "#111111" : "black"
+                    color: isButtonHover ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainer
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent
                         Rectangle {
-                            id: rippleRect
-                            color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform
-                                origin.x: rippleRect.width / 2
-                                origin.y: rippleRect.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstance
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_1.width - x)
+                                const dy = Math.max(y, button_1.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance
+                                property: "diameter"
+                                to: rippleInstance.targetDiameter
+                                duration: 1000
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance
+                                property: "opacity"
+                                to: 0
+                                duration: 1000
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance.destroy()
                             }
                         }
                     }
@@ -108,69 +146,26 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRect.width = 2 * maxD;
-                                rippleRect.height = 2 * maxD;
-                                rippleRect.x = mx - maxD;
-                                rippleRect.y = my - maxD;
-                                scaleTransform.xScale = 0;
-                                scaleTransform.yScale = 0;
-                                rippleRect.opacity = 0.2;
-                                rippleRect.visible = true;
-                                rippleAnimation.start();
-                            }
+                        onPressed: function(mouse) {
+                              if (animationEnabled) {
+                                var ripple = rippleComponent.createObject(button_1)
+                                ripple.startAnimation(mouse.x, mouse.y)
+                              }
                         }
 
                         onExited: {
-                            rippleAnimation.stop();
-                            fadeOutAnimation.start();
-                            button_1.isButtonHover = false;
+                            button_1.isButtonHover = false
                         }
 
                         onEntered: {
-                            button_1.isButtonHover = true;
+                            button_1.isButtonHover = true
                         }
 
                         onClicked: {
                             if (containsMouse) {
-                                main_window.isOverlayVisible = true;
-                                languageDialog.open();
+                                main_window.isOverlayVisible = true
+                                languageDialog.open()
                             }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation
-                        target: scaleTransform
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform.xScale >= 1 && !mouseArea.pressed) {
-                                fadeOutAnimation.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation
-                        target: rippleRect
-                        property: "opacity"
-                        from: rippleRect.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect.visible = false;
                         }
                     }
 
@@ -181,7 +176,7 @@ import Qt.labs.settings 1.1
                         z: 1
 
                         Image {
-                            source: "assets/images/lang_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/lang_black.png"  : "assets/images/lang_white.png"
                             width: 31
                             height: 31
                             anchors.verticalCenter: parent.verticalCenter
@@ -192,15 +187,15 @@ import Qt.labs.settings 1.1
                             width: parent.width - 35
 
                             Text {
-                                text: qsTr('Язык')
-                                color: "white"
+                                text: qsTr('Language') + (app.languageVersion ? "" : "")
+                                color: theme.text
                                 font.bold: true
                                 font.pixelSize: 18
                             }
 
                             Text {
-                                text: qsTr("Русский")
-                                color: "white"
+                                text: qsTr("ThisLang") + (app.languageVersion ? "" : "")
+                                color: theme.text
                                 font.pixelSize: 14
                             }
                         }
@@ -219,26 +214,59 @@ import Qt.labs.settings 1.1
                     property bool isButtonHover2: false
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHover2 ? "#111111" : "black"
+                    color: isButtonHover2 ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainer2
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent2
                         Rectangle {
-                            id: rippleRect2
-                            color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform2
-                                origin.x: rippleRect2.width / 2
-                                origin.y: rippleRect2.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstance2
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color:  theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_2.width - x)
+                                const dy = Math.max(y, button_2.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance2
+                                property: "diameter"
+                                to: rippleInstance2.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance2.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance2
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance2.destroy()
                             }
                         }
                     }
@@ -249,68 +277,26 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
+                        onPressed: function(mouse) {
                             if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRect2.width = 2 * maxD;
-                                rippleRect2.height = 2 * maxD;
-                                rippleRect2.x = mx - maxD;
-                                rippleRect2.y = my - maxD;
-                                scaleTransform2.xScale = 0;
-                                scaleTransform2.yScale = 0;
-                                rippleRect2.opacity = 0.2;
-                                rippleRect2.visible = true;
-                                rippleAnimation2.start();
+                                var ripple = rippleComponent2.createObject(button_2)
+                                ripple.startAnimation(mouse.x, mouse.y)
                             }
                         }
 
                         onExited: {
-                            rippleAnimation2.stop();
-                            fadeOutAnimation2.start();
-                            button_2.isButtonHover2 = false;
+                            button_2.isButtonHover2 = false
                         }
 
                         onEntered: {
-                            button_2.isButtonHover2 = true;
+                            button_2.isButtonHover2 = true
                         }
 
                         onClicked: {
                             if (containsMouse) {
-                                // main_window.isOverlayVisible = true;
+                                themeDialog.open()
+                                main_window.isOverlayVisible = true
                             }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation2
-                        target: scaleTransform2
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform2.xScale >= 1 && !mouseArea2.pressed) {
-                                fadeOutAnimation2.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation2
-                        target: rippleRect2
-                        property: "opacity"
-                        from: rippleRect2.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect2.visible = false;
                         }
                     }
 
@@ -321,15 +307,15 @@ import Qt.labs.settings 1.1
                         width: parent.width - 70
 
                         Text {
-                            text: qsTr("Оформление")
-                            color: "white"
+                            text: qsTr("ThemeMode") + (app.languageVersion ? "" : "")
+                            color: theme.text
                             font.bold: true
                             font.pixelSize: 16
                         }
 
                         Text {
-                            text: qsTr("Тёмная тема")
-                            color: "white"
+                            text: quanta_settings.settings_theme === 2 ? (qsTr("DarkTheme") + (app.languageVersion ? "" : "")) : (qsTr("LightTheme") + (app.languageVersion ? "" : ""))
+                            color: theme.text
                             font.pixelSize: 12
                         }
                     }
@@ -341,7 +327,7 @@ import Qt.labs.settings 1.1
                         z: 1
 
                         Image {
-                            source: "assets/images/moon_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/moon_black.png" : "assets/images/moon_white.png"
                             width: 34
                             height: 34
                             anchors.verticalCenter: parent.verticalCenter
@@ -362,26 +348,59 @@ import Qt.labs.settings 1.1
                     property bool isButtonHover3: false
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHover3 ? "#111111" : "black"
+                    color: isButtonHover3 ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainer3
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent3
                         Rectangle {
-                            id: rippleRect3
-                            color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform3
-                                origin.x: rippleRect3.width / 2
-                                origin.y: rippleRect3.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstance3
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_3.width - x)
+                                const dy = Math.max(y, button_3.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance3
+                                property: "diameter"
+                                to: rippleInstance3.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance3.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance3
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance3.destroy()
                             }
                         }
                     }
@@ -392,53 +411,20 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            var mx = mouseX;
-                            var my = mouseY;
-                            var d1 = Math.sqrt(mx * mx + my * my);
-                            var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                            var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                            var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                            var maxD = Math.max(d1, d2, d3, d4);
-                            rippleRect3.width = 2 * maxD;
-                            rippleRect3.height = 2 * maxD;
-                            rippleRect3.x = mx - maxD;
-                            rippleRect3.y = my - maxD;
-                            scaleTransform3.xScale = 0;
-                            scaleTransform3.yScale = 0;
-                            rippleRect3.visible = true;
-                            rippleAnimation3.duration = 500;
-                            rippleAnimation3.start();
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimation.running) {
                                 settings.animationEnabled = !settings.animationEnabled
+                                var ripple = rippleComponent3.createObject(button_3)
+                                ripple.startAnimation(mouse.x, mouse.y)
                             }
                         }
 
                         onExited: {
-                            rippleAnimation3.stop();
-                            rippleRect3.visible = false;
-                            button_3.isButtonHover3 = false;
+                            button_3.isButtonHover3 = false
                         }
 
                         onEntered: {
-                            button_3.isButtonHover3 = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation3
-                        target: scaleTransform3
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform3.xScale >= 1 && !mouseArea3.pressed) {
-                                rippleRect3.visible = false;
-                            }
+                            button_3.isButtonHover3 = true
                         }
                     }
 
@@ -449,8 +435,8 @@ import Qt.labs.settings 1.1
                         width: parent.width - animationSwitch.width - 110
 
                         Text {
-                            text: qsTr("Анимации")
-                            color: "white"
+                            text: qsTr("Animations") + (app.languageVersion ? "" : "")
+                            color: theme.text
                             font.bold: true
                             font.pixelSize: 16
                         }
@@ -463,14 +449,13 @@ import Qt.labs.settings 1.1
                         anchors.verticalCenter: parent.verticalCenter
 
                         Image {
-                            source: "assets/images/star_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/star_black.png" : "assets/images/star_white.png"
                             width: 31
                             height: 31
                             anchors.left: parent.left
                             anchors.leftMargin: 22
                             anchors.verticalCenter: parent.verticalCenter
                         }
-
 
                         Switch {
                             id: animationSwitch
@@ -484,6 +469,17 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 18
                             checked: settings.animationEnabled
+
+                            MouseArea {
+                                id: mouseAreaAn
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.animationEnabled = !settings.animationEnabled
+                                  }
+                                }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -581,29 +577,61 @@ import Qt.labs.settings 1.1
                 Rectangle {
                     id: button_reload
                     property bool isButtonHoverrel: false
-
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHoverrel ? "#111111" : "black"
+                    color: isButtonHoverrel ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainerReload
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentReload
                         Rectangle {
-                            id: rippleRectReload
-                            color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformReload
-                                origin.x: rippleRectReload.width / 2
-                                origin.y: rippleRectReload.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstanceReload
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_reload.width - x)
+                                const dy = Math.max(y, button_reload.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceReload
+                                property: "diameter"
+                                to: rippleInstanceReload.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceReload.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceReload
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceReload.destroy()
                             }
                         }
                     }
@@ -614,28 +642,7 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectReload.width = 2 * maxD;
-                                rippleRectReload.height = 2 * maxD;
-                                rippleRectReload.x = mx - maxD;
-                                rippleRectReload.y = my - maxD;
-                                scaleTransformReload.xScale = 0;
-                                scaleTransformReload.yScale = 0;
-                                rippleRectReload.visible = true;
-                                rippleAnimationReload.duration = 500;
-                                rippleAnimationReload.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationReload.running) {
                                 settings.reloadEnabled = !settings.reloadEnabled
                                 if (settings.reloadEnabled) {
@@ -643,32 +650,19 @@ import Qt.labs.settings 1.1
                                 } else {
                                     app.removeFromAutostart()
                                 }
+                                  if (animationEnabled) {
+                                    var ripple = rippleComponentReload.createObject(button_reload)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                    }
                             }
                         }
 
-
                         onExited: {
-                            rippleAnimationReload.stop();
-                            rippleRectReload.visible = false;
-                            button_reload.isButtonHoverrel = false;
+                            button_reload.isButtonHoverrel = false
                         }
 
                         onEntered: {
-                            button_reload.isButtonHoverrel = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationReload
-                        target: scaleTransformReload
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformReload.xScale >= 1 && !mouseAreaReload.pressed) {
-                                rippleRectReload.visible = false;
-                            }
+                            button_reload.isButtonHoverrel = true
                         }
                     }
 
@@ -680,7 +674,7 @@ import Qt.labs.settings 1.1
                         anchors.verticalCenter: parent.verticalCenter
 
                         Image {
-                            source: "assets/images/exchange_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/exchange_black.png" : "assets/images/exchange_white.png"
                             width: 28
                             height: 28
                             anchors.verticalCenter: parent.verticalCenter
@@ -690,11 +684,11 @@ import Qt.labs.settings 1.1
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width - reloadSwitch.width - 110
                             anchors.left: parent.left
-                            anchors.leftMargin:  49
+                            anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Автозагрузка")
-                                color: "white"
+                                text: qsTr("Autoloading") + (app.languageVersion ? "" : "")
+                                color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
                             }
@@ -712,6 +706,22 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 38
                             checked: settings.reloadEnabled
+
+                            MouseArea {
+                                id: mouseAreaReload2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.reloadEnabled = !settings.reloadEnabled
+                                        if (settings.reloadEnabled) {
+                                            app.addToAutostart()
+                                        } else {
+                                            app.removeFromAutostart()
+                                        }
+                                }
+                            }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -811,26 +821,88 @@ import Qt.labs.settings 1.1
                     property bool isButtonHover5: false
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHover5 ? "#111111" : "black"
+                    color: isButtonHover5 ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainer5
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponent5
                         Rectangle {
-                            id: rippleRect5
-                            color: "white"
-                            opacity: 0.0
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransform5
-                                origin.x: rippleRect5.width / 2
-                                origin.y: rippleRect5.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstance5
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_5.width - x)
+                                const dy = Math.max(y, button_5.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstance5
+                                property: "diameter"
+                                to: rippleInstance5.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance5.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstance5
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstance5.destroy()
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        id: mouseArea5
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+
+                        onPressed: function(mouse) {
+                            if (animationEnabled) {
+                                var ripple = rippleComponent5.createObject(button_5)
+                                ripple.startAnimation(mouse.x, mouse.y)
+                            }
+                        }
+
+                        onExited: {
+                            button_5.isButtonHover5 = false
+                        }
+
+                        onEntered: {
+                            button_5.isButtonHover5 = true
+                        }
+
+                        onClicked: {
+                            if (containsMouse) {
+                                errorDialog.open()
+                                main_window.isOverlayVisible = true
                             }
                         }
                     }
@@ -842,8 +914,8 @@ import Qt.labs.settings 1.1
                         width: parent.width - 70
 
                         Text {
-                            text: qsTr("Сообщить об ошибке")
-                            color: "white"
+                            text: qsTr("Report") + (app.languageVersion ? "" : "")
+                            color: theme.text
                             font.bold: true
                             font.pixelSize: 16
                         }
@@ -856,91 +928,16 @@ import Qt.labs.settings 1.1
                         z: 1
 
                         Image {
-                            source: "assets/images/bug_white.png"
+                            source: quanta_settings.settings_theme !== 2 ?"assets/images/bug_black.png" : "assets/images/bug_white.png"
                             width: 36
                             height: 36
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
-                    MouseArea {
-                        id: mouseArea5
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        hoverEnabled: true
-
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-
-                                rippleRect5.width = 2 * maxD;
-                                rippleRect5.height = 2 * maxD;
-                                rippleRect5.x = mx - maxD;
-                                rippleRect5.y = my - maxD;
-
-                                scaleTransform5.xScale = 0;
-                                scaleTransform5.yScale = 0;
-
-                                rippleRect5.opacity = 0.2;
-                                rippleRect5.visible = true;
-
-                                rippleAnimation5.start();
-                            }
-                        }
-
-                        onExited: {
-                            rippleAnimation5.stop();
-                            fadeOutAnimation5.start();
-                            button_5.isButtonHover5 = false;
-                        }
-
-                        onEntered: {
-                            button_5.isButtonHover5 = true;
-                        }
-
-                        onClicked: {
-                            if (containsMouse) {
-                                //
-                            }
-                        }
-                    }
-
                     HoverHandler {
                         id: hoverHandler5
                         onHoveredChanged: button_5.isButtonHover5 = hoverHandler5.hovered
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimation5
-                        target: scaleTransform5
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        duration: 500
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransform5.xScale >= 1 && !mouseArea5.pressed) {
-                                fadeOutAnimation5.start();
-                            }
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: fadeOutAnimation5
-                        target: rippleRect5
-                        property: "opacity"
-                        from: rippleRect5.opacity
-                        to: 0
-                        duration: 300
-                        onStopped: {
-                            rippleRect5.visible = false;
-                        }
                     }
                 }
 
@@ -949,29 +946,61 @@ import Qt.labs.settings 1.1
                 Rectangle {
                     id: button_notify
                     property bool isButtonHoverNotify: false
-
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHoverNotify ? "#111111" : "black"
+                    color: isButtonHoverNotify ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainerNotify
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentNotify
                         Rectangle {
-                            id: rippleRectNotify
-                            color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformNotify
-                                origin.x: rippleRectNotify.width / 2
-                                origin.y: rippleRectNotify.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstanceNotify
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                           color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_notify.width - x)
+                                const dy = Math.max(y, button_notify.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceNotify
+                                property: "diameter"
+                                to: rippleInstanceNotify.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceNotify.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceNotify
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceNotify.destroy()
                             }
                         }
                     }
@@ -982,56 +1011,18 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectNotify.width = 2 * maxD;
-                                rippleRectNotify.height = 2 * maxD;
-                                rippleRectNotify.x = mx - maxD;
-                                rippleRectNotify.y = my - maxD;
-                                scaleTransformNotify.xScale = 0;
-                                scaleTransformNotify.yScale = 0;
-                                rippleRectNotify.visible = true;
-                                rippleAnimationNotify.duration = 500;
-                                rippleAnimationNotify.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationNotify.running) {
                                 settings.notifyEnabled = !settings.notifyEnabled
+                                if (animationEnabled) {
+                                    var ripple = rippleComponentNotify.createObject(button_notify)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                }
                             }
                         }
 
-                        onExited: {
-                            rippleAnimationNotify.stop();
-                            rippleRectNotify.visible = false;
-                            button_notify.isButtonHoverNotify = false;
-                        }
-
-                        onEntered: {
-                            button_notify.isButtonHoverNotify = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationNotify
-                        target: scaleTransformNotify
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformNotify.xScale >= 1 && !mouseAreaNotify.pressed) {
-                                rippleRectNotify.visible = false;
-                            }
-                        }
+                        onExited: button_notify.isButtonHoverNotify = false
+                        onEntered: button_notify.isButtonHoverNotify = true
                     }
 
                     Row {
@@ -1042,7 +1033,7 @@ import Qt.labs.settings 1.1
                         anchors.verticalCenter: parent.verticalCenter
 
                         Image {
-                            source: "assets/images/cpu_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/cpu_black.png" : "assets/images/cpu_white.png"
                             width: 28
                             height: 31
                             anchors.verticalCenter: parent.verticalCenter
@@ -1055,8 +1046,8 @@ import Qt.labs.settings 1.1
                             anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Расположение уведомлений")
-                                color: "white"
+                                text: qsTr("Notification") + (app.languageVersion ? "" : "")
+                                color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
                             }
@@ -1074,6 +1065,18 @@ import Qt.labs.settings 1.1
                             anchors.right: parent.right
                             anchors.rightMargin: 38
                             checked: settings.notifyEnabled
+
+                            MouseArea {
+                                id: mouseAreaNotify2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                hoverEnabled: true
+
+                                onReleased: function(mouse) {
+                                        settings.notifyEnabled = !settings.notifyEnabled
+
+                              }
+                            }
 
                             Rectangle {
                                 anchors.fill: parent
@@ -1173,26 +1176,59 @@ import Qt.labs.settings 1.1
                     property bool isButtonHoverDebug: false
                     width: columnContainer.width
                     height: 65
-                    color: isButtonHoverDebug ? "#111111" : "black"
+                    color: isButtonHoverDebug ? theme.backOverHover : theme.backOver
                     clip: true
 
-                    Item {
-                        id: rippleContainerDebug
-                        anchors.fill: parent
-                        z: 0
-
+                    Component {
+                        id: rippleComponentDebug
                         Rectangle {
-                            id: rippleRectDebug
-                            color: "white"
-                            opacity: 0.2
-                            visible: false
-                            radius: width / 2
-                            transform: Scale {
-                                id: scaleTransformDebug
-                                origin.x: rippleRectDebug.width / 2
-                                origin.y: rippleRectDebug.height / 2
-                                xScale: 0
-                                yScale: 0
+                            id: rippleInstanceDebug
+                            z: 5
+                            property real diameter: 0
+                            property real pressX: 0
+                            property real pressY: 0
+                            property real targetDiameter: 0
+                            opacity: 0.3
+                            visible: diameter > 0
+
+                            x: pressX - diameter / 2
+                            y: pressY - diameter / 2
+                            width: diameter
+                            height: diameter
+                            radius: diameter / 2
+                            color: theme.backOverRipple
+
+                            function startAnimation(x, y) {
+                                pressX = x
+                                pressY = y
+                                const dx = Math.max(x, button_debug_mode.width - x)
+                                const dy = Math.max(y, button_debug_mode.height - y)
+                                const maxDist = Math.sqrt(dx * dx + dy * dy)
+                                targetDiameter = maxDist * 2.5
+                                diameter = 0
+                                opacity = 0.3
+                                animDiameter.start()
+                                animOpacity.start()
+                            }
+
+                            PropertyAnimation {
+                                id: animDiameter
+                                target: rippleInstanceDebug
+                                property: "diameter"
+                                to: rippleInstanceDebug.targetDiameter
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceDebug.diameter = 0
+                            }
+
+                            PropertyAnimation {
+                                id: animOpacity
+                                target: rippleInstanceDebug
+                                property: "opacity"
+                                to: 0
+                                duration: 1100
+                                easing.type: Easing.OutQuad
+                                onStopped: rippleInstanceDebug.destroy()
                             }
                         }
                     }
@@ -1203,56 +1239,18 @@ import Qt.labs.settings 1.1
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onPressed: {
-                            if (animationEnabled) {
-                                var mx = mouseX;
-                                var my = mouseY;
-                                var d1 = Math.sqrt(mx * mx + my * my);
-                                var d2 = Math.sqrt(mx * mx + (parent.height - my) * (parent.height - my));
-                                var d3 = Math.sqrt((parent.width - mx) * (parent.width - mx) + my * my);
-                                var d4 = Math.sqrt((parent.width - mx) * (parent.width - mx) + (parent.height - my) * (parent.height - my));
-                                var maxD = Math.max(d1, d2, d3, d4);
-                                rippleRectDebug.width = 2 * maxD;
-                                rippleRectDebug.height = 2 * maxD;
-                                rippleRectDebug.x = mx - maxD;
-                                rippleRectDebug.y = my - maxD;
-                                scaleTransformDebug.xScale = 0;
-                                scaleTransformDebug.yScale = 0;
-                                rippleRectDebug.visible = true;
-                                rippleAnimationDebug.duration = 500;
-                                rippleAnimationDebug.start();
-                            }
-                        }
-
-                        onReleased: {
+                        onReleased: function(mouse) {
                             if (containsMouse && !bounceAnimationDebug.running) {
                                 settings.debugModeEnabled = !settings.debugModeEnabled
+                                if (animationEnabled) {
+                                    var ripple = rippleComponentDebug.createObject(button_debug_mode)
+                                    ripple.startAnimation(mouse.x, mouse.y)
+                                }
                             }
                         }
 
-                        onExited: {
-                            rippleAnimationDebug.stop();
-                            rippleRectDebug.visible = false;
-                            button_debug_mode.isButtonHoverDebug = false;
-                        }
-
-                        onEntered: {
-                            button_debug_mode.isButtonHoverDebug = true;
-                        }
-                    }
-
-                    NumberAnimation {
-                        id: rippleAnimationDebug
-                        target: scaleTransformDebug
-                        properties: "xScale,yScale"
-                        from: 0
-                        to: 1
-                        easing.type: Easing.OutQuad
-                        onStopped: {
-                            if (scaleTransformDebug.xScale >= 1 && !mouseAreaDebug.pressed) {
-                                rippleRectDebug.visible = false;
-                            }
-                        }
+                        onExited: button_debug_mode.isButtonHoverDebug = false
+                        onEntered: button_debug_mode.isButtonHoverDebug = true
                     }
 
                     Row {
@@ -1263,7 +1261,7 @@ import Qt.labs.settings 1.1
                         anchors.verticalCenter: parent.verticalCenter
 
                         Image {
-                            source: "assets/images/fire_white.png"
+                            source: quanta_settings.settings_theme !== 2 ? "assets/images/fire_black.png" : "assets/images/fire_white.png"
                             width: 31
                             height: 31
                             anchors.verticalCenter: parent.verticalCenter
@@ -1276,8 +1274,8 @@ import Qt.labs.settings 1.1
                             anchors.leftMargin: 49
 
                             Text {
-                                text: qsTr("Режим откладки")
-                                color: "white"
+                                text: qsTr("Debug") + (app.languageVersion ? "" : "")
+                                color: theme.text
                                 font.bold: true
                                 font.pixelSize: 16
                             }
@@ -1304,6 +1302,17 @@ import Qt.labs.settings 1.1
                                 border.width: 2
                             }
 
+                            MouseArea {
+                                id: mouseAreaDebug2
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onReleased: function(mouse) {
+                                        settings.debugModeEnabled = !settings.debugModeEnabled
+                                    }
+                                }
+
+
                             indicator: Rectangle {
                                 color: "transparent"
                                 border.color: "transparent"
@@ -1313,6 +1322,8 @@ import Qt.labs.settings 1.1
                                 id: hoverHandlerDebug
                                 onHoveredChanged: debugSwitch.isHover = hovered
                             }
+
+
 
                             Rectangle {
                                 id: debug_animation
@@ -1385,12 +1396,563 @@ import Qt.labs.settings 1.1
                         id: hoverHandlerDebugMode
                         onHoveredChanged: button_debug_mode.isButtonHoverDebug = hoverHandlerDebugMode.hovered
                     }
-
-
                 }
+
+
             }
         }
     }
+
+
+
+
+
+        Popup {
+            id:  errorDialog
+            focus: true
+            width: 500
+            height: 200
+            z: 22
+            x: (parent.width - width) / 2 - 100
+            y: (parent.height - height) / 2
+            onClosed: main_window.isOverlayVisible = false
+
+            background: Rectangle {
+                color: "transparent"
+            }
+
+            Rectangle {
+                width: 24
+                height: 24
+                color: theme.button
+                anchors.right: parent.right
+                anchors.rightMargin: 17
+                anchors.top: parent.top
+                anchors.topMargin: 12
+                radius: 10
+                z: 2
+                Image {
+                    source: "assets/images/parametrs/cross.png"
+                    anchors.centerIn: parent
+                    width: parent.width - 2
+                    height: parent.height - 2
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main_window.isOverlayVisible = false
+                        errorDialog.visible = false
+                    }
+                }
+            }
+
+
+
+
+            Rectangle {
+                anchors.fill: parent
+                color: theme.background
+                radius: 30
+
+                Canvas {
+                    id: gradientText1
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: -65
+                    width: 500
+                    height: 50
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+
+                        var gradient = ctx.createLinearGradient(0, 0, width, 0)
+                        gradient.addColorStop(0, "#FF0000")
+                        gradient.addColorStop(1, "#FF8888")
+
+                        ctx.font = "bold 33px '" + cleanerFont.name + "'"
+                        ctx.fillStyle = gradient
+                        ctx.textAlign = "center"
+                        ctx.textBaseline = "middle"
+                        ctx.fillText(qsTr("FindError"), width / 2, height / 2)
+                    }
+
+                    onWidthChanged: requestPaint()
+                    onHeightChanged: requestPaint()
+                }
+
+                Canvas {
+                    id: gradientText2
+                    anchors.centerIn: parent
+                    anchors.verticalCenterOffset: -20
+                    width: 500
+                    height: 50
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+
+                        var gradient = ctx.createLinearGradient(0, 0, width, 0)
+                        gradient.addColorStop(0, "#FF0000")
+                        gradient.addColorStop(1, "#FF8888")
+
+                        ctx.font = "bold 33px '" + cleanerFont.name + "'"
+                        ctx.fillStyle = gradient
+                        ctx.textAlign = "center"
+                        ctx.textBaseline = "middle"
+                        ctx.fillText(qsTr("Support"), width / 2, height / 2)
+                    }
+
+                    onWidthChanged: requestPaint()
+                    onHeightChanged: requestPaint()
+                }
+
+
+                Rectangle {
+                    id: tme
+                    property bool tme_hovered: false
+                    width: 295
+                    height: 57
+                    color: tme_hovered  ? theme.hover : theme.button
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 25
+                    anchors.bottomMargin: 25
+                    radius: 10
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: qsTr("t.me//unreallx")
+                        font.bold: true
+                        color: theme.text
+                        font.pixelSize: 35
+                        font.family: cleanerFont.name
+                        opacity: 0.8
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                ClipboardHelper.copyText("t.me//unreallx")
+                                main_window.addNotification(qsTr("Copied") + (app.languageVersion ? "" : ""))
+                            }
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: tme.tme_hovered = hovered
+                    }
+                }
+
+                Rectangle {
+                    id: clipboard
+                    property bool  clip_hovered: false
+                    width: 57
+                    height: 57
+                    color: clip_hovered  ? theme.hover : theme.button
+                    radius: 10
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.rightMargin: 90
+                    anchors.bottomMargin: 25
+
+                    Image {
+                        width: 50
+                        height: 50
+                        anchors.centerIn: parent
+                        anchors.verticalCenterOffset: -3
+                        source: quanta_settings.settings_theme === 2 ? "assets/images/clipboard_white.png" : "assets/images/clipboard_black.png"
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: clipboard.clip_hovered = hovered
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                ClipboardHelper.copyText("t.me//unreallx")
+                                main_window.addNotification(qsTr("Copied") + (app.languageVersion ? "" : ""))
+                            }
+                    }
+                }
+
+                Rectangle {
+                    id: browser_img
+                    property bool browser_hovered: false
+                    width: 57
+                    height: 57
+                    color:  browser_hovered  ? theme.hover : theme.button
+                    radius: 10
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.rightMargin: 25
+                    anchors.bottomMargin: 25
+                    Image {
+                        width: 50
+                        height: 50
+                        anchors.centerIn: parent
+                        anchors.verticalCenterOffset: -1
+                        source: quanta_settings.settings_theme === 2 ? "assets/images/browser_white.png" : "assets/images/browser_black.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                                Qt.openUrlExternally("https://t.me/unreallx")
+                            }
+                    }
+
+                    HoverHandler {
+                        onHoveredChanged: browser_img.browser_hovered = hovered
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        Popup {
+            id: themeDialog
+            modal: true
+            focus: true
+            dim: false
+            width: 400
+            height: 240
+            z: 22
+            x: (parent.width - width) / 2 - 100
+            y: (parent.height - height) / 2
+            onClosed: main_window.isOverlayVisible = false
+            background: Rectangle {
+                color: "transparent"
+            }
+
+            Rectangle {
+                width: 25
+                height: 25
+                color:  theme.button
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                anchors.top: parent.top
+                anchors.topMargin: 8
+                radius: 10
+                z: 2
+                Image {
+                    source: "assets/images/parametrs/cross.png"
+                    anchors.centerIn: parent
+                    width: parent.width - 2
+                    height: parent.height - 2
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main_window.isOverlayVisible = false
+                        themeDialog.visible = false
+                    }
+                }
+            }
+
+
+            Rectangle {
+                anchors.fill: parent
+                color: theme.background
+                radius: 25
+
+                    Text {
+                        anchors.top: parent.top
+                        anchors.topMargin: 5
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("ChooseThemeMode") + (app.languageVersion ? "" : "")
+                        color: theme.text
+                        font.pixelSize: 20
+                        font.bold: true
+                    }
+
+                    ButtonGroup {
+                        id: buttonGroupTheme
+                    }
+
+                    //white theme
+                    Rectangle {
+                        id: whiteThemeRec
+                        property bool whiteThemeRec_hovered: false
+                        width: 325
+                        height: 70
+                        color: whiteThemeRec_hovered  ? theme.hover : theme.button
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.leftMargin: 25
+                        anchors.topMargin: 40
+                        radius: 10
+
+                        RadioButton {
+                            id: whiteButton
+                            anchors.centerIn: parent
+                            text: qsTr("LightTheme") + (app.languageVersion ? "" : "")
+                            font.pixelSize: 20
+                            font.bold: true
+                            scale: 1.1
+                            checked: quanta_settings.settings_theme === 1
+
+                            contentItem: Text {
+                                leftPadding: whiteButton.indicator && !whiteButton.mirrored ? whiteButton.indicator.width + whiteButton.spacing : 0
+                                rightPadding: whiteButton.indicator && whiteButton.mirrored ? whiteButton.indicator.width +whiteButton.spacing : 0
+
+                                text: whiteButton.text
+                                font: whiteButton.font
+                                color: theme.text
+                                elide: Text.ElideRight
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                            indicator: RadioIndicator {
+                                    control: whiteButton
+                                    y: 16
+                                    x: 5
+                                }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked:  {
+                                whiteButton.checked = true
+                                darkButton.checked = false
+                                quanta_settings.settings_theme = 1
+                                applyTheme()
+                            }
+                        }
+                        HoverHandler {
+                            onHoveredChanged: whiteThemeRec.whiteThemeRec_hovered = hovered
+                        }
+                    }
+
+                    //dark theme
+                    Rectangle {
+                        id: darkThemeRec
+                        property bool darkThemeRec_hovered: false
+                        width: 325
+                        height: 70
+                        color: darkThemeRec_hovered ? theme.hover : theme.button
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: 25
+                        anchors.bottomMargin: 25
+                        radius: 10
+
+                        RadioButton {
+                            id: darkButton
+                            anchors.centerIn: parent
+                            text: qsTr("DarkTheme") + (app.languageVersion ? "" : "")
+                            font.pixelSize: 20
+                            font.bold: true
+                            scale: 1.1
+                            checked: quanta_settings.settings_theme === 2
+                            contentItem: Text {
+                                leftPadding: darkButton.indicator && !darkButton.mirrored ? darkButton.indicator.width + darkButton.spacing : 0
+                                rightPadding: darkButton.indicator && darkButton.mirrored ? darkButton.indicator.width + darkButton.spacing : 0
+                                text: darkButton.text
+                                font: darkButton.font
+                                color: theme.text
+                                elide: Text.ElideRight
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                            indicator: RadioIndicator {
+                                    control: darkButton
+                                    y: 16
+                                    x: 5
+                                }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                darkButton.checked = true
+                                whiteButton.checked = false
+                                quanta_settings.settings_theme = 2
+                                applyTheme()
+                            }
+                        }
+                        HoverHandler {
+                            onHoveredChanged: darkThemeRec.darkThemeRec_hovered = hovered
+                        }
+                    }
+                }
+        }
+
+
+
+
+
+
+        Popup {
+            id: languageDialog
+            dim: false
+            modal: true
+            focus: true
+            width: 400
+            height: 240
+            z: 22
+            x: (parent.width - width) / 2 - 100
+            y: (parent.height - height) / 2
+            onClosed: main_window.isOverlayVisible = false
+            background: Rectangle {
+                color: "transparent"
+            }
+
+            Rectangle {
+                width: 25
+                height: 25
+                color:  theme.button
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                anchors.top: parent.top
+                anchors.topMargin: 8
+                radius: 10
+                z: 2
+                Image {
+                    source: "assets/images/parametrs/cross.png"
+                    anchors.centerIn: parent
+                    width: parent.width - 2
+                    height: parent.height - 2
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main_window.isOverlayVisible = false
+                        languageDialog.visible = false
+                    }
+                }
+            }
+
+
+
+            Rectangle {
+                anchors.fill: parent
+                color: theme.background
+                radius: 25
+
+                    Text {
+                        anchors.top: parent.top
+                        anchors.topMargin: 5
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("ChooseLang") + (app.languageVersion ? "" : "")
+                        color: theme.text
+                        font.pixelSize: 20
+                        font.bold: true
+                    }
+
+                    // ButtonGroup {
+                    //     id: buttonGroupLanguage
+                    // }
+
+                    Rectangle {
+                        id: rusLangRec
+                        property bool rusLangRec_hovered: false
+                        width: 325
+                        height: 70
+                        color: rusLangRec_hovered  ? theme.hover : theme.button
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.leftMargin: 25
+                        anchors.topMargin: 40
+                        radius: 10
+
+                        RadioButton {
+                            id: rusButton
+                            anchors.centerIn: parent
+                            text: "Русский"
+                            font.pixelSize: 20
+                            font.bold: true
+                            scale: 1.1
+
+                            contentItem: Text {
+                                leftPadding: rusButton.indicator && !rusButton.mirrored ? rusButton.indicator.width + rusButton.spacing : 0
+                                rightPadding: rusButton.indicator && rusButton.mirrored ? rusButton.indicator.width + rusButton.spacing : 0
+
+                                text: rusButton.text
+                                font: rusButton.font
+                                color: theme.text
+                                elide: Text.ElideRight
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                            indicator: RadioIndicator {
+                                    control: rusButton
+                                    y: 16
+                                    x: 5
+                                }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked:  {
+                                app.setLanguage("rus")
+                                quanta_settings.settings_language = "rus"
+                                rusButton.checked = true
+                                engButton.checked = false
+                            }
+                        }
+                        HoverHandler {
+                            onHoveredChanged: rusLangRec.rusLangRec_hovered = hovered
+                        }
+                    }
+
+                    Rectangle {
+                        id: engLangRec
+                        property bool engLangRec_hovered: false
+                        width: 325
+                        height: 70
+                        color: engLangRec_hovered ? theme.hover : theme.button
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: 25
+                        anchors.bottomMargin: 25
+                        radius: 10
+
+                        RadioButton {
+                            id: engButton
+                            anchors.centerIn: parent
+                            text: "English"
+                            font.pixelSize: 20
+                            font.bold: true
+                            scale: 1.1
+                            contentItem: Text {
+                                leftPadding: engButton.indicator && !engButton.mirrored ? engButton.indicator.width + engButton.spacing : 0
+                                rightPadding: engButton.indicator && engButton.mirrored ? engButton.indicator.width + engButton.spacing : 0
+                                text: engButton.text
+                                font: engButton.font
+                                color: theme.text
+                                elide: Text.ElideRight
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                            indicator: RadioIndicator {
+                                control: engButton
+                                y: 16
+                                x: 5
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                app.setLanguage("eng")
+                                quanta_settings.settings_language = "eng"
+                                engButton.checked = true
+                                rusButton.checked = false
+
+                            }
+                        }
+                        HoverHandler {
+                            onHoveredChanged: engLangRec.engLangRec_hovered = hovered
+                        }
+                    }
+                }
+        }
 }
-
-

@@ -1,6 +1,7 @@
 D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/appQuantaCleaner_autogen/W6M2ZRSKWP/moc_appcontroller.cpp: D:/qt_apps/QuantaCleaner/Src/Header/appcontroller.h \
   D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/appQuantaCleaner_autogen/moc_predefs.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/QObject \
+  D:/Qt/6.6.3/mingw_64/include/QtCore/QTranslator \
   D:/Qt/6.6.3/mingw_64/include/QtCore/q20functional.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/q20memory.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/q20type_traits.h \
@@ -85,6 +86,7 @@ D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/appQuantaCl
   D:/Qt/6.6.3/mingw_64/include/QtCore/qtmetamacros.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/qtnoop.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/qtpreprocessorsupport.h \
+  D:/Qt/6.6.3/mingw_64/include/QtCore/qtranslator.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/qtresource.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/qttranslation.h \
   D:/Qt/6.6.3/mingw_64/include/QtCore/qttypetraits.h \

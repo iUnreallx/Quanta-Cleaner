@@ -306,9 +306,11 @@ CMakeFiles/appQuantaCleaner.dir/Src/Source/appcontroller.cpp.obj: \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/chrono \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ratio \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ctime \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QTranslator \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qtranslator.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qobject.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QSettings \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qsettings.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qobject.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qvariant.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qdebug.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtextstream.h \
@@ -330,4 +332,6 @@ CMakeFiles/appQuantaCleaner.dir/Src/Source/appcontroller.cpp.obj: \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qeventloop.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qnativeinterface.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication.h
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QDebug \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qdebug.h

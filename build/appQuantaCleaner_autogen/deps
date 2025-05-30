@@ -29,6 +29,8 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QProcess \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QString \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QStringList \
+	D:/Qt/6.6.3/mingw_64/include/QtCore/QTranslator \
+	D:/Qt/6.6.3/mingw_64/include/QtCore/QUrl \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QVariant \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QtCore \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/QtCoreDepends \
@@ -283,6 +285,19 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/qxmlstream.h \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/qxpfunctional.h \
 	D:/Qt/6.6.3/mingw_64/include/QtCore/qxptype_traits.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/QClipboard \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/QDesktopServices \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/QGuiApplication \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qclipboard.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qdesktopservices.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qguiapplication.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qinputmethod.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qtgui-config.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qtguiexports.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qtguiglobal.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qwindowdefs.h \
+	D:/Qt/6.6.3/mingw_64/include/QtGui/qwindowdefs_win.h \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6/FindWrapAtomic.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6/FindWrapVulkanHeaders.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6/Qt6Config.cmake \
@@ -431,6 +446,15 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets-relwithdebinfo.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsAdditionalTargetInfo.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfig.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfigVersion.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfigVersionImpl.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsDependencies.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsTargets-relwithdebinfo.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsTargets.cmake \
+	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsVersionlessTargets.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake \
@@ -917,23 +941,6 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Quick/Qt6QuickTargets-relwithdebinfo.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Quick/Qt6QuickTargets.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Quick/Qt6QuickVersionlessTargets.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsAdditionalTargetInfo.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsConfig.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsConfigVersion.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsConfigVersionImpl.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsDependencies.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsTargets-relwithdebinfo.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsTargets.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderTools/Qt6ShaderToolsVersionlessTargets.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsMacros.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsAdditionalTargetInfo.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsConfig.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsConfigVersion.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsConfigVersionImpl.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsDependencies.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsTargets-relwithdebinfo.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsTargets.cmake \
-	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ShaderToolsTools/Qt6ShaderToolsToolsVersionlessTargets.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateAdditionalTargetInfo.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfig.cmake \
 	D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersion.cmake \
@@ -947,6 +954,7 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake \
+	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeParseArguments.cmake \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeRCInformation.cmake \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake \
 	D:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake \
@@ -1431,12 +1439,14 @@ appQuantaCleaner_autogen/timestamp: \
 	D:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wtypes.h \
 	D:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wtypesbase.h \
 	D:/qt_apps/QuantaCleaner/CMakeLists.txt \
+	D:/qt_apps/QuantaCleaner/Src/Header/ClipboardHelper.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/LogsViewer.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/appcontroller.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/crashdump.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/eventlog.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/fontcache.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/isAdminChecked.h \
+	D:/qt_apps/QuantaCleaner/Src/Header/openFolder.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/point.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/recyclebincleaner.h \
 	D:/qt_apps/QuantaCleaner/Src/Header/tempcleaner.h \

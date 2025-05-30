@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 
 Button {
@@ -18,7 +17,7 @@ Button {
             text: button.text
             font.pixelSize: 27
             font.bold: true
-            color: isActive ? "#d4b726" : "white"
+            color: isActive ? (quanta_settings.settings_theme === 2 ? "#d4b726" :  "#054300") : theme.text
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: isHovered ? -15 : -10

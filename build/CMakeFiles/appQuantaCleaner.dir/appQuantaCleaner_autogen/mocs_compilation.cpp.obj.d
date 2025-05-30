@@ -1,7 +1,7 @@
 CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.obj: \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\mocs_compilation.cpp \
- D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_LogsViewer.cpp \
- D:/qt_apps/QuantaCleaner/Src/Header/LogsViewer.h \
+ D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_ClipboardHelper.cpp \
+ D:/qt_apps/QuantaCleaner/Src/Header/ClipboardHelper.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QObject \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qobject.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qobjectdefs.h \
@@ -307,13 +307,54 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/chrono \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ratio \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ctime \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/QGuiApplication \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qguiapplication.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qtguiglobal.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qtgui-config.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qtguiexports.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreevent.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qeventloop.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qobject.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qnativeinterface.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qdebug.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qtextstream.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qstringconverter_base.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcontiguouscache.h \
+ D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/climits \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qsharedpointer.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qshareddata.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qmap.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qshareddata_impl.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qset.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qhash.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qvarlengtharray.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qwindowdefs.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qwindowdefs_win.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qinputmethod.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qlocale.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qvariant.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/q23utility.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qpoint.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qsize.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qmargins.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qguiapplication.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/QClipboard \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qclipboard.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qtmochelpers.h \
+ D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_LogsViewer.cpp \
+ D:/qt_apps/QuantaCleaner/Src/Header/LogsViewer.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QString \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qstring.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QStringList \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qstringlist.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qtmochelpers.h \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_appcontroller.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/appcontroller.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QTranslator \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qtranslator.h \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_crashdump.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/crashdump.h \
  D:/Qt/6.6.3/mingw_64/include/QtConcurrent/QtConcurrent \
@@ -329,25 +370,8 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/6.6.3/mingw_64/include/QtCore/q23functional.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/q23utility.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstractanimation.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qobject.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstracteventdispatcher.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qeventloop.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstractitemmodel.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qhash.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qvariant.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qdebug.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qtextstream.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qstringconverter_base.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qcontiguouscache.h \
- D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/climits \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qsharedpointer.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qshareddata.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qmap.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qshareddata_impl.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qset.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qvarlengtharray.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/q23utility.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstractnativeeventfilter.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstractproxymodel.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qabstractitemmodel.h \
@@ -361,10 +385,6 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/6.6.3/mingw_64/include/QtCore/qdeadlinetimer.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qelapsedtimer.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtsan_impl.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreevent.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qnativeinterface.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qarraydata.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qarraydataops.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qarraydatapointer.h \
@@ -384,7 +404,6 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/6.6.3/mingw_64/include/QtCore/qbytearrayview.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qcache.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qcalendar.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qlocale.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qcborarray.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qcborvalue.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qdatetime.h \
@@ -521,7 +540,6 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/6.6.3/mingw_64/include/QtCore/qversionnumber.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtyperevision.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qline.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qpoint.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qlist.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qlocale.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qlockfile.h \
@@ -581,8 +599,6 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/random.tcc \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qreadwritelock.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qrect.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qmargins.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qsize.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qrefcount.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qregularexpression.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qresource.h \
@@ -722,7 +738,6 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtmetamacros.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtnoop.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtpreprocessorsupport.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qtranslator.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtransposeproxymodel.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtresource.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qttranslation.h \
@@ -930,6 +945,12 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/qt_apps/QuantaCleaner/Src/Header/eventlog.h \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_fontcache.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/fontcache.h \
+ D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_openFolder.cpp \
+ D:/qt_apps/QuantaCleaner/Src/Header/openFolder.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QDir \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/QDesktopServices \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qdesktopservices.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QUrl \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_point.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/point.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QProcess \
@@ -941,6 +962,5 @@ CMakeFiles/appQuantaCleaner.dir/appQuantaCleaner_autogen/mocs_compilation.cpp.ob
  D:/qt_apps/QuantaCleaner/Src/Header/winsxscleaner.h \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_wintempclean.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/wintempclean.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/QDir \
  D:\qt_apps\QuantaCleaner\build\Desktop_Qt_6_6_3_MinGW_64_bit-Release\appQuantaCleaner_autogen\W6M2ZRSKWP/moc_winupdatecache.cpp \
  D:/qt_apps/QuantaCleaner/Src/Header/winupdatecache.h

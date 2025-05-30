@@ -970,4 +970,11 @@ CMakeFiles/appQuantaCleaner.dir/main.cpp.obj: \
  D:\qt_apps\QuantaCleaner\Src/Header/crashdump.h \
  D:\qt_apps\QuantaCleaner\Src/Header/point.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/QProcess \
- D:\qt_apps\QuantaCleaner\Src/Header/appcontroller.h
+ D:\qt_apps\QuantaCleaner\Src/Header/appcontroller.h \
+ D:\qt_apps\QuantaCleaner\Src/Header/ClipboardHelper.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/QClipboard \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qclipboard.h \
+ D:\qt_apps\QuantaCleaner\Src/Header/openFolder.h \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/QDesktopServices \
+ D:/Qt/6.6.3/mingw_64/include/QtGui/qdesktopservices.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/QUrl

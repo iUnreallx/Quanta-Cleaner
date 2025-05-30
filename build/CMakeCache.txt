@@ -328,6 +328,9 @@ Qt6GuiTools_DIR:PATH=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6GuiTools
 //The directory containing a CMake configuration file for Qt6Gui.
 Qt6Gui_DIR:PATH=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Gui
 
+//The directory containing a CMake configuration file for Qt6LinguistTools.
+Qt6LinguistTools_DIR:PATH=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools
+
 //The directory containing a CMake configuration file for Qt6Network.
 Qt6Network_DIR:PATH=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Network
 
@@ -1274,5 +1277,6 @@ Vulkan_LIBRARY-ADVANCED:INTERNAL=1
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/QuantaCleaner
+_Qt6_LINGUIST_TOOLS_DIR:INTERNAL=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6LinguistTools
 __qt_qml_macros_module_base_dir:INTERNAL=D:/Qt/6.6.3/mingw_64/lib/cmake/Qt6Qml
 

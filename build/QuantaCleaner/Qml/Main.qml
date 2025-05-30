@@ -1,3 +1,4 @@
+// Main.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
@@ -7,7 +8,6 @@ import QtCore
 
 ApplicationWindow {
     id: main_window
-    Material.theme: Material.DeepOrange
     title: "Quanta"
     visible: true
     color: "black"
@@ -16,12 +16,31 @@ ApplicationWindow {
     minimumWidth: 500
     minimumHeight: 400
     font.family: cleanerFont.name
+    Material.theme: Material.Dark
 
+    // Properties
     property bool isOverlayVisible: false
     property bool tmphover_close: false
-    property var last_symbol_of_functions: ""
+    property string currentPage: "MainPage.qml"
+    property string last_symbol_of_functions: ""
+    property string quantaTextGlobal: "Quanta"
+    property string cleanFuncGlobal: ""
+    property var clearedNotify: qsTr("ClearedNotify") + (app.languageVersion ? "" : "")
+    property var cleanFree: qsTr("Cleared") + (app.languageVersion ? "" : "")
+    property var waitTask: qsTr("WaitingTask") + (app.languageVersion ? "" : "")
 
     property int goResultDelete: 0
+    property int taskCompleted: 0
+    property int notificationCounter: 0
+    property double tempSize: 0
+    property double winSxsSize: 0
+    property double binSize: 0
+    property double updateSize: 0
+    property double eventLog: 0
+    property double crashdump: 0
+    property double fontcache: 0
+    property double wintemp_: 0
+    property double pointclean: 0
     property double tempToDelete: 0
     property double winTempToDelete: 0
     property double fontCacheToDelete: 0
@@ -31,47 +50,11 @@ ApplicationWindow {
     property double dumpToDelete: 0
     property double pointToDelete: 0
     property bool first_start: true
+    property var timerMap: ({})
 
-    function calculateAllDeleteCache() {
-        if (main_window.goResultDelete ===  8) {
-            var result =  main_window.tempToDelete + main_window.winTempToDelete + main_window.fontCacheToDelete + main_window.binToDelete + main_window.updateToDelete + main_window.eventToDelete + main_window.dumpToDelete + main_window.pointToDelete
-            var total = result.toFixed(2);
-             if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
-                pageLoader.item.deleteText = "Можно очистить ~ " + total + " МБ."
-                }
-            main_window.goResultDelete = 0
-            main_window.tempToDelete = 0
-            main_window.winTempToDelete = 0
-            main_window.fontCacheToDelete = 0
-            main_window.binToDelete = 0
-            main_window.updateToDelete = 0
-            main_window.eventToDelete = 0
-            main_window.dumpToDelete = 0
-            main_window.pointToDelete = 0
-            console.log("")
-        }
-    }
-
-
-    function clFuncText() {
-        var blocks = getActiveBlockCount()
-        if (main_window.taskCompleted > blocks) {
-            cleanFuncGlobal = `${blocks} / ${blocks}`
-        } else {
-             cleanFuncGlobal = `${main_window.taskCompleted} / ${blocks}`
-        }
-
-        pageLoader.item.cleanedText = cleanFuncGlobal
-    }
-
-
-    onGoResultDeleteChanged: {
-        calculateAllDeleteCache()
-    }
-
+    // Settings
     Settings {
         id: quanta_settings
-
         property bool parametr_block1_active: false
         property bool parametr_block2_active: false
         property bool parametr_block3_active: false
@@ -81,28 +64,92 @@ ApplicationWindow {
         property bool parametr_block7_active: false
         property bool parametr_block8_active: false
         property bool parametr_block9_active: true
-
         property bool settings_animation: true
         property bool settings_reload: false
         property bool settings_notify: true
+        property int settings_theme: 2
+        property var settings_language: "eng"
         property bool debugMode: false
-
         property bool running_clean: false
         property int global_functions: 0
         property bool cleanTextCome: false
         property bool radioMainMenuBlock: false
     }
 
-    Component.onCompleted: {
-        quanta_settings.cleanTextCome = false
-        quanta_settings.running_clean = false
-        quanta_settings.global_functions = 0
-        cleanFuncGlobal = `${main_window.taskCompleted} / ${getActiveBlockCount()}`
+    // Theme
+    QtObject {
+        id: theme
+        property color background
+        property color text
+        property color button
+        property color hover
+        property color backOver
+        property color backOverHover
+        property color backOverRipple
+        property color sidebar
+        property color parametrsPageBackground
+    }
+
+    // Font Loaders
+    FontLoader {
+        id: cleanerFont
+        source: "assets/fonts/Ubuntu-Bold.ttf"
+    }
+
+    FontLoader {
+        id: cleanerFontRegular
+        source: "assets/fonts/Ubuntu-Regular.ttf"
+    }
+
+    // Functions
+    function applyTheme() {
+        if (quanta_settings.settings_theme === 2) {
+            theme.parametrsPageBackground = "#000"
+            theme.background = "#241415"
+            theme.text = "white"
+            theme.button = "#4B2022"
+            theme.hover = "#60292C"
+            theme.backOver = "#000000"
+            theme.backOverRipple = "#caeceb"
+            theme.backOverHover = "#111111"
+            theme.sidebar = "#111"
+        } else {
+            theme.parametrsPageBackground = "#FFFFFF"
+            theme.background = "white"
+            theme.text = "black"
+            theme.button = "#E0E0E0"
+            theme.hover = "#CCCCCC"
+            theme.backOver = "#caeceb"
+            theme.backOverRipple = "#000000"
+            theme.backOverHover = "#CCCCCC"
+            theme.sidebar = "#F0F0F0"
+        }
+    }
+
+    function calculateAllDeleteCache() {
+        if (goResultDelete === 8) {
+            var result = tempToDelete + winTempToDelete + fontCacheToDelete + binToDelete +
+                         updateToDelete + eventToDelete + dumpToDelete + pointToDelete
+            var total = result.toFixed(2)
+            if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
+                pageLoader.item.deleteText = cleanFree + total + " МB."
+            }
+            goResultDelete = 0
+            tempToDelete = 0
+            winTempToDelete = 0
+            fontCacheToDelete = 0
+            binToDelete = 0
+            updateToDelete = 0
+            eventToDelete = 0
+            dumpToDelete = 0
+            pointToDelete = 0
+        }
+    }
+
+    function clFuncText() {
+        var blocks = getActiveBlockCount()
+        cleanFuncGlobal = (taskCompleted > blocks) ? `${blocks} / ${blocks}` : `${taskCompleted} / ${blocks}`
         pageLoader.item.cleanedText = cleanFuncGlobal
-         main_window.last_symbol_of_functions =  "Ожидание задач..."
-        pageLoader.item.cleanFunctions = main_window.last_symbol_of_functions
-        main_window.calculateAllCachesClean()
-        main_window.first_start = false
     }
 
     function calculateAllCachesClean() {
@@ -116,66 +163,304 @@ ApplicationWindow {
         pointQ.calculateRestorePointRemovableSize()
     }
 
-
     function getActiveBlockCount() {
-        let count = 0;
+        let count = 0
         for (let i = 1; i <= 9; i++) {
             if (quanta_settings["parametr_block" + i + "_active"] === false) {
-                count++;
+                count++
             }
         }
-        return count;
+        return count
     }
 
+    function updateTotalSize() {
+        var total = (tempSize || 0) + (winSxsSize || 0) + (binSize || 0) + (updateSize || 0) +
+                    (eventLog || 0) + (crashdump || 0) + (fontcache || 0) + (wintemp_ || 0) +
+                    (pointclean || 0)
+        if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
+            pageLoader.item.cleanedText = cleanFuncGlobal
+        }
 
-    ListModel {
-        id: notificationModel
+        if (taskCompleted === quanta_settings.global_functions) {
+            total = total.toFixed(1)
+            var cleaned = total + " MB"
+            quantaTextGlobal = cleaned
+            addNotification(clearedNotify + " " + cleaned)
+            if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
+                pageLoader.item.quantaText = quantaTextGlobal
+            }
+            quanta_settings.running_clean = false
+            calculateAllCachesClean()
+            return cleaned
+        }
+        return quantaTextGlobal
     }
 
-    property var timerMap: ({})
-    property int notificationCounter: 0
+    function clearTotalSize() {
+        tempSize = 0
+        winSxsSize = 0
+        binSize = 0
+        updateSize = 0
+        eventLog = 0
+        crashdump = 0
+        fontcache = 0
+        wintemp_ = 0
+        pointclean = 0
+        taskCompleted = 0
+    }
 
     function addNotification(message) {
         if (notificationModel.count >= 3) {
-            const oldId = notificationModel.get(0).id;
-            notificationModel.remove(0);
+            const oldId = notificationModel.get(0).id
+            notificationModel.remove(0)
             if (timerMap[oldId]) {
-                const oldTimer = timerMap[oldId];
+                const oldTimer = timerMap[oldId]
                 if (oldTimer && !oldTimer.destroyed) {
-                    oldTimer.stop();
-                    oldTimer.destroy();
+                    oldTimer.stop()
+                    oldTimer.destroy()
                 }
-                delete timerMap[oldId];
+                delete timerMap[oldId]
             }
         }
 
-        notificationCounter++;
-        const notifId = notificationCounter;
-
-        notificationModel.append({ "message": message, "id": notifId });
+        notificationCounter++
+        const notifId = notificationCounter
+        let side = (notificationModel.count > 0) ? notificationModel.get(0).side : quanta_settings.settings_notify
+        notificationModel.append({ "message": message, "id": notifId, "side": side })
 
         const timer = Qt.createQmlObject(
             'import QtQuick 2.15; Timer { interval: 5000; running: true; repeat: false; }',
             main_window
-        );
+        )
 
         timer.triggered.connect(() => {
             for (let i = 0; i < notificationsRepeater.count; i++) {
-                const item = notificationsRepeater.itemAt(i);
+                const item = notificationsRepeater.itemAt(i)
                 if (item && item.notifId === notifId) {
-                    item.animateExitAndRemove();
-                    break;
+                    item.animateExitAndRemove()
+                    break
+                }
+            }
+            if (timer && !timer.destroyed) {
+                timer.stop()
+                timer.destroy()
+            }
+            delete timerMap[notifId]
+        })
+
+        timerMap[notifId] = timer
+    }
+
+    onGoResultDeleteChanged: calculateAllDeleteCache()
+    onTaskCompletedChanged: {
+        cleanFuncGlobal = `${taskCompleted} / ${quanta_settings.global_functions}`
+        updateTotalSize()
+    }
+
+    Text {
+        text: "text loader"
+        font.family: cleanerFont.name
+        visible: false
+    }
+
+    Rectangle {
+        id: globalOverlay
+        anchors.fill: parent
+        color: "black"
+        opacity: isOverlayVisible ? 0.5 : 0.0
+        visible: isOverlayVisible
+        z: 20
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.AllButtons
+            propagateComposedEvents: false
+            preventStealing: true
+            onClicked: main_window.isOverlayVisible = false
+        }
+    }
+
+    Rectangle {
+        id: global_close_prm_logs
+        width: 20
+        height: 20
+        color: "transparent"
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        anchors.top: parent.top
+        anchors.topMargin: 4
+        visible: false
+        z: 100
+
+        Text {
+            text: "×"
+            anchors.centerIn: parent
+            color: "red"
+            font.bold: true
+            font.pixelSize: 30
+            z: 2
+        }
+
+        Rectangle {
+            height: 25
+            width: 25
+            radius: 30
+            color: tmphover_close ? "#471F1F" : "transparent"
+            anchors.top: parent.top
+            anchors.topMargin: 1
+            anchors.left: parent.left
+            anchors.leftMargin: -3
+            z: 1
+        }
+
+        HoverHandler {
+            onHoveredChanged: tmphover_close = hovered
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                tempLogView.visible = false
+                global_close_prm_logs.visible = false
+            }
+        }
+    }
+
+    Rectangle {
+        id: sidebar
+        anchors.left: parent.left
+        height: parent.height
+        width: 215
+        color: theme.sidebar
+
+        Column {
+            anchors.fill: parent
+            topPadding: 20
+            spacing: Math.min(14, Math.max(1, 0 + (height * 0.02)))
+
+            HoverButton {
+                id: mainButton
+                height: 60
+                width: 170
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Main") + (app.languageVersion ? "" : "")
+                isActive: true
+                onClicked: {
+                    if (currentPage !== "MainPage.qml") {
+                        currentPage = "MainPage.qml"
+                        pageLoader.source = currentPage
+                        setActiveButton(mainButton)
+                    }
                 }
             }
 
-            if (timer && !timer.destroyed) {
-                timer.stop();
-                timer.destroy();
+            HoverButton {
+                id: settingsButton
+                height: 60
+                width: 170
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Settings") + (app.languageVersion ? "" : "")
+                onClicked: {
+                    if (currentPage !== "SettingsPage.qml") {
+                        currentPage = "SettingsPage.qml"
+                        pageLoader.source = currentPage
+                        setActiveButton(settingsButton)
+                    }
+                }
             }
-            delete timerMap[notifId];
-        });
 
-        timerMap[notifId] = timer;
+            HoverButton {
+                id: parametersButton
+                height: 60
+                width: 170
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Parameters") + (app.languageVersion ? "" : "")
+                onClicked: {
+                    if (currentPage !== "ParametersPage.qml") {
+                        currentPage = "ParametersPage.qml"
+                        pageLoader.source = currentPage
+                        setActiveButton(parametersButton)
+                    }
+                }
+            }
+
+            HoverButton {
+                id: aboutButton
+                height: 60
+                width: 170
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("About") + (app.languageVersion ? "" : "")
+                onClicked: {
+                    if (currentPage !== "AboutAppPage.qml") {
+                        currentPage = "AboutAppPage.qml"
+                        pageLoader.source = currentPage
+                        setActiveButton(aboutButton)
+                    }
+                }
+            }
+        }
+
+        Image {
+            id: bottomLeftImage
+            source: quanta_settings.settings_theme === 2 ? "assets/images/git_last.png" : "assets/images/git_black.png"
+            width: 45
+            height: 45
+            anchors.left: parent.left
+            anchors.leftMargin: 35
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 18
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: Qt.openUrlExternally("https://github.com/iUnreallx")
+            }
+        }
+
+        Text {
+            id: label_github
+            text: "GitHub"
+            font.pixelSize: 26
+            font.bold: true
+            color: quanta_settings.settings_theme === 2 ? "gray" : "black"
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 25
+            anchors.rightMargin: 35
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: Qt.openUrlExternally("https://github.com/iUnreallx")
+            }
+        }
+    }
+
+    Loader {
+        id: pageLoader
+        anchors.fill: parent
+        source: currentPage
+        z: -1
+
+        onLoaded: {
+            if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
+                pageLoader.item.quantaText = quantaTextGlobal
+                pageLoader.item.cleanedText = cleanFuncGlobal
+                pageLoader.item.cleanFunctions = (last_symbol_of_functions === ("Waiting for tasks...") ||
+                                                 last_symbol_of_functions === ("Ожидание задач..."))
+                                                ? waitTask
+                                                : last_symbol_of_functions
+                if (!first_start) {
+                    calculateAllCachesClean()
+                }
+                clFuncText()
+            }
+        }
+    }
+
+    ListModel {
+        id: notificationModel
     }
 
     Popup {
@@ -192,7 +477,7 @@ ApplicationWindow {
         Binding {
             target: notificationsPopup
             property: "x"
-            value: quanta_settings.settings_notify ? main_window.width - notificationsPopup.width - 25 : 10
+            value: notificationModel.count > 0 ? (notificationModel.get(0).side ? main_window.width - notificationsPopup.width - 25 : 10) : 0
         }
 
         Binding {
@@ -223,7 +508,7 @@ ApplicationWindow {
                         height: parent.height
                         radius: 15
                         color: "#32BC32"
-                        x: quanta_settings.settings_notify ? parent.width + 10 : -width
+                        x: model.side ? parent.width + 10 : -width
                         opacity: 0
 
                         Text {
@@ -261,7 +546,7 @@ ApplicationWindow {
                         NumberAnimation {
                             target: notificationRect
                             property: "x"
-                            to: quanta_settings.settings_notify ? parent.width + 10 : -parent.width
+                            to: model.side ? parent.width + 10 : -parent.width
                             duration: 300
                             easing.type: Easing.OutCubic
                         }
@@ -274,64 +559,38 @@ ApplicationWindow {
 
                         onStopped: {
                             if (isExiting && modelIndex >= 0 && modelIndex < notificationModel.count) {
-                                notificationModel.remove(modelIndex);
+                                notificationModel.remove(modelIndex)
                             }
                         }
                     }
 
-                    Component.onCompleted: {
-                        enterAnimation.start();
-                    }
+                    Component.onCompleted: enterAnimation.start()
 
                     function animateExitAndRemove() {
-                        if (isExiting) return;
-                        isExiting = true;
-                        exitAnimation.start();
+                        if (isExiting) return
+                        isExiting = true
+                        exitAnimation.start()
                     }
                 }
             }
         }
     }
 
-
-
-    Text {
-        text: "text loader"
-        font.family: cleanerFont.name
-        visible: false
-    }
-
-
-
-    FontLoader {
-        id: cleanerFont
-        source: "assets/fonts/Ubuntu-Bold.ttf"
-    }
-
-    FontLoader {
-        id: cleanerFontRegular
-        source: "assets/fonts/Ubuntu-Regular.ttf"
-    }
-
-
+    // Connections clean functions
     Connections {
         target: tmp
         function onTempCleanResult(result) {
-            addNotification("Очищено временных файлов на\n" + Number(result) + " МБ")
-            console.log("Temp", result)
-
+            addNotification(qsTr("ClearedTemporary") + "\n" + Number(result) + " МB")
         }
         function onTempCleanResultTap(result) {
-            main_window.tempSize = Number(result)
-            main_window.taskCompleted += 1
+            tempSize = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "tempcleaner.cpp"
-            main_window.last_symbol_of_functions = "tempcleaner.cpp"
-            console.log("Temp", result)
+            last_symbol_of_functions = "tempcleaner.cpp"
         }
         function onSizeDelete(result) {
-            main_window.tempToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("temp SIZE >>>", result)
+            tempToDelete = Number(result)
+            goResultDelete += 1
         }
     }
 
@@ -339,19 +598,16 @@ ApplicationWindow {
         target: winsxs
         function onCleanupWinSXSPoint(result) {
             if (result === "notAdmin") {
-                addNotification("Запустите от имени\nадминистратора")
+                addNotification(qsTr("AdminWarning"))
                 return
             }
-            addNotification("Очищено в winSxS на\n" + Number(result) + " МБ")
-            console.log("WinSxS", result)
+            addNotification(qsTr("WinSXS") + "\n" + Number(result) + " МB")
         }
-
         function onCleanupWinSXSPointTap(result) {
-            main_window.winSxsSize = Number(result)
-            main_window.taskCompleted += 1
+            winSxsSize = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "winsxscleaner.cpp"
-            main_window.last_symbol_of_functions = "winsxscleaner.cpp"
-            console.log("WinSxS", result)
+            last_symbol_of_functions = "winsxscleaner.cpp"
         }
     }
 
@@ -359,558 +615,152 @@ ApplicationWindow {
         target: wintemp
         function onWinTempCleaned(result) {
             pageLoader.item.taskComplete += 1
-            addNotification("Очищено в WinTemp на\n" + Number(result) + " МБ")
-            console.log("WinTemp", result)
+            addNotification(qsTr("ClearedWinTemp") + "\n" + Number(result) + " МB")
         }
         function onWinTempCleanedTap(result) {
-            main_window.wintemp_ = Number(result)
-            main_window.taskCompleted += 1
+            wintemp_ = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "wintempclean.cpp"
-            main_window.last_symbol_of_functions ="wintempclean.cpp"
-            console.log("WinTemp", result)
+            last_symbol_of_functions = "wintempclean.cpp"
         }
         function onSizeDelete(result) {
-            main_window.winTempToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("wintemp SIZE >>>", result)
+            winTempToDelete = Number(result)
+            goResultDelete += 1
         }
     }
 
     Connections {
         target: fontQ
         function onFontCacheCleaned(result) {
-            addNotification("Очищено FontCache файлов на\n" + Number(result) + " МБ")
-            console.log("FONT CACHE", result)
+            addNotification(qsTr("ClearedFontCache") + "\n" + Number(result) + " МB")
         }
         function onFontCacheCleanedTap(result) {
-            main_window.fontcache = Number(result)
-            main_window.taskCompleted += 1
+            fontcache = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "fontcacheclean.cpp"
-            main_window.last_symbol_of_functions = "fontcacheclean.cpp"
-            console.log("FONT CACHE", result)
+            last_symbol_of_functions = "fontcacheclean.cpp"
         }
         function onSizeDelete(result) {
-            main_window.fontCacheToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("font SIZE >>>", result)
+            fontCacheToDelete = Number(result)
+            goResultDelete += 1
         }
     }
-
 
     Connections {
         target: binclear
         function onRecycleBinCleaned(result) {
-            addNotification("Очищена корзина на\n" + Number(result) + " МБ")
-            console.log("bin", result)
+            addNotification(qsTr("ClearedBin") + "\n" + Number(result) + " МB")
         }
         function onRecycleBinCleanedTap(result) {
-            main_window.binSize = Number(result)
-            main_window.taskCompleted += 1
+            binSize = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "recyclebincleaner.cpp"
-            main_window.last_symbol_of_functions ="recyclebincleaner.cpp"
-            console.log("bin", result)
+            last_symbol_of_functions = "recyclebincleaner.cpp"
         }
         function onSizeDelete(result) {
-            main_window.binToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("bin SIZE >>>", result)
+            binToDelete = Number(result)
+            goResultDelete += 1
         }
     }
-
 
     Connections {
         target: updateQ
         function onGetterClean(result) {
-            addNotification("Очищено кеша обновлений на\n" + Number(result) + " МБ")
-            console.log("update", result)
+            addNotification(qsTr("ClearedUpdate") + "\n" + Number(result) + " МB")
         }
         function onGetterCleanTap(result) {
-            main_window.updateSize = Number(result)
-            main_window.taskCompleted += 1
+            updateSize = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "winupdatecache.cpp"
-            main_window.last_symbol_of_functions ="winupdatecache.cpp"
-            console.log("update", result)
+            last_symbol_of_functions = "winupdatecache.cpp"
         }
         function onSizeDelete(result) {
-            main_window.updateToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("update SIZE >>>", result)
+            updateToDelete = Number(result)
+            goResultDelete += 1
         }
     }
-
 
     Connections {
         target: eventQ
         function onEventLogsCleaned(result) {
-            addNotification("Очищено журнала событий на\n" + Number(result) + " МБ")
-            console.log("event", result)
+            addNotification(qsTr("ClearedEvent") + "\n" + Number(result) + " МB")
         }
         function onEventLogsCleanedTap(result) {
-            main_window.eventLog = Number(result)
-            main_window.taskCompleted += 1
+            eventLog = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "eventlog.cpp"
-            main_window.last_symbol_of_functions ="eventlog.cpp"
-            console.log("event", result)
+            last_symbol_of_functions = "eventlog.cpp"
         }
         function onSizeDelete(result) {
-            main_window.eventToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("event SIZE >>>", result)
+            eventToDelete = Number(result)
+            goResultDelete += 1
         }
     }
 
     Connections {
         target: dmp
         function onCrashDumpsCleaned(result) {
-            addNotification("Очищено дампа ошибок\n" + Number(result) + " МБ")
-            console.log("dump", result)
+            addNotification(qsTr("ClearedDump") + "\n" + Number(result) + " МB")
         }
         function onCrashDumpsCleanedTap(result) {
-            main_window.crashdump = Number(result)
-            main_window.taskCompleted += 1
+            crashdump = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "crashdump.cpp"
-            main_window.last_symbol_of_functions ="crashdump.cpp"
-            console.log("dump", result)
+            last_symbol_of_functions = "crashdump.cpp"
         }
         function onSizeDelete(result) {
-            main_window.dumpToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("dump SIZE >>>", result)
+            dumpToDelete = Number(result)
+            goResultDelete += 1
         }
     }
 
     Connections {
         target: pointQ
         function onRestorePointsCleaned(result) {
-            addNotification("Очищено мусора с\nточек восстановления на\n" + Number(result) + " МБ")
-            console.log("point", result)
-
+            addNotification(qsTr("ClearedPoint") + "\n" + Number(result) + " МB")
         }
         function onRestorePointsCleanedTap(result) {
-            main_window.pointclean = Number(result)
-            main_window.taskCompleted += 1
+            pointclean = Number(result)
+            taskCompleted += 1
             pageLoader.item.cleanFunctions = "pointclean.cpp"
-            main_window.last_symbol_of_functions ="pointclean.cpp"
-            console.log("point", result)
+            last_symbol_of_functions = "pointclean.cpp"
         }
         function onSizeDelete(result) {
-            main_window.pointToDelete = Number(result)
-            main_window.goResultDelete +=1
-            console.log("point SIZE >>>", result)
+            pointToDelete = Number(result)
+            goResultDelete += 1
         }
     }
 
-    property int taskCompleted: 0
-    property double tempSize: 0
-    property double winSxsSize: 0
-    property double binSize: 0
-    property double updateSize: 0
-    property double eventLog: 0
-    property double crashdump: 0
-    property double fontcache: 0
-    property double wintemp_: 0
-    property double pointclean: 0
-
-    property string quantaTextGlobal: "Quanta"
-    property string cleanFuncGlobal: ""
-
-
-
-    onTaskCompletedChanged: {
-         cleanFuncGlobal = `${main_window.taskCompleted} / ${quanta_settings.global_functions}`
-        updateTotalSize()
+    // Initialization
+    Component.onCompleted: {
+        applyTheme()
+        quanta_settings.cleanTextCome = false
+        quanta_settings.running_clean = false
+        quanta_settings.global_functions = 0
+        cleanFuncGlobal = `${taskCompleted} / ${getActiveBlockCount()}`
+        pageLoader.item.cleanedText = cleanFuncGlobal
+        last_symbol_of_functions = waitTask
+        pageLoader.item.cleanFunctions = last_symbol_of_functions
+        calculateAllCachesClean()
+        first_start = false
     }
-
-
-
-
-    function updateTotalSize() {
-        var total = (main_window.tempSize || 0) + (main_window.winSxsSize || 0) +
-                    (main_window.binSize || 0) + (main_window.updateSize || 0) +
-                    (main_window.eventLog || 0) + (main_window.crashdump || 0) + (main_window.fontcache || 0)
-                    + (main_window.wintemp_ || 0) + (main_window.pointclean || 0);
-         if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
-            pageLoader.item.cleanedText = cleanFuncGlobal
-            }
-
-        if (main_window.taskCompleted === quanta_settings.global_functions) {
-           total = total.toFixed(1);
-           var cleaned = total + " MB";
-           main_window.quantaTextGlobal = cleaned
-            addNotification("Очищено " + cleaned)
-            if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
-                       pageLoader.item.quantaText = main_window.quantaTextGlobal
-            }
-            quanta_settings.running_clean = false
-            main_window.calculateAllCachesClean()
-            return cleaned
-
-        } else {
-            return quantaTextGlobal
-        }
-    }
-
-    function clearTotalSize() {
-        tempSize = 0
-        winSxsSize = 0
-        binSize = 0
-        updateSize = 0
-        eventLog = 0
-        crashdump = 0
-        fontcache = 0
-        wintemp_ = 0
-        pointclean = 0
-        taskCompleted = 0
-    }
-
-
-
-    Rectangle {
-            id: globalOverlay
-            anchors.fill: parent
-            color: "black"
-            opacity: isOverlayVisible ? 0.5 : 0.0
-            visible: isOverlayVisible
-            z: 20
-            MouseArea {
-                anchors.fill: parent
-                onClicked: main_window.isOverlayVisible = false
-            }
-        }
-
-
-    Rectangle {
-        id: global_close_prm_logs
-        width: 20
-        height: 20
-        color: "transparent"
-        // radius: 30
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.top: parent.top
-        anchors.topMargin: 4
-        visible: false
-
-        z: 100
-
-        Text {
-            text: "×"
-            anchors.centerIn: parent
-            color: "red"
-            font.bold: true
-            font.pixelSize: 30
-            z: 2
-        }
-        Rectangle {
-            height: 25
-            width:  25
-            radius: 30
-            color:  tmphover_close ? "#471F1F":"transparent"
-            anchors.top: parent.top
-            anchors.topMargin: 1
-            anchors.left: parent.left
-            anchors.leftMargin: -3
-            z: 1
-        }
-
-        HoverHandler {
-            onHoveredChanged: {
-                 tmphover_close = hovered
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                tempLogView.visible = false
-                global_close_prm_logs.visible = false
-        }
-        }
-    }
-
-
-
-    Popup {
-        id: languageDialog
-        focus: true
-        width: 300
-        height: 400
-        z: 22
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-        onClosed: main_window.isOverlayVisible = false
-        background: Rectangle {
-            color: "transparent"
-        }
-
-        Rectangle {
-            width: 20
-            height: 20
-            color: "transparent"
-            radius: 3
-            anchors.right: parent.right
-            anchors.rightMargin: 17
-            anchors.top: parent.top
-            anchors.topMargin: 12
-            z: 2
-
-            Text {
-                text: "×"
-                anchors.centerIn: parent
-                color: "red"
-                font.pixelSize: 35
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    main_window.isOverlayVisible = false
-                    languageDialog.visible = false
-                }
-            }
-        }
-
-
-
-        Rectangle {
-            anchors.fill: parent
-            color: "#241415"
-            radius: 30
-
-            Column {
-                anchors.fill: parent
-                spacing: 20
-
-                Text {
-                    anchors.top: parent.top
-                    anchors.topMargin: 40
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("Выберите язык")
-                    color: "white"
-                    font.pixelSize: 20
-                    font.bold: true
-                }
-
-                ButtonGroup {
-                    id: buttonGroup
-                }
-
-                RadioButton {
-                    id: russianButton
-                    anchors.top: parent.top
-                    anchors.topMargin: 75
-                    x: 80
-                    text: "Русский"
-                    font.pixelSize: 16
-                    font.bold: true
-                    scale: 1.1
-                    checked: true
-
-                    MouseArea {
-
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked:
-                        {
-                            console.log('rus')
-                            russianButton.checked = true
-                        }
-                    }
-                }
-
-                RadioButton {
-                    id: englishButton
-                    anchors.top: parent.top
-                    anchors.topMargin: 125
-                    x: 80
-                    text: "English"
-                    font.pixelSize: 16
-                    font.bold: true
-                    scale: 1.1
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            console.log('en')
-                            englishButton.checked = true
-                        }
-                    }
-                }
-
-
-                Component.onCompleted: {
-                    buttonGroup.addButton(russianButton)
-                    buttonGroup.addButton(englishButton)
-                }
-            }
-        }
-    }
-
-
-    property string currentPage: "MainPage.qml"
-
-
-    Rectangle {
-        id: sidebar
-        anchors.left: parent.left
-        height: parent.height
-        width: 215
-        color: "#111"
-
-
-        Column {
-            anchors.fill: parent
-            topPadding: 20
-            spacing: Math.min(14, Math.max(1, 0 + (height * 0.02)))
-
-            HoverButton {
-                id: mainButton
-                height: 60
-                width: 170
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Главная")
-                isActive: true
-                onClicked: {
-                    if (currentPage !== "MainPage.qml") {
-                        currentPage = "MainPage.qml"
-                        pageLoader.source = currentPage
-                        setActiveButton(mainButton)
-                    }
-                }
-            }
-
-            HoverButton {
-                id: settingsButton
-                height: 60
-                width: 170
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Настройки")
-                onClicked: {
-                    if (currentPage !== "SettingsPage.qml") {
-                        currentPage = "SettingsPage.qml"
-                        pageLoader.source = currentPage
-                        setActiveButton(settingsButton)
-                    }
-                }
-            }
-
-            HoverButton {
-                id: parametersButton
-                height: 60
-                width: 170
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Параметры")
-                onClicked: {
-                    if (currentPage !== "ParametersPage.qml") {
-                        currentPage = "ParametersPage.qml"
-                        pageLoader.source = currentPage
-                        setActiveButton(parametersButton)
-                    }
-                }
-            }
-
-            HoverButton {
-                id: aboutButton
-                height: 60
-                width: 170
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Об Авторе")
-                onClicked: {
-                    if (currentPage !== "AboutAppPage.qml") {
-                        currentPage = "AboutAppPage.qml"
-                        pageLoader.source = currentPage
-                        setActiveButton(aboutButton)
-                    }
-                }
-            }
-        }
-
-        Image {
-            id: bottomLeftImage
-            source: "assets/images/git_last.png"
-            width: 35
-            height: 35
-            anchors.left: parent.left
-            anchors.leftMargin: 37
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 23
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Qt.openUrlExternally("https://github.com/iUnreallx")
-                }
-            }
-        }
-
-        Text {
-            id: label_github
-            text: "GitHub"
-            font.pixelSize: 26
-            font.bold: true
-            color: "gray"
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 25
-            anchors.rightMargin: 35
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Qt.openUrlExternally("https://github.com/iUnreallx")
-                }
-            }
-        }
-    }
-
-    Loader {
-        id: pageLoader
-        anchors.fill: parent
-        source: currentPage
-        z: -1
-
-        onLoaded: {
-            if (pageLoader.item && pageLoader.item.hasOwnProperty("quantaText")) {
-                pageLoader.item.quantaText = main_window.quantaTextGlobal
-                pageLoader.item.cleanedText = cleanFuncGlobal
-                pageLoader.item.cleanFunctions = main_window.last_symbol_of_functions
-                if (!main_window.first_start) {
-                    main_window.calculateAllCachesClean()
-                }
-                main_window.clFuncText()
-            }
-        }
-    }
-
-
-
 
     function setActiveButton(button) {
-        mainButton.isActive = false;
-        settingsButton.isActive = false;
-        parametersButton.isActive = false;
-        aboutButton.isActive = false;
-
-        button.isActive = true;
+        mainButton.isActive = false
+        settingsButton.isActive = false
+        parametersButton.isActive = false
+        aboutButton.isActive = false
+        button.isActive = true
 
         if (button === mainButton) {
-            main_window.minimumHeight = 400
-            main_window.minimumWidth = 500
-            if (main_window.width === 695)
-            {
-                main_window.width = 500
+            minimumHeight = 400
+            minimumWidth = 500
+            if (width === 695) {
+                width = 500
             }
-
         } else {
-            main_window.minimumHeight = 400
-            main_window.minimumWidth = 695
+            minimumHeight = 400
+            minimumWidth = 695
         }
     }
 }
-
-
-

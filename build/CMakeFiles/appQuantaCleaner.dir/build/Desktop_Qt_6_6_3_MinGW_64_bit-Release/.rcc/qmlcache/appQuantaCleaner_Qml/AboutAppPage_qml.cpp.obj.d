@@ -334,4 +334,21 @@ CMakeFiles/appQuantaCleaner.dir/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc
  D:/Qt/6.6.3/mingw_64/include/QtCore/qpointer.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qversionnumber.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qtyperevision.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qmetaobject.h
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qmetaobject.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qdatetime.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qcalendar.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qlocale.h \
+ D:/Qt/6.6.3/mingw_64/include/QtCore/qtimezone.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qjsengine.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qjsmanagedvalue.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qjsprimitivevalue.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qjsnumbercoercion.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmldebug.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlcomponent.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqml.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlregistration.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQmlIntegration/qqmlintegration.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlerror.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlcontext.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlengine.h \
+ D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlabstracturlinterceptor.h

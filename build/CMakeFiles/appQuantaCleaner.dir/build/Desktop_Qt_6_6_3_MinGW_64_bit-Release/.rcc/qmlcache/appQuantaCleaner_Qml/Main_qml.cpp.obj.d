@@ -354,7 +354,6 @@ CMakeFiles/appQuantaCleaner.dir/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc
  D:/Qt/6.6.3/mingw_64/include/QtQml/qqmlabstracturlinterceptor.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qalgorithms.h \
  D:/Qt/6.6.3/mingw_64/include/QtQml/qjsprimitivevalue.h \
- D:/Qt/6.6.3/mingw_64/include/QtCore/qloggingcategory.h \
  D:/Qt/6.6.3/mingw_64/include/QtCore/qrandom.h \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/random \
  D:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/random.h \
