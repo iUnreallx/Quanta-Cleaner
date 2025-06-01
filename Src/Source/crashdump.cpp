@@ -18,7 +18,7 @@ void CrashDump::cleanCrashDumps(CrashDumpMode mode, bool isNotTap) {
 
 void CrashDump::removeCrashDumpFiles(CrashDumpMode mode, bool isNotTap) {
     QString userName = qgetenv("USERNAME");
-    QString crashDumpPath = "C:/Users/" + userName + "/AppDaВta/Local/CrashDumps";
+    QString crashDumpPath = "C:/Users/" + userName + "/AppData/Local/CrashDumps";
     QDir dumpDir(crashDumpPath);
 
     bool emitCalled = false;
