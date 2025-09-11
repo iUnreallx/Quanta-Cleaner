@@ -296,9 +296,9 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
             // 0 - Fast mode, 1 - Normal mode (without time menegment), 2 - Debug Mode - with time menegment
             onClicked: (mouse) => {
+                if (isInsideRoundedRect(mouse.x, mouse.y)) {
                     if (!quanta_settings.running_clean) {
                         var settings_count = getActiveBlockCount();
                         quanta_settings.global_functions = settings_count;
@@ -375,46 +375,28 @@ Rectangle {
                                 }
                              }
                          }
-
+                     }
             }
 
-            // onPositionChanged: (mouse) => {
-            //     var inside = isInsideRoundedRect(mouse.x, mouse.y);
-            //     cursorShape = inside ? Qt.PointingHandCursor : Qt.ArrowCursor;
-            //     mainpage.isHovered = inside;
-            // }
+            onPositionChanged: (mouse) => {
+                var inside = isInsideRoundedRect(mouse.x, mouse.y);
+                cursorShape = inside ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                mainpage.isHovered = inside;
+            }
 
-            // onExited: {
-            //     mainpage.isHovered = false;
-            //     cursorShape = Qt.ArrowCursor;
-            // }
+            onExited: {
+                mainpage.isHovered = false;
+                cursorShape = Qt.ArrowCursor;
+            }
 
-            // function isInsideRoundedRect(x, y) {
-            //     var rw = button.width;
-            //     var rh = button.height;
-            //     var cr = button.radius;
-            //     var sx = 0;
-            //     var sy = 0;
-
-            //     if (x >= sx + cr && x <= sx + rw - cr && y >= sy && y <= sy + rh) return true;
-            //     if (x >= sx && x <= sx + rw && y >= sy + cr && y <= sy + rh - cr) return true;
-
-            //     var corners = [
-            //         { cx: sx + cr, cy: sy + cr },
-            //         { cx: sx + rw - cr, cy: sy + cr },
-            //         { cx: sx + cr, cy: sy + rh - cr },
-            //         { cx: sx + rw - cr, cy: sy + rh - cr }
-            //     ];
-
-            //     for (var i = 0; i < corners.length; i++) {
-            //         var dx = x - corners[i].cx;
-            //         var dy = y - corners[i].cy;
-            //         if (dx * dx + dy * dy <= cr * cr)
-            //             return true;
-            //     }
-
-            //     return false;
-            // }
+            function isInsideRoundedRect(x, y) {
+                    var centerX = width / 2;  // Use MouseArea's width/height directly (local coords)
+                    var centerY = height / 2;
+                    var radius = Math.min(width, height) / 2;  // Ensures circle even if width != height
+                    var dx = x - centerX;
+                    var dy = y - centerY;
+                    return (dx * dx + dy * dy <= radius * radius);
+                }
         }
 
         Label {
