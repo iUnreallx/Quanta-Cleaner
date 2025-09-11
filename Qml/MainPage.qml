@@ -32,6 +32,8 @@ Rectangle {
         }
     }
 
+
+
     onWidthChanged: handleResize()
     onHeightChanged: handleResize()
 
@@ -203,126 +205,167 @@ Rectangle {
         running: quanta_settings.settings_animation
     }
 
+    Emitter {
+        system: particleSystem
+        visible: quanta_settings.settings_animation
+        emitRate: 20
+        lifeSpan: 75000
+        size: 8
+        sizeVariation: 4
+        width: 2
+        height: 2
+        z: -1
+        startTime: 70000
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+
+        velocity: AngleDirection {
+            angle: -45
+            angleVariation: 100
+            magnitude: 35
+            magnitudeVariation: 15
+        }
+    }
+
+    ImageParticle {
+        system: particleSystem
+        visible: quanta_settings.settings_animation
+        anchors.fill: parent
+        source: "assets/images/circle.png"
+        color: "gold"
+        colorVariation: 0.25
+        z: 2
+        entryEffect: ImageParticle.None
+
+        opacity: 0.9
+        alphaVariation: 0.25
+    }
+
     Rectangle {
+        property bool buttonMainHovered: false
         id: button
         width: Math.min(Math.max(Window.width * 0.3, 200), 285)
         height: width
-        radius: 500
+        radius: width / 2
         anchors.centerIn: parent
         anchors.verticalCenterOffset: mainpage.isOverrideMain ? 45 : 25
         anchors.horizontalCenterOffset: 105
-        color: "#29211E"
+        color: buttonMainHovered ? "#5E3233" : "#29211E"
         z: 5
 
         Image {
             id: trashImage
             source: "assets/images/mainpage/trash.png"
             anchors.centerIn: parent
-            width: button.width - 130
+            width: Math.max(button.width - 140 , 100)
             height: width
             fillMode: Image.PreserveAspectFit
             visible: true
         }
 
+        function isInsideCircle(x, y) {
+            var centerX = button.width / 2
+            var centerY = button.height / 2
+            var radius = button.width / 2
+            var distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2))
+            return distance <= radius
+        }
+
         MouseArea {
+            id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: (mouse) => {
-                if (isInsideRoundedRect(mouse.x, mouse.y)) {
-                    if (!quanta_settings.running_clean) {
-                        var settings_count = getActiveBlockCount();
-                        quanta_settings.global_functions = settings_count;
-                        quanta_settings.running_clean = true;
+            cursorShape: button.buttonMainHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
 
+            onPositionChanged: {
+                button.buttonMainHovered = button.isInsideCircle(mouseX, mouseY)
+            }
+
+            onEntered: {
+                button.buttonMainHovered = button.isInsideCircle(mouseX, mouseY)
+            }
+
+            onExited: {
+                button.buttonMainHovered = false
+            }
+
+            onClicked: {
+                if (button.isInsideCircle(mouse.x, mouse.y)) {
+                    if (!quanta_settings.running_clean) {
+                        var settings_count = getActiveBlockCount()
+                        quanta_settings.global_functions = settings_count
+                        quanta_settings.running_clean = true
                         mainpage.fastRespawnProgressBar = true
                         progressBar.width = 0
                         quanta_settings.cleanTextCome = true
                         mainpage.fastRespawnProgressBar = false
-
-                        main_window.clearTotalSize();
+                        main_window.clearTotalSize()
 
                         if (quanta_settings.debugMode) {
                             if (!quanta_settings.parametr_block1_active) {
-                                tmp.clearTempFolder(2, false);
+                                tmp.clearTempFolder(2, false)
                             }
                             if (!quanta_settings.parametr_block2_active) {
-                                winsxs.cleanWinSXS(2, false);
+                                winsxs.cleanWinSXS(2, false)
                             }
                             if (!quanta_settings.parametr_block3_active) {
-                                wintemp.cleanWinTemp(2, false);
+                                wintemp.cleanWinTemp(2, false)
                             }
                             if (!quanta_settings.parametr_block4_active) {
-                                fontQ.fontCacheClean(2, false);
+                                fontQ.fontCacheClean(2, false)
                             }
                             if (!quanta_settings.parametr_block5_active) {
-                                binclear.cleanRecycleBin(2, false);
+                                binclear.cleanRecycleBin(2, false)
                             }
                             if (!quanta_settings.parametr_block6_active) {
-                                updateQ.updateClean(2, false);
+                                updateQ.updateClean(2, false)
                             }
                             if (!quanta_settings.parametr_block7_active) {
-                                eventQ.cleanEventLogs(2, false);
+                                eventQ.cleanEventLogs(2, false)
                             }
                             if (!quanta_settings.parametr_block8_active) {
-                                dmp.cleanCrashDumps(2, false);
+                                dmp.cleanCrashDumps(2, false)
                             }
                             if (!quanta_settings.parametr_block9_active) {
-                                pointQ.cleanRestorePoints(2, false);
+                                pointQ.cleanRestorePoints(2, false)
                             }
                             if (settings_count === 0) {
-                                quanta_settings.running_clean = false;
+                                quanta_settings.running_clean = false
                             }
                         } else {
                             if (!quanta_settings.parametr_block1_active) {
-                                tmp.clearTempFolder(0, false);
+                                tmp.clearTempFolder(0, false)
                             }
                             if (!quanta_settings.parametr_block2_active) {
-                                winsxs.cleanWinSXS(0, false);
+                                winsxs.cleanWinSXS(0, false)
                             }
                             if (!quanta_settings.parametr_block3_active) {
-                                wintemp.cleanWinTemp(0, false);
+                                wintemp.cleanWinTemp(0, false)
                             }
                             if (!quanta_settings.parametr_block4_active) {
-                                fontQ.fontCacheClean(0, false);
+                                fontQ.fontCacheClean(0, false)
                             }
                             if (!quanta_settings.parametr_block5_active) {
-                                binclear.cleanRecycleBin(0, false);
+                                binclear.cleanRecycleBin(0, false)
                             }
                             if (!quanta_settings.parametr_block6_active) {
-                                updateQ.updateClean(0, false);
+                                updateQ.updateClean(0, false)
                             }
                             if (!quanta_settings.parametr_block7_active) {
-                                eventQ.cleanEventLogs(0, false);
+                                eventQ.cleanEventLogs(0, false)
                             }
                             if (!quanta_settings.parametr_block8_active) {
-                                dmp.cleanCrashDumps(0, false);
+                                dmp.cleanCrashDumps(0, false)
                             }
                             if (!quanta_settings.parametr_block9_active) {
-                                pointQ.cleanRestorePoints(0, false);
+                                pointQ.cleanRestorePoints(0, false)
+                            }
+                            if (settings_count === 0) {
+                                quanta_settings.running_clean = false
                             }
                         }
                     }
                 }
-            }
-
-            onPositionChanged: (mouse) => {
-                var inside = isInsideRoundedRect(mouse.x, mouse.y);
-                cursorShape = inside ? Qt.PointingHandCursor : Qt.ArrowCursor;
-                mainpage.isHovered = inside;
-            }
-
-            onExited: {
-                mainpage.isHovered = false;
-                cursorShape = Qt.ArrowCursor;
-            }
-
-            function isInsideRoundedRect(x, y) {
-                var centerX = width / 2;
-                var centerY = height / 2;
-                var radius = Math.min(width, height) / 2;
-                var dx = x - centerX;
-                var dy = y - centerY;
-                return (dx * dx + dy * dy <= radius * radius);
             }
         }
 
@@ -331,9 +374,11 @@ Rectangle {
             text: "Quanta"
             font.pixelSize: 40
             font.bold: true
-            color: "white"
+            color: "#66E8A3"
             anchors.centerIn: parent
             visible: false
         }
     }
+
+
 }

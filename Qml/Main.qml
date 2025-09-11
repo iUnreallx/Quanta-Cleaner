@@ -507,17 +507,18 @@ ApplicationWindow {
                         width: parent.width
                         height: parent.height
                         radius: 15
-                        color: "#66E8A3"
+                        color: "#281F1B"
                         x: model.side ? parent.width + 10 : -width
                         opacity: 0
 
                         Text {
                             anchors.centerIn: parent
                             text: model.message
-                            color: "yellow"
+                            color: "#66E8A3"
                             font.pixelSize: 17
+                            font.bold: true
                             wrapMode: Text.Wrap
-                            font.family: cleanerFont.name
+                            font.family: cleanerFontRegular.name
                             horizontalAlignment: Text.AlignHCenter
                             font.letterSpacing: -1
                         }
