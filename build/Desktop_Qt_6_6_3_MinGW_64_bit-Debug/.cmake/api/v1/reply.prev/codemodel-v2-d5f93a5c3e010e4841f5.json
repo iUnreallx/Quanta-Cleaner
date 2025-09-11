@@ -1,0 +1,178 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-6699f488d2a83bf64817.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "QuantaCleaner",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint-Debug-d385556e61c7aed0c16a.json",
+					"name" : "all_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_json-Debug-e72b174a694cc60b16dd.json",
+					"name" : "all_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_module-Debug-1f87c041f1e83d79a9dc.json",
+					"name" : "all_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmltyperegistrations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmltyperegistrations-Debug-2ded2d53bbac856b1f4f.json",
+					"name" : "all_qmltyperegistrations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner-Debug-9f883e4a19dac56af8d6.json",
+					"name" : "appQuantaCleaner",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_autogen-Debug-3084efca1d44b7342e00.json",
+					"name" : "appQuantaCleaner_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_autogen_timestamp_deps-Debug-16a7e32991f1e65deefa.json",
+					"name" : "appQuantaCleaner_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_automoc_json_extraction::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_automoc_json_extraction-Debug-e6702cfe2b0f008d49f3.json",
+					"name" : "appQuantaCleaner_automoc_json_extraction",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_qmlimportscan::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_qmlimportscan-Debug-6d2ba8cfb533c2079f63.json",
+					"name" : "appQuantaCleaner_qmlimportscan",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_qmllint-Debug-a255ffddf8817681356e.json",
+					"name" : "appQuantaCleaner_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_qmllint_json-Debug-e1f9bcc43b6375d38f2e.json",
+					"name" : "appQuantaCleaner_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_qmllint_module-Debug-16e9c23c54b24c6804f2.json",
+					"name" : "appQuantaCleaner_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_qmltyperegistration::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_qmltyperegistration-Debug-2a02a23b46a28a785f26.json",
+					"name" : "appQuantaCleaner_qmltyperegistration",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appQuantaCleaner_tooling::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appQuantaCleaner_tooling-Debug-af5b06a72db268f8b707.json",
+					"name" : "appQuantaCleaner_tooling",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Debug",
+		"source" : "D:/qt_apps/QuantaCleaner"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

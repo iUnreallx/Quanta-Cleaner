@@ -1,0 +1,10 @@
+--resource
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/qmake_QuantaCleaner.qrc
+--resource
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/appQuantaCleaner_raw_qml_0.qrc
+/qt/qml/QuantaCleaner/Qml/AboutAppPage.qml
+/qt/qml/QuantaCleaner/Qml/HoverButton.qml
+/qt/qml/QuantaCleaner/Qml/Main.qml
+/qt/qml/QuantaCleaner/Qml/MainPage.qml
+/qt/qml/QuantaCleaner/Qml/ParametersPage.qml
+/qt/qml/QuantaCleaner/Qml/SettingsPage.qml

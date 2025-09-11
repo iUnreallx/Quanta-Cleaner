@@ -1,0 +1,58 @@
+{
+    "classes": [
+        {
+            "className": "WinSxSCleaner",
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "mode",
+                            "type": "CleanupMode"
+                        },
+                        {
+                            "name": "isNotTap",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "cleanWinSXS",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "WinSxSCleaner",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "cleanupWinSXSPoint",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "cleanupWinSXSPointTap",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "winsxscleaner.h",
+    "outputRevision": 68
+}

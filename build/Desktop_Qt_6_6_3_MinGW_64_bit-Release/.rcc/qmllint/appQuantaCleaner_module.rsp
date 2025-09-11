@@ -1,0 +1,10 @@
+-I
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release
+-I
+D:/Qt/6.6.3/mingw_64/./qml
+--resource
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/qmake_QuantaCleaner.qrc
+--resource
+D:/qt_apps/QuantaCleaner/build/Desktop_Qt_6_6_3_MinGW_64_bit-Release/.rcc/appQuantaCleaner_raw_qml_0.qrc
+--module
+QuantaCleaner

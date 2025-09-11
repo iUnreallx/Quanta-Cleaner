@@ -1,0 +1,86 @@
+{
+    "classes": [
+        {
+            "className": "WinTempClean",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "name": "CleanMode",
+                    "values": [
+                        "FAST",
+                        "NORMAL",
+                        "DEBUG"
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "mode",
+                            "type": "CleanMode"
+                        },
+                        {
+                            "name": "isNotTap",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "cleanWinTemp",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "calculateWinTempRemovableSize",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "WinTempClean",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "winTempCleaned",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "winTempCleanedTap",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "sizeDelete",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "wintempclean.h",
+    "outputRevision": 68
+}
