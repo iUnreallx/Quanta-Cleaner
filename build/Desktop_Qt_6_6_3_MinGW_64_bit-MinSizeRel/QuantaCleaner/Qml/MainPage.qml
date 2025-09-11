@@ -210,19 +210,19 @@ Rectangle {
 
 
         gradient: Gradient {
-            orientation: Gradient.Horizontal  // Left-to-right gradient
+            orientation: Gradient.Horizontal
 
             GradientStop {
                 position: 0.3
-                color: "#111110"  // Starting color
+                color: "#111110"
             }
             GradientStop {
                 position: 0.78
-                color: "#5F2020"  // Middle color
+                color: "#5F2020"
             }
             GradientStop {
                 position: 1.0
-                color: "#5F2020"  // Extend color to 100% for consistency
+                color: "#5F2020"
             }
         }
     }
@@ -277,10 +277,11 @@ Rectangle {
         id: button
         width: Math.min(Math.max(Window.width * 0.3, 200), 285)
         height: width
-        radius: 80
+        radius: 100
         anchors.centerIn: parent
         anchors.verticalCenterOffset: mainpage.isOverrideMain ? 45 : 25
         anchors.horizontalCenterOffset: 105
+        color: "#4A2727"
         z : 5
 
         Behavior on anchors.verticalCenterOffset {
@@ -290,20 +291,7 @@ Rectangle {
             }
         }
 
-        gradient: Gradient {
-            GradientStop {
-                color: mainpage.isHovered ? "#0f2364" : "#060064"
-                position: 0.0
-            }
-            GradientStop {
-                color: mainpage.isHovered ? "#7d2319" : "#641400"
-                position: 0.5
-            }
-            GradientStop {
-                color: mainpage.isHovered ? "#ff2323" : "#ff0000"
-                position: 1.0
-            }
-        }
+
 
         MouseArea {
             anchors.fill: parent
