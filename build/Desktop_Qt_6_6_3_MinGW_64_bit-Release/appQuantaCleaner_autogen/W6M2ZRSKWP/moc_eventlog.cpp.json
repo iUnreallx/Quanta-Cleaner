@@ -1,0 +1,86 @@
+{
+    "classes": [
+        {
+            "className": "EventLog",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "name": "EventLogMode",
+                    "values": [
+                        "FAST",
+                        "NORMAL",
+                        "DEBUG"
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "mode",
+                            "type": "EventLogMode"
+                        },
+                        {
+                            "name": "isNotTap",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "cleanEventLogs",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "calculateEventLogRemovableSize",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "EventLog",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "eventLogsCleaned",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "eventLogsCleanedTap",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "result",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "sizeDelete",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "eventlog.h",
+    "outputRevision": 68
+}
