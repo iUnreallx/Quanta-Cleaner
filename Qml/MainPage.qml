@@ -21,7 +21,16 @@ Rectangle {
     property bool fastRespawnProgressBar: false
     property bool resizeAnimationProgressBar: false
 
-    onQuantaTextChanged: quanta_text.text = quantaText
+    property int quantaTextChangeCount: 0
+
+    onQuantaTextChanged: {
+        quantaTextChangeCount++
+        if (quantaTextChangeCount >= 2) {
+            quanta_text.text = quantaText
+            quanta_text.visible = true
+            trashImage.visible = false
+        }
+    }
 
     onWidthChanged: handleResize()
     onHeightChanged: handleResize()
@@ -50,16 +59,12 @@ Rectangle {
         height: mainpage.isOverrideMain ? 75 : 45
         color:  quanta_settings.settings_theme === 2 ? "#111111" : "#F0F0F0"
         radius: 10
-        border.color: quanta_settings.settings_theme === 2 ? "#322825" : "transparent"
+        // border.color: quanta_settings.settings_theme === 2 ? "#322825" : "transparent"
         anchors.left: parent.left
         anchors.leftMargin: 227
         z: 5
 
-        Behavior on height {
-            NumberAnimation {
-                duration: (!animationEnabled || !initialLoadComplete) ? 0 : 300
-            }
-        }
+        // Убрана Behavior on height для мгновенного изменения размера
 
         Rectangle {
             id: progressBackground
@@ -71,7 +76,7 @@ Rectangle {
             height: 25
             color: "#29211E"
             radius: 10
-            border.color: quanta_settings.settings_theme === 2 ? "#5C3833" : "transparent"
+            // border.color: quanta_settings.settings_theme === 2 ? "#5C3833" : "transparent"
 
             Rectangle {
                 id: progressBar
@@ -84,12 +89,7 @@ Rectangle {
                     ? ((main_window.taskCompleted / quanta_settings.global_functions) * (progressBackground.width - 10)) + 10
                     : 0
 
-                Behavior on width {
-                    NumberAnimation {
-                        duration: !animationEnabled ? 0 : fastRespawnProgressBar ? 0 : (resizeAnimationProgressBar ? 0 : 300)
-                        easing.type: Easing.OutCubic
-                    }
-                }
+                // Убрана Behavior on width для мгновенного изменения ширины
             }
         }
 
@@ -106,11 +106,7 @@ Rectangle {
             font.bold: true
             opacity: parent.width < 460 ? 0 : (mainpage.isOverrideMain ? 0.9: 0)
 
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: (!animationEnabled || !initialLoadComplete) ? 0 : ( mainpage.isOverrideMain  ? (resizeAnimationProgressBar ? 0: 130) : (resizeAnimationProgressBar ? 0:320));
-                    easing.type: Easing.InOutQuad }
-            }
+            // Убрана Behavior on opacity для мгновенного изменения прозрачности
         }
 
 
@@ -141,11 +137,7 @@ Rectangle {
             font.bold: true
             opacity: mainpage.isOverrideMain ? 0.9: 0
 
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: (!animationEnabled || !initialLoadComplete) ? 0 : ( mainpage.isOverrideMain  ? 130 : 320);
-                    easing.type: Easing.InOutQuad }
-            }
+            // Убрана Behavior on opacity для мгновенного изменения прозрачности
         }
 
         Rectangle {
@@ -185,12 +177,7 @@ Rectangle {
                 }
             }
 
-            Behavior on angle {
-                NumberAnimation {
-                    duration: (!animationEnabled || !initialLoadComplete) ? 0 : 300
-                    easing.type: Easing.InOutQuad
-                }
-            }
+            // Убрана Behavior on angle для мгновенного поворота
         }
     }
 
@@ -281,17 +268,20 @@ Rectangle {
         anchors.centerIn: parent
         anchors.verticalCenterOffset: mainpage.isOverrideMain ? 45 : 25
         anchors.horizontalCenterOffset: 105
-        color: "#4A2727"
+        color: "#29211E"
         z : 5
 
-        Behavior on anchors.verticalCenterOffset {
-            NumberAnimation {
-                duration: (!animationEnabled || !initialLoadComplete) ? 0 : 300
-                easing.type: Easing.InOutQuad
-            }
+        // Убрана Behavior on anchors.verticalCenterOffset для мгновенного смещения
+
+        Image {
+            id: trashImage
+            source: "assets/images/mainpage/trash.png"
+            anchors.centerIn: parent
+            width: button.width - 100
+            height: width
+            fillMode: Image.PreserveAspectFit
+            visible: true
         }
-
-
 
         MouseArea {
             anchors.fill: parent
@@ -390,9 +380,9 @@ Rectangle {
             }
 
             function isInsideRoundedRect(x, y) {
-                    var centerX = width / 2;  // Use MouseArea's width/height directly (local coords)
+                    var centerX = width / 2;
                     var centerY = height / 2;
-                    var radius = Math.min(width, height) / 2;  // Ensures circle even if width != height
+                    var radius = Math.min(width, height) / 2;
                     var dx = x - centerX;
                     var dy = y - centerY;
                     return (dx * dx + dy * dy <= radius * radius);
@@ -406,6 +396,7 @@ Rectangle {
             font.bold: true
             color: "white"
             anchors.centerIn: parent
+            visible: false
         }
     }
 }
