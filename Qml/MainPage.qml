@@ -57,14 +57,11 @@ Rectangle {
         anchors.topMargin: 12
         width: parent.width - 242
         height: mainpage.isOverrideMain ? 75 : 45
-        color:  quanta_settings.settings_theme === 2 ? "#111111" : "#F0F0F0"
+        color: quanta_settings.settings_theme === 2 ? "#111111" : "#F0F0F0"
         radius: 10
-        // border.color: quanta_settings.settings_theme === 2 ? "#322825" : "transparent"
         anchors.left: parent.left
         anchors.leftMargin: 227
         z: 5
-
-        // Убрана Behavior on height для мгновенного изменения размера
 
         Rectangle {
             id: progressBackground
@@ -76,7 +73,6 @@ Rectangle {
             height: 25
             color: "#29211E"
             radius: 10
-            // border.color: quanta_settings.settings_theme === 2 ? "#5C3833" : "transparent"
 
             Rectangle {
                 id: progressBar
@@ -89,12 +85,17 @@ Rectangle {
                     ? ((main_window.taskCompleted / quanta_settings.global_functions) * (progressBackground.width - 10)) + 10
                     : 0
 
-                // Убрана Behavior on width для мгновенного изменения ширины
+                Behavior on width {
+                    NumberAnimation {
+                        duration: !animationEnabled ? 0 : fastRespawnProgressBar ? 0 : (resizeAnimationProgressBar ? 0 : 300)
+                        easing.type: Easing.OutCubic
+                    }
+                }
             }
         }
 
         Text {
-            id:  dltText
+            id: dltText
             anchors.top: parent.top
             anchors.topMargin: 45
             anchors.right: parent.right
@@ -104,11 +105,8 @@ Rectangle {
             font.family: cleanerFontRegular.name
             font.pixelSize: 16
             font.bold: true
-            opacity: parent.width < 460 ? 0 : (mainpage.isOverrideMain ? 0.9: 0)
-
-            // Убрана Behavior on opacity для мгновенного изменения прозрачности
+            opacity: parent.width < 460 ? 0 : (mainpage.isOverrideMain ? 0.9 : 0)
         }
-
 
         Text {
             id: progressText
@@ -135,9 +133,7 @@ Rectangle {
             font.family: cleanerFontRegular.name
             font.pixelSize: 16
             font.bold: true
-            opacity: mainpage.isOverrideMain ? 0.9: 0
-
-            // Убрана Behavior on opacity для мгновенного изменения прозрачности
+            opacity: mainpage.isOverrideMain ? 0.9 : 0
         }
 
         Rectangle {
@@ -176,11 +172,8 @@ Rectangle {
                     angle: overrideToggleMain.angle
                 }
             }
-
-            // Убрана Behavior on angle для мгновенного поворота
         }
     }
-
 
     function getActiveBlockCount() {
         let count = 0;
@@ -194,27 +187,13 @@ Rectangle {
 
     Rectangle {
         anchors.fill: parent
-
-
         gradient: Gradient {
             orientation: Gradient.Horizontal
-
-            GradientStop {
-                position: 0.3
-                color: "#111110"
-            }
-            GradientStop {
-                position: 0.78
-                color: "#5F2020"
-            }
-            GradientStop {
-                position: 1.0
-                color: "#5F2020"
-            }
+            GradientStop { position: 0.3; color: "#111110" }
+            GradientStop { position: 0.78; color: "#5F2020" }
+            GradientStop { position: 1.0; color: "#5F2020" }
         }
     }
-
-
 
     ParticleSystem {
         id: particleSystem
@@ -223,42 +202,6 @@ Rectangle {
         visible: quanta_settings.settings_animation
         running: quanta_settings.settings_animation
     }
-
-    // Emitter {
-    //     system: particleSystem
-    //     visible: quanta_settings.settings_animation
-    //     emitRate: 20
-    //     lifeSpan: 70000
-    //     size: 8
-    //     sizeVariation: 4
-    //     width: 2
-    //     height: 2
-    //     z: -1
-    //     startTime: 70000
-    //     anchors.left: parent.left
-    //     anchors.bottom: parent.bottom
-
-    //     velocity: AngleDirection {
-    //         angle: -45
-    //         angleVariation: 100
-    //         magnitude: 35
-    //         magnitudeVariation: 15
-    //     }
-    // }
-
-    // ImageParticle {
-    //     system: particleSystem
-    //     visible: quanta_settings.settings_animation
-    //     anchors.fill: parent
-    //     source: "assets/images/circle.png"
-    //     color: "#0052DF"
-    //     colorVariation: 0.25
-    //     z: 2
-    //     entryEffect: ImageParticle.None
-
-    //     opacity: 0.9
-    //     alphaVariation: 0.25
-    // }
 
     Rectangle {
         id: button
@@ -269,15 +212,13 @@ Rectangle {
         anchors.verticalCenterOffset: mainpage.isOverrideMain ? 45 : 25
         anchors.horizontalCenterOffset: 105
         color: "#29211E"
-        z : 5
-
-        // Убрана Behavior on anchors.verticalCenterOffset для мгновенного смещения
+        z: 5
 
         Image {
             id: trashImage
             source: "assets/images/mainpage/trash.png"
             anchors.centerIn: parent
-            width: button.width - 100
+            width: button.width - 130
             height: width
             fillMode: Image.PreserveAspectFit
             visible: true
@@ -286,7 +227,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            // 0 - Fast mode, 1 - Normal mode (without time menegment), 2 - Debug Mode - with time menegment
             onClicked: (mouse) => {
                 if (isInsideRoundedRect(mouse.x, mouse.y)) {
                     if (!quanta_settings.running_clean) {
@@ -305,67 +245,64 @@ Rectangle {
                             if (!quanta_settings.parametr_block1_active) {
                                 tmp.clearTempFolder(2, false);
                             }
-                           if (!quanta_settings.parametr_block2_active) {
-                               winsxs.cleanWinSXS(2, false);
-                           }
-                           if (!quanta_settings.parametr_block3_active) {
-                               wintemp.cleanWinTemp(2, false);
-                           }
-                           if (!quanta_settings.parametr_block4_active) {
-                               fontQ.fontCacheClean(2, false);
-                           }
-                           if (!quanta_settings.parametr_block5_active) {
-                               binclear.cleanRecycleBin(2, false);
-                           }
-
-                           if (!quanta_settings.parametr_block6_active) {
-                               updateQ.updateClean(2, false);
-                           }
-                           if (!quanta_settings.parametr_block7_active) {
-                               eventQ.cleanEventLogs(2, false);
-                           }
-                           if (!quanta_settings.parametr_block8_active) {
-                               dmp.cleanCrashDumps(2, false);
-                           }
-                           if (!quanta_settings.parametr_block9_active) {
-                               pointQ.cleanRestorePoints(2, false);
-                           }
-
-                           if (settings_count === 0) {
-                               quanta_settings.running_clean = false;
-                           }
-
-                               } else {
-                                  if (!quanta_settings.parametr_block1_active) {
-                                      tmp.clearTempFolder(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block2_active) {
-                                      winsxs.cleanWinSXS(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block3_active) {
-                                      wintemp.cleanWinTemp(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block4_active) {
-                                      fontQ.fontCacheClean(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block5_active) {
-                                      binclear.cleanRecycleBin(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block6_active) {
-                                      updateQ.updateClean(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block7_active) {
-                                      eventQ.cleanEventLogs(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block8_active) {
-                                      dmp.cleanCrashDumps(0, false);
-                                  }
-                                  if (!quanta_settings.parametr_block9_active) {
-                                      pointQ.cleanRestorePoints(0, false);
-                                }
-                             }
-                         }
-                     }
+                            if (!quanta_settings.parametr_block2_active) {
+                                winsxs.cleanWinSXS(2, false);
+                            }
+                            if (!quanta_settings.parametr_block3_active) {
+                                wintemp.cleanWinTemp(2, false);
+                            }
+                            if (!quanta_settings.parametr_block4_active) {
+                                fontQ.fontCacheClean(2, false);
+                            }
+                            if (!quanta_settings.parametr_block5_active) {
+                                binclear.cleanRecycleBin(2, false);
+                            }
+                            if (!quanta_settings.parametr_block6_active) {
+                                updateQ.updateClean(2, false);
+                            }
+                            if (!quanta_settings.parametr_block7_active) {
+                                eventQ.cleanEventLogs(2, false);
+                            }
+                            if (!quanta_settings.parametr_block8_active) {
+                                dmp.cleanCrashDumps(2, false);
+                            }
+                            if (!quanta_settings.parametr_block9_active) {
+                                pointQ.cleanRestorePoints(2, false);
+                            }
+                            if (settings_count === 0) {
+                                quanta_settings.running_clean = false;
+                            }
+                        } else {
+                            if (!quanta_settings.parametr_block1_active) {
+                                tmp.clearTempFolder(0, false);
+                            }
+                            if (!quanta_settings.parametr_block2_active) {
+                                winsxs.cleanWinSXS(0, false);
+                            }
+                            if (!quanta_settings.parametr_block3_active) {
+                                wintemp.cleanWinTemp(0, false);
+                            }
+                            if (!quanta_settings.parametr_block4_active) {
+                                fontQ.fontCacheClean(0, false);
+                            }
+                            if (!quanta_settings.parametr_block5_active) {
+                                binclear.cleanRecycleBin(0, false);
+                            }
+                            if (!quanta_settings.parametr_block6_active) {
+                                updateQ.updateClean(0, false);
+                            }
+                            if (!quanta_settings.parametr_block7_active) {
+                                eventQ.cleanEventLogs(0, false);
+                            }
+                            if (!quanta_settings.parametr_block8_active) {
+                                dmp.cleanCrashDumps(0, false);
+                            }
+                            if (!quanta_settings.parametr_block9_active) {
+                                pointQ.cleanRestorePoints(0, false);
+                            }
+                        }
+                    }
+                }
             }
 
             onPositionChanged: (mouse) => {
@@ -380,13 +317,13 @@ Rectangle {
             }
 
             function isInsideRoundedRect(x, y) {
-                    var centerX = width / 2;
-                    var centerY = height / 2;
-                    var radius = Math.min(width, height) / 2;
-                    var dx = x - centerX;
-                    var dy = y - centerY;
-                    return (dx * dx + dy * dy <= radius * radius);
-                }
+                var centerX = width / 2;
+                var centerY = height / 2;
+                var radius = Math.min(width, height) / 2;
+                var dx = x - centerX;
+                var dy = y - centerY;
+                return (dx * dx + dy * dy <= radius * radius);
+            }
         }
 
         Label {
