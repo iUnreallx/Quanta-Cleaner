@@ -98,6 +98,7 @@ qt_add_qml_module(appQuantaCleaner
         Qml/assets/images/github_white.png
         Qml/assets/images/telegram_black.png
         Qml/assets/images/telegram_white.png
+        Qml/assets/images/mainpage/trash.png
 )
 
 set(TS_FILES
