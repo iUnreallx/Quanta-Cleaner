@@ -4,7 +4,7 @@ project(QuantaCleaner VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Concurrent Core LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Quick Concurrent Core)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -101,12 +101,6 @@ qt_add_qml_module(appQuantaCleaner
         Qml/assets/images/mainpage/trash.png
 )
 
-set(TS_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/localization/quanta_en.ts
-    ${CMAKE_CURRENT_SOURCE_DIR}/localization/quanta_ru.ts
-)
-
-qt6_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 set_target_properties(appQuantaCleaner PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
