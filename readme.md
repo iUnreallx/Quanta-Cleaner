@@ -71,4 +71,4 @@ Whether it's fixing bugs, suggesting features, improving UI, or just sharing ide
 👉 [Start contributing here](https://github.com/iUnreallx/Quanta-Cleaner)
 
 
-Star this please <3
+<3
