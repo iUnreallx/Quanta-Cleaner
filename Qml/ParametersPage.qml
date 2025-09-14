@@ -717,7 +717,6 @@ Rectangle {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 tmp.clearTempFolder(2, true)
-
                             }
                         }
 
@@ -804,8 +803,6 @@ Rectangle {
                             visible:  opacity > 0
                             opacity: parametrs.is_temp_override ? 1 : 0
                             z: 1
-
-
 
                             MouseArea {
                                 anchors.fill: parent
@@ -909,8 +906,7 @@ Rectangle {
                                     onClicked: {
                                         logsviewer.cleanLogPath("tempLog.txt")
                                         logsviewer.loadLogs("tempLog.txt")
-                                        addNotification("Лог времменых файлов (Temp)\nуспешно очищен")
-                                        // logText.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
+                                        addNotification(qsTr("TempLogDelete"))
                                     }
                                 }
 
@@ -1457,7 +1453,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("WinSxSCleaner.txt")
                                             logsviewer.loadLogs("WinSxSCleaner.txt")
-                                            addNotification("Лог WinSxS\nуспешно очищен")
+                                            addNotification(qsTr("WinSxSLogDelete"))
                                             logText2.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -2005,7 +2001,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("winTempClean.txt")
                                             logsviewer.loadLogs("winTempClean.txt")
-                                            addNotification("Лог временных файлов winTemp\nуспешно очищен")
+                                            addNotification(qsTr("WinTempLogDelete"))
                                             logText3.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -2552,7 +2548,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("fontCache.txt")
                                             logsviewer.loadLogs("fontCache.txt")
-                                            addNotification("Лог кеша шрифтов\nуспешно очищен")
+                                            addNotification(qsTr("FontLogDelete"))
                                             logText4.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -3099,7 +3095,8 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("recycleLog.txt")
                                             logsviewer.loadLogs("recycleLog.txt")
-                                            addNotification("Лог корзины\nуспешно очищен")
+                                            addNotification(qsTr("BinLogDelete"))
+                                            addNotification(qsTr("TempLogDelete"))
                                             logText5.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -3646,7 +3643,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("updateWinLog.txt")
                                             logsviewer.loadLogs("updateWinLog.txt")
-                                            addNotification("Лог кеша обновлений\nуспешно очищен")
+                                            addNotification(qsTr("UpdateLogDelete"))
                                             logText6.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -4193,7 +4190,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("eventLog.txt")
                                             logsviewer.loadLogs("eventLog.txt")
-                                            addNotification("Лог журнала событий\nуспешно очищен")
+                                            addNotification(qsTr("EventLogDelete"))
                                             logText7.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -4735,7 +4732,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("crashDump.txt")
                                             logsviewer.loadLogs("crashDump.txt")
-                                            addNotification("Лог дампа ошибок\nуспешно очищен")
+                                            addNotification(qsTr("DumpLogDelete"))
                                             logText8.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -5277,7 +5274,7 @@ Rectangle {
                                         onClicked: {
                                             logsviewer.cleanLogPath("PointCleaner.txt")
                                             logsviewer.loadLogs("PointCleaner.txt")
-                                            addNotification("Лог точки восстановления\nуспешно очищен")
+                                            addNotification(qsTr("PointLogDelete"))
                                             logText9.text = (logsviewer && logsviewer.logs.length > 0) ? logsviewer.logs.join("\n") : "Файл пуст"
                                         }
                                     }
@@ -7070,7 +7067,7 @@ Rectangle {
                            cursorShape: Qt.PointingHandCursor
                            onClicked: {
                                folderHelper.deleteLogsFolder()
-                               main_window.addNotification("Успешно удалено!")
+                               main_window.addNotification(qsTr("DeleteSucess"))
                            }
                        }
 

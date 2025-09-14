@@ -32,8 +32,6 @@ Rectangle {
         }
     }
 
-
-
     onWidthChanged: handleResize()
     onHeightChanged: handleResize()
 
@@ -379,6 +377,4 @@ Rectangle {
             visible: false
         }
     }
-
-
 }
