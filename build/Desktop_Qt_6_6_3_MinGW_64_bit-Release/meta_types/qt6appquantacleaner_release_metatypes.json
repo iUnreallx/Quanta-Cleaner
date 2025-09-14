@@ -1,0 +1,944 @@
+[
+    {
+        "classes": [
+            {
+                "className": "ClipboardHelper",
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "text",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "copyText",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "ClipboardHelper",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "ClipboardHelper.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "LogsViewer",
+                "methods": [
+                    {
+                        "access": "public",
+                        "name": "clearLogs",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "path",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "loadLogs",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "LogPath",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "cleanLogPath",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "logs",
+                        "notify": "logsChanged",
+                        "read": "logs",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QStringList",
+                        "user": false
+                    }
+                ],
+                "qualifiedClassName": "LogsViewer",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "logsChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "LogsViewer.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "AppController",
+                "methods": [
+                    {
+                        "access": "public",
+                        "name": "addToAutostart",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "removeFromAutostart",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "lang",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "setLanguage",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "languageVersion",
+                        "notify": "languageVersionChanged",
+                        "read": "languageVersion",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "int",
+                        "user": false
+                    }
+                ],
+                "qualifiedClassName": "AppController",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "languageChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "languageVersionChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "appcontroller.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "CrashDump",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "CrashDumpMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "CrashDumpMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanCrashDumps",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateCrashDumpRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "CrashDump",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "crashDumpsCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "crashDumpsCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "crashdump.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "EventLog",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "EventLogMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "EventLogMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanEventLogs",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateEventLogRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "EventLog",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "eventLogsCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "eventLogsCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "eventlog.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "FontCache",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "FontCacheMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "FontCacheMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "fontCacheClean",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateFontCacheRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "FontCache",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "fontCacheCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "fontCacheCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "fontcache.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "FolderOpener",
+                "methods": [
+                    {
+                        "access": "public",
+                        "name": "openLogsFolder",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "deleteLogsFolder",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "FolderOpener",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "openFolder.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "PointCleaner",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "RestorePointMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "RestorePointMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanRestorePoints",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateRestorePointRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "PointCleaner",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "restorePointsCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "restorePointsCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "point.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "recycleBinCleaner",
+                "enums": [
+                    {
+                        "isClass": true,
+                        "isFlag": false,
+                        "name": "RecycleBinMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "RecycleBinMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanRecycleBin",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateRecycleBinRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "recycleBinCleaner",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "recycleBinCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "recycleBinCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "recyclebincleaner.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "TempCleaner",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "TempCleanMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "name": "calculateTempRemovableSize",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "TempCleanMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "clearTempFolder",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "TempCleaner",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "tempCleanResult",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "tempCleanResultTap",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "tempcleaner.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "WinSxSCleaner",
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "CleanupMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanWinSXS",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "WinSxSCleaner",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "cleanupWinSXSPoint",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "cleanupWinSXSPointTap",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "winsxscleaner.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "WinTempClean",
+                "enums": [
+                    {
+                        "isClass": true,
+                        "isFlag": false,
+                        "name": "CleanMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "CleanMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "cleanWinTemp",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateWinTempRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "WinTempClean",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "winTempCleaned",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "winTempCleanedTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "wintempclean.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "className": "WinUpdateCache",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "name": "WinUpdateCacheMode",
+                        "values": [
+                            "FAST",
+                            "NORMAL",
+                            "DEBUG"
+                        ]
+                    }
+                ],
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "mode",
+                                "type": "WinUpdateCacheMode"
+                            },
+                            {
+                                "name": "isNotTap",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "updateClean",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "calculateUpdateCacheRemovableSize",
+                        "returnType": "void"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "WinUpdateCache",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "getterClean",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "getterCleanTap",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "result",
+                                "type": "QString"
+                            }
+                        ],
+                        "name": "sizeDelete",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "winupdatecache.h",
+        "outputRevision": 68
+    }
+]
