@@ -258,6 +258,10 @@ and Behavior</translation>
         <source>RemoveLogs</source>
         <translation>Delete logs</translation>
     </message>
+    <message>
+        <source>DeleteSucess</source>
+        <translation>Delete Sucess!</translation>
+    </message>
 </context>
 
 

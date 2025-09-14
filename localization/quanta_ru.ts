@@ -260,6 +260,11 @@ WinSxS</translation>
         <source>RemoveLogs</source>
         <translation>Удалить логи</translation>
     </message>
+    <message>
+        <source>DeleteSucess</source>
+        <translation>Успешно удалено!</translation>
+    </message>
+
 </context>
 
 
