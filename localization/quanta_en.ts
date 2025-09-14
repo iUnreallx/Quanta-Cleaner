@@ -262,6 +262,55 @@ and Behavior</translation>
         <source>DeleteSucess</source>
         <translation>Delete Sucess!</translation>
     </message>
+
+
+    <message>
+    <source>TempLogDelete</source>
+    <translation>Temporary Files Log (Temp)
+successfully cleaned</translation>
+</message>
+<message>
+    <source>WinSxSLogDelete</source>
+    <translation>WinSxS Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>WinTempLogDelete</source>
+    <translation>WinTemp Files Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>FontLogDelete</source>
+    <translation>Font Cache Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>BinLogDelete</source>
+    <translation>Recycle Bin Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>UpdateLogDelete</source>
+    <translation>Update Cache Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>EventLogDelete</source>
+    <translation>Event Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>DumpLogDelete</source>
+    <translation>Crash Dump Log
+successfully cleaned</translation>
+</message>
+<message>
+    <source>PointLogDelete</source>
+    <translation>Restore Point Log
+successfully cleaned</translation>
+</message>
+
+
 </context>
 
 

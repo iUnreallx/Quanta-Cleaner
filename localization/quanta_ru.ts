@@ -265,6 +265,52 @@ WinSxS</translation>
         <translation>Успешно удалено!</translation>
     </message>
 
+    <message>
+        <source>TempLogDelete</source>
+        <translation>Лог времменых файлов (Temp)
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>WinSxSLogDelete</source>
+        <translation>Лог WinSxS
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>WinTempLogDelete</source>
+        <translation>Лог временных файлов winTemp
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>FontLogDelete</source>
+        <translation>Лог кеша шрифтов
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>BinLogDelete</source>
+        <translation>Лог корзины
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>UpdateLogDelete</source>
+        <translation>Лог кеша обновлений
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>EventLogDelete</source>
+        <translation>Лог журнала событий
+успешно очищен</translation>
+    </message>    
+    <message>
+        <source>DumpLogDelete</source>
+        <translation>Лог дампа ошибок
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>PointLogDelete</source>
+        <translation>Лог точки восстановления
+успешно очищен</translation>
+    </message>
+
 </context>
 
 
