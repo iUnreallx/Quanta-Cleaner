@@ -1,2 +1,4 @@
-build
-CMakeLists.txt.user
+build/
+CMakeLists.txt.user*
+*.autosave
+.qtcreator/
