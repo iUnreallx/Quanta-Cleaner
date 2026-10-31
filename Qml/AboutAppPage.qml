@@ -117,7 +117,7 @@ Item {
                     Text {
                         id: ver
                         anchors.centerIn: parent
-                        text: "v1.1.0"
+                        text: "v1.2.0"
                         color: theme.txt2
                         font.family: theme.monoFamily
                         font.pixelSize: 12
