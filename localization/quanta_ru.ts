@@ -74,8 +74,335 @@
     	<source>ClearedNotify</source>
   	<translation>Очищено</translation>
     </message>
-
-
+    <message>
+        <source>Overview</source>
+        <translation>Обзор</translation>
+    </message>
+    <message>
+        <source>What to clean</source>
+        <translation>Что чистим</translation>
+    </message>
+    <message>
+        <source>About app</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <source>Can be cleaned</source>
+        <translation>Можно очистить</translation>
+    </message>
+    <message>
+        <source>Clean</source>
+        <translation>Очистить</translation>
+    </message>
+    <message>
+        <source>Cleaning</source>
+        <translation>Очищаем</translation>
+    </message>
+    <message>
+        <source>All clean</source>
+        <translation>Чисто</translation>
+    </message>
+    <message>
+        <source>Click to enable</source>
+        <translation>Нажми, чтобы включить</translation>
+    </message>
+    <message>
+        <source>Click to disable</source>
+        <translation>Нажми, чтобы выключить</translation>
+    </message>
+    <message>
+        <source>Click to clean</source>
+        <translation>Нажми, чтобы очистить</translation>
+    </message>
+    <message>
+        <source>categories</source>
+        <translation>категорий</translation>
+    </message>
+    <message>
+        <source>Cleaning complete</source>
+        <translation>Очистка завершена</translation>
+    </message>
+    <message>
+        <source>Freed</source>
+        <translation>Освобождено</translation>
+    </message>
+    <message>
+        <source>now</source>
+        <translation>сейчас</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation>с</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translation>Ничего не выбрано</translation>
+    </message>
+    <message>
+        <source>Temp files</source>
+        <translation>Временные файлы</translation>
+    </message>
+    <message>
+        <source>WinSxS</source>
+        <translation>WinSxS</translation>
+    </message>
+    <message>
+        <source>Windows Temp</source>
+        <translation>Windows Temp</translation>
+    </message>
+    <message>
+        <source>Font cache</source>
+        <translation>Кэш шрифтов</translation>
+    </message>
+    <message>
+        <source>Recycle Bin</source>
+        <translation>Корзина</translation>
+    </message>
+    <message>
+        <source>Windows Update</source>
+        <translation>Обновления Windows</translation>
+    </message>
+    <message>
+        <source>Event logs</source>
+        <translation>Журналы событий</translation>
+    </message>
+    <message>
+        <source>Crash dumps</source>
+        <translation>Дампы ошибок</translation>
+    </message>
+    <message>
+        <source>Restore points</source>
+        <translation>Точки восстановления</translation>
+    </message>
+    <message>
+        <source>InfoTemp</source>
+        <translation>Остатки в пользовательской папке Temp.</translation>
+    </message>
+    <message>
+        <source>InfoWinSxS</source>
+        <translation>Старые копии компонентов Windows. Нужны права администратора.</translation>
+    </message>
+    <message>
+        <source>InfoWinTemp</source>
+        <translation>Системная папка Windows\Temp: кэши установок и остатки.</translation>
+    </message>
+    <message>
+        <source>InfoFont</source>
+        <translation>Кэш шрифтов Windows. Пересоздаётся автоматически.</translation>
+    </message>
+    <message>
+        <source>InfoBin</source>
+        <translation>Всё содержимое корзины.</translation>
+    </message>
+    <message>
+        <source>InfoUpdate</source>
+        <translation>Скачанные файлы Windows Update.</translation>
+    </message>
+    <message>
+        <source>InfoEvent</source>
+        <translation>Журналы событий Windows.</translation>
+    </message>
+    <message>
+        <source>InfoDump</source>
+        <translation>Дампы памяти после системных сбоев.</translation>
+    </message>
+    <message>
+        <source>InfoPoint</source>
+        <translation>Старые точки восстановления системы. По умолчанию выключено, нужны права администратора.</translation>
+    </message>
+    <message>
+        <source>Pick the categories to clean</source>
+        <translation>Выбери категории для очистки</translation>
+    </message>
+    <message>
+        <source>To clean</source>
+        <translation>К очистке</translation>
+    </message>
+    <message>
+        <source>Spot clean</source>
+        <translation>Точечная очистка</translation>
+    </message>
+    <message>
+        <source>Open log</source>
+        <translation>Открыть лог</translation>
+    </message>
+    <message>
+        <source>Clear log</source>
+        <translation>Очистить лог</translation>
+    </message>
+    <message>
+        <source>Include in cleaning</source>
+        <translation>Включить в очистку</translation>
+    </message>
+    <message>
+        <source>Log is empty</source>
+        <translation>Лог пуст</translation>
+    </message>
+    <message>
+        <source>Logs</source>
+        <translation>Логи</translation>
+    </message>
+    <message>
+        <source>Open logs folder</source>
+        <translation>Открыть папку логов</translation>
+    </message>
+    <message>
+        <source>Delete all logs</source>
+        <translation>Удалить все логи</translation>
+    </message>
+    <message>
+        <source>Make Quanta yours</source>
+        <translation>Сделай Quanta своей</translation>
+    </message>
+    <message>
+        <source>Accent color</source>
+        <translation>Акцентный цвет</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>Синий</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>Фиолетовый</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>Розовый</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation>Красный</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>Оранжевый</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation>Жёлтый</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>Зелёный</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>Бирюзовый</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Тёмная</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translation>Светлая</translation>
+    </message>
+    <message>
+        <source>Behavior</source>
+        <translation>Поведение</translation>
+    </message>
+    <message>
+        <source>Launch at startup</source>
+        <translation>Автозапуск</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Уведомления</translation>
+    </message>
+    <message>
+        <source>Debug mode</source>
+        <translation>Режим отладки</translation>
+    </message>
+    <message>
+        <source>Report an error</source>
+        <translation>Сообщить об ошибке</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
+    </message>
+    <message>
+        <source>Cleans temp files, caches and Windows junk in one click.</source>
+        <translation>Чистит временные файлы, кэш и мусор Windows в один клик.</translation>
+    </message>
+    <message>
+        <source>MB freed</source>
+        <translation>МБ освобождено</translation>
+    </message>
+    <message>
+        <source>cleanups</source>
+        <translation>очисток</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <source>Animations</source>
+        <translation>Анимации</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>Успешно скопировано!</translation>
+    </message>
+    <message>
+        <source>DeleteSucess</source>
+        <translation>Успешно удалено!</translation>
+    </message>
+    <message>
+        <source>TempLogDelete</source>
+        <translation>Лог времменых файлов (Temp)
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>WinSxSLogDelete</source>
+        <translation>Лог WinSxS
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>WinTempLogDelete</source>
+        <translation>Лог временных файлов winTemp
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>FontLogDelete</source>
+        <translation>Лог кеша шрифтов
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>BinLogDelete</source>
+        <translation>Лог корзины
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>UpdateLogDelete</source>
+        <translation>Лог кеша обновлений
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>EventLogDelete</source>
+        <translation>Лог журнала событий
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>DumpLogDelete</source>
+        <translation>Лог дампа ошибок
+успешно очищен</translation>
+    </message>
+    <message>
+        <source>PointLogDelete</source>
+        <translation>Лог точки восстановления
+успешно очищен</translation>
+    </message>
 </context>
 
 <context>

@@ -73,7 +73,335 @@ recovery points on</translation>
     	<source>ClearedNotify</source>
   	<translation>Cleared</translation>
     </message>
-
+    <message>
+        <source>Overview</source>
+        <translation>Overview</translation>
+    </message>
+    <message>
+        <source>What to clean</source>
+        <translation>What to clean</translation>
+    </message>
+    <message>
+        <source>About app</source>
+        <translation>About app</translation>
+    </message>
+    <message>
+        <source>Can be cleaned</source>
+        <translation>Can be cleaned</translation>
+    </message>
+    <message>
+        <source>Clean</source>
+        <translation>Clean</translation>
+    </message>
+    <message>
+        <source>Cleaning</source>
+        <translation>Cleaning</translation>
+    </message>
+    <message>
+        <source>All clean</source>
+        <translation>All clean</translation>
+    </message>
+    <message>
+        <source>Click to enable</source>
+        <translation>Click to enable</translation>
+    </message>
+    <message>
+        <source>Click to disable</source>
+        <translation>Click to disable</translation>
+    </message>
+    <message>
+        <source>Click to clean</source>
+        <translation>Click to clean</translation>
+    </message>
+    <message>
+        <source>categories</source>
+        <translation>categories</translation>
+    </message>
+    <message>
+        <source>Cleaning complete</source>
+        <translation>Cleaning complete</translation>
+    </message>
+    <message>
+        <source>Freed</source>
+        <translation>Freed</translation>
+    </message>
+    <message>
+        <source>now</source>
+        <translation>now</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation>s</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translation>Nothing selected</translation>
+    </message>
+    <message>
+        <source>Temp files</source>
+        <translation>Temp files</translation>
+    </message>
+    <message>
+        <source>WinSxS</source>
+        <translation>WinSxS</translation>
+    </message>
+    <message>
+        <source>Windows Temp</source>
+        <translation>Windows Temp</translation>
+    </message>
+    <message>
+        <source>Font cache</source>
+        <translation>Font cache</translation>
+    </message>
+    <message>
+        <source>Recycle Bin</source>
+        <translation>Recycle Bin</translation>
+    </message>
+    <message>
+        <source>Windows Update</source>
+        <translation>Windows Update</translation>
+    </message>
+    <message>
+        <source>Event logs</source>
+        <translation>Event logs</translation>
+    </message>
+    <message>
+        <source>Crash dumps</source>
+        <translation>Crash dumps</translation>
+    </message>
+    <message>
+        <source>Restore points</source>
+        <translation>Restore points</translation>
+    </message>
+    <message>
+        <source>InfoTemp</source>
+        <translation>Leftovers in the user Temp folder.</translation>
+    </message>
+    <message>
+        <source>InfoWinSxS</source>
+        <translation>Old Windows component backups. Needs admin rights.</translation>
+    </message>
+    <message>
+        <source>InfoWinTemp</source>
+        <translation>System Windows\Temp folder: install caches and leftovers.</translation>
+    </message>
+    <message>
+        <source>InfoFont</source>
+        <translation>Windows font cache. It is rebuilt automatically.</translation>
+    </message>
+    <message>
+        <source>InfoBin</source>
+        <translation>Everything in the Recycle Bin.</translation>
+    </message>
+    <message>
+        <source>InfoUpdate</source>
+        <translation>Downloaded Windows Update files.</translation>
+    </message>
+    <message>
+        <source>InfoEvent</source>
+        <translation>Windows event journals.</translation>
+    </message>
+    <message>
+        <source>InfoDump</source>
+        <translation>Memory dumps left by system crashes.</translation>
+    </message>
+    <message>
+        <source>InfoPoint</source>
+        <translation>Old system restore points. Off by default, needs admin rights.</translation>
+    </message>
+    <message>
+        <source>Pick the categories to clean</source>
+        <translation>Pick the categories to clean</translation>
+    </message>
+    <message>
+        <source>To clean</source>
+        <translation>To clean</translation>
+    </message>
+    <message>
+        <source>Spot clean</source>
+        <translation>Spot clean</translation>
+    </message>
+    <message>
+        <source>Open log</source>
+        <translation>Open log</translation>
+    </message>
+    <message>
+        <source>Clear log</source>
+        <translation>Clear log</translation>
+    </message>
+    <message>
+        <source>Include in cleaning</source>
+        <translation>Include in cleaning</translation>
+    </message>
+    <message>
+        <source>Log is empty</source>
+        <translation>Log is empty</translation>
+    </message>
+    <message>
+        <source>Logs</source>
+        <translation>Logs</translation>
+    </message>
+    <message>
+        <source>Open logs folder</source>
+        <translation>Open logs folder</translation>
+    </message>
+    <message>
+        <source>Delete all logs</source>
+        <translation>Delete all logs</translation>
+    </message>
+    <message>
+        <source>Make Quanta yours</source>
+        <translation>Make Quanta yours</translation>
+    </message>
+    <message>
+        <source>Accent color</source>
+        <translation>Accent color</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>Blue</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>Violet</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>Pink</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation>Red</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>Orange</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation>Yellow</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>Green</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>Teal</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>Theme</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Dark</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translation>Light</translation>
+    </message>
+    <message>
+        <source>Behavior</source>
+        <translation>Behavior</translation>
+    </message>
+    <message>
+        <source>Launch at startup</source>
+        <translation>Launch at startup</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifications</translation>
+    </message>
+    <message>
+        <source>Debug mode</source>
+        <translation>Debug mode</translation>
+    </message>
+    <message>
+        <source>Report an error</source>
+        <translation>Report an error</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
+    </message>
+    <message>
+        <source>Cleans temp files, caches and Windows junk in one click.</source>
+        <translation>Cleans temp files, caches and Windows junk in one click.</translation>
+    </message>
+    <message>
+        <source>MB freed</source>
+        <translation>MB freed</translation>
+    </message>
+    <message>
+        <source>cleanups</source>
+        <translation>cleanups</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Language</translation>
+    </message>
+    <message>
+        <source>Animations</source>
+        <translation>Animations</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>Copied successfully!</translation>
+    </message>
+    <message>
+        <source>DeleteSucess</source>
+        <translation>Delete Sucess!</translation>
+    </message>
+    <message>
+        <source>TempLogDelete</source>
+        <translation>Temporary Files Log (Temp)
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>WinSxSLogDelete</source>
+        <translation>WinSxS Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>WinTempLogDelete</source>
+        <translation>WinTemp Files Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>FontLogDelete</source>
+        <translation>Font Cache Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>BinLogDelete</source>
+        <translation>Recycle Bin Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>UpdateLogDelete</source>
+        <translation>Update Cache Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>EventLogDelete</source>
+        <translation>Event Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>DumpLogDelete</source>
+        <translation>Crash Dump Log
+successfully cleaned</translation>
+    </message>
+    <message>
+        <source>PointLogDelete</source>
+        <translation>Restore Point Log
+successfully cleaned</translation>
+    </message>
 </context>
 
 <context>
