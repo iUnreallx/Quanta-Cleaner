@@ -1,131 +1,216 @@
-import QtQuick 2.15
+import QtQuick
+import QtQuick.Controls
 
-Rectangle {
-    id: about
+Item {
+    id: page
+
+    property bool shown: false
+    property real v1: 0
+    property real v2: 0
+    property real v3: 0
+
     anchors.fill: parent
-    color: theme.backOver
-    anchors.leftMargin: 215
+    opacity: shown ? 1 : 0
+    visible: opacity > 0.01
+    Behavior on opacity { NumberAnimation { duration: page.shown ? 0 : 200 } }
 
-    Text {
-        text: "Quanta Cleaner v1.0.0"
-        font.bold: true
-        font.family: cleanerFont.name
-        font.pixelSize: 30
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.margins: 20
-        color: theme.text
-    }
-
-    Image {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.topMargin: 12
-        anchors.leftMargin: 345
-        width: 45
-        height: 45
-        source: "assets/images/ico.png"
-
-    }
-
-    Rectangle {
-        anchors.top: parent.top
-        anchors.topMargin: 65
-        color: "#4B2022"
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        width: parent.width - 20
-        height: 3
-        radius: 10
-    }
-
-
-    Text {
-        id: descriptionApp
-        text: qsTr("AboutApp")
-        font.bold: true
-        font.family: cleanerFont.name
-        font.pixelSize: 16
-        color: theme.text
-        anchors.top: parent.top
-        anchors.topMargin: 75
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        wrapMode: Text.Wrap
-        width: parent.width - 20
-    }
-
-
-    Rectangle {
-        id: browser_img2
-        property bool browser2_hovered: false
-        width: 57
-        height: 57
-        color:  browser2_hovered  ? theme.hover : theme.button
-        radius: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.top: descriptionApp.bottom
-        anchors.topMargin: 10
-
-        Image {
-            width: 50
-            height: 50
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: 0
-            anchors.horizontalCenterOffset: -2
-            source: quanta_settings.settings_theme === 2 ? "assets/images/telegram_white.png" : "assets/images/telegram_black.png"
+    onShownChanged: {
+        if (shown) {
+            countAnim.stop()
+            v1 = 0
+            v2 = 0
+            v3 = 0
+            v1Anim.to = main_window.catCount
+            v2Anim.to = quanta_settings.stat_freed
+            v3Anim.to = quanta_settings.stat_runs
+            countAnim.restart()
         }
+    }
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                    Qt.openUrlExternally("https://t.me/unreallx")
+    ParallelAnimation {
+        id: countAnim
+        NumberAnimation { id: v1Anim; target: page; property: "v1"; duration: 900; easing.type: Easing.OutCubic }
+        NumberAnimation { id: v2Anim; target: page; property: "v2"; duration: 1400; easing.type: Easing.OutCubic }
+        NumberAnimation { id: v3Anim; target: page; property: "v3"; duration: 1100; easing.type: Easing.OutCubic }
+    }
+
+    Flickable {
+        id: fl
+        anchors.fill: parent
+        contentWidth: width
+        contentHeight: content.height + 90 + 110
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+
+        Column {
+            id: content
+            x: (fl.width - width) / 2
+            y: 90
+            width: Math.min(560, fl.width - 80)
+            spacing: 0
+
+            Reveal {
+                width: parent.width
+                height: 134
+                shown: page.shown
+                order: 0
+
+                Item {
+                    id: big
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 112
+                    height: 112
+
+                    RadialFill {
+                        id: halo
+                        anchors.centerIn: parent
+                        width: 220
+                        height: 220
+                        rpx: 100
+                        stops: [
+                            { p: 0, c: Qt.rgba(theme.acc.r, theme.acc.g, theme.acc.b, 0.42) },
+                            { p: 1, c: Qt.rgba(theme.acc.r, theme.acc.g, theme.acc.b, 0) }
+                        ]
+                        SequentialAnimation on opacity {
+                            running: page.shown && quanta_settings.settings_animation
+                            loops: Animation.Infinite
+                            NumberAnimation { to: 0.45; duration: 2000; easing.type: Easing.InOutSine }
+                            NumberAnimation { to: 1; duration: 2000; easing.type: Easing.InOutSine }
+                        }
+                    }
+
+                    QuantaLogo {
+                        anchors.fill: parent
+                        tile: true
+                    }
                 }
-        }
+            }
 
-        HoverHandler {
-            onHoveredChanged: browser_img2.browser2_hovered = hovered
-        }
-    }
-
-
-
-    Rectangle {
-        id:  github
-        property bool github_hovered: false
-        width: 57
-        height: 57
-        color:  github_hovered  ? theme.hover : theme.button
-        radius: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 75
-        anchors.top: descriptionApp.bottom
-        anchors.topMargin: 10
-
-        Image {
-            width: 50
-            height: 50
-            anchors.centerIn: parent
-            source: quanta_settings.settings_theme === 2 ? "assets/images/github_white.png" : "assets/images/github_black.png"
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                    Qt.openUrlExternally("https://github.com/iUnreallx/Quanta-Cleaner")
+            Reveal {
+                width: parent.width
+                height: 60
+                shown: page.shown
+                order: 1
+                Txt {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 6
+                    text: "Quanta Cleaner"
+                    font.pixelSize: 40
+                    font.weight: Font.DemiBold
+                    font.letterSpacing: -1.6
                 }
-        }
+            }
 
-        HoverHandler {
-            onHoveredChanged: github.github_hovered = hovered
+            Reveal {
+                width: parent.width
+                height: 40
+                shown: page.shown
+                order: 2
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 28
+                    width: ver.implicitWidth + 24
+                    radius: 14
+                    color: "transparent"
+                    border.width: 1
+                    border.color: theme.line2
+                    Text {
+                        id: ver
+                        anchors.centerIn: parent
+                        text: "v1.1.0"
+                        color: theme.txt2
+                        font.family: theme.monoFamily
+                        font.pixelSize: 12
+                    }
+                }
+            }
+
+            Reveal {
+                width: parent.width
+                height: about.implicitHeight + 30
+                shown: page.shown
+                order: 3
+                Txt {
+                    id: about
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 18
+                    width: Math.min(420, parent.width)
+                    text: str.aboutShort
+                    color: theme.txt2
+                    font.pixelSize: 15
+                    lineHeight: 1.3
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: 18 + 92 + 22
+
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 18
+                    spacing: 12
+
+                    Repeater {
+                        model: 3
+                        delegate: GlassCard {
+                            required property int index
+                            readonly property real val: index === 0 ? page.v1 : (index === 1 ? page.v2 : page.v3)
+                            readonly property string cap: index === 0 ? str.categories : (index === 1 ? str.mbFreed : str.cleanups)
+                            width: (content.width - 24) / 3
+                            height: 92
+                            radius: 24
+                            shown: page.shown
+                            order: 4 + index
+
+                            Txt {
+                                x: 16
+                                y: 14
+                                text: Math.round(val).toLocaleString(Qt.locale(), "f", 0)
+                                font.pixelSize: 34
+                                font.weight: Font.Light
+                                font.letterSpacing: -1.7
+                            }
+                            Txt {
+                                x: 16
+                                y: 58
+                                width: parent.width - 24
+                                text: cap
+                                color: theme.txt2
+                                font.pixelSize: 13
+                                elide: Text.ElideRight
+                            }
+                        }
+                    }
+                }
+            }
+
+            Reveal {
+                width: parent.width
+                height: 48
+                shown: page.shown
+                order: 7
+
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 10
+
+                    PillButton {
+                        text: "Telegram"
+                        iconKind: "send"
+                        height: 48
+                        onClicked: Qt.openUrlExternally("https://t.me/unreallx")
+                    }
+                    PillButton {
+                        text: "GitHub"
+                        iconSource: "assets/images/github_white.png"
+                        height: 48
+                        onClicked: Qt.openUrlExternally("https://github.com/iUnreallx/Quanta-Cleaner")
+                    }
+                }
+            }
         }
     }
-
-
-
 }

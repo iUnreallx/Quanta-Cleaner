@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(QuantaCleaner VERSION 0.1 LANGUAGES CXX)
+project(QuantaCleaner VERSION 1.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -19,11 +19,30 @@ qt_add_qml_module(appQuantaCleaner
 
     QML_FILES
         Qml/AboutAppPage.qml
-        Qml/HoverButton.qml
+        Qml/BentoCard.qml
+        Qml/CategorySheet.qml
+        Qml/CtaButton.qml
+        Qml/DockBar.qml
+        Qml/DoneBadge.qml
+        Qml/GlassCard.qml
+        Qml/Ico.qml
+        Qml/LogViewer.qml
         Qml/Main.qml
         Qml/MainPage.qml
+        Qml/NotificationBanner.qml
+        Qml/Odometer.qml
         Qml/ParametersPage.qml
+        Qml/PillButton.qml
+        Qml/PillToggle.qml
+        Qml/QuantaLogo.qml
+        Qml/RadialFill.qml
+        Qml/Reveal.qml
+        Qml/RingView.qml
+        Qml/SegControl.qml
         Qml/SettingsPage.qml
+        Qml/SwapText.qml
+        Qml/TintImage.qml
+        Qml/Txt.qml
 
     SOURCES
         main.cpp
@@ -58,47 +77,18 @@ qt_add_qml_module(appQuantaCleaner
 
     RESOURCES
         Qml/assets/ico/quanta.ico
-        Qml/assets/fonts/Ubuntu-Bold.ttf
-        Qml/assets/fonts/Ubuntu-Regular.ttf
-        Qml/assets/images/bug_black.png
-        Qml/assets/images/bug_white.png
-        Qml/assets/images/cpu_black.png
-        Qml/assets/images/cpu_white.png
-        Qml/assets/images/exchange_black.png
-        Qml/assets/images/exchange_white.png
-        Qml/assets/images/fire_black.png
-        Qml/assets/images/fire_white.png
-        Qml/assets/images/git_last.png
-        Qml/assets/images/git_black.png
-        Qml/assets/images/lang_black.png
-        Qml/assets/images/lang_white.png
-        Qml/assets/images/moon_black.png
-        Qml/assets/images/moon_white.png
-        Qml/assets/images/par_black2.png
-        Qml/assets/images/par_white.png
-        Qml/assets/images/star_white.png
-        Qml/assets/images/star_black.png
-        Qml/assets/images/circle.png
-        Qml/assets/images/ico.png
-        Qml/assets/images/clipboard_black.png
-        Qml/assets/images/clipboard_white.png
-        Qml/assets/images/browser_black.png
-        Qml/assets/images/browser_white.png
-        Qml/assets/images/parametrs/chevron.png
-        Qml/assets/images/parametrs/cross.png
-        Qml/assets/images/parametrs/eye.png
-        Qml/assets/images/parametrs/geer.png
-        Qml/assets/images/parametrs/rocket.png
-        Qml/assets/images/parametrs/sign.png
-        Qml/assets/images/parametrs/trash.png
-        Qml/assets/images/parametrs/notes_black.png
-        Qml/assets/images/parametrs/notes_white.png
-        Qml/assets/images/parametrs/chevron_black.png
-        Qml/assets/images/github_black.png
+        Qml/assets/fonts/Onest-Variable.ttf
+        Qml/assets/fonts/JetBrainsMono-Medium.ttf
         Qml/assets/images/github_white.png
-        Qml/assets/images/telegram_black.png
-        Qml/assets/images/telegram_white.png
-        Qml/assets/images/mainpage/trash.png
+        Qml/assets/images/min/temp.png
+        Qml/assets/images/min/winsxs.png
+        Qml/assets/images/min/wintemp.png
+        Qml/assets/images/min/font.png
+        Qml/assets/images/min/bin.png
+        Qml/assets/images/min/update.png
+        Qml/assets/images/min/logs.png
+        Qml/assets/images/min/dump.png
+        Qml/assets/images/min/point.png
 )
 
 

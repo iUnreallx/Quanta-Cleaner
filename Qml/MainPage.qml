@@ -1,380 +1,109 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Particles 2.15
+import QtQuick
 
-Rectangle {
-    id: mainpage
+Item {
+    id: page
+
+    property bool shown: false
+    property var ring
+
     anchors.fill: parent
-    color: "#000000"
+    opacity: shown ? 1 : 0
+    visible: opacity > 0.01
+    Behavior on opacity { NumberAnimation { duration: page.shown ? 350 : 200 } }
 
-    property bool isHovered: false
-    property bool isOverrideMain: quanta_settings.radioMainMenuBlock
-    property bool animationEnabled: quanta_settings.settings_animation
-    property bool initialLoadComplete: false
+    readonly property int hov: ring ? ring.hoverIdx : -1
+    readonly property bool ctr: ring ? ring.centerHover : false
+    readonly property bool run: main_window.phase === "run"
+    readonly property bool done: main_window.phase === "done"
 
-    property var quantaText: "Quanta"
-    property var cleanedText: ""
-    property var cleanFunctions: qsTr("WaitingTask") + (app.languageVersion ? "" : "")
-    property var deleteText: qsTr("CleaningAnalysis") + (app.languageVersion ? "" : "")
-
-    property bool fastRespawnProgressBar: false
-    property bool resizeAnimationProgressBar: false
-
-    property int quantaTextChangeCount: 0
-
-    onQuantaTextChanged: {
-        quantaTextChangeCount++
-        if (quantaTextChangeCount >= 2) {
-            quanta_text.text = quantaText
-            quanta_text.visible = true
-            trashImage.visible = false
+    readonly property string lblText: hov >= 0 ? main_window.catNames[hov] : str.canBeCleaned
+    readonly property real odoValue: hov >= 0 ? main_window.avail[hov]
+                                              : (run ? main_window.startTotal * (1 - main_window.prog)
+                                                     : (done ? 0 : main_window.totalMb))
+    readonly property string subTextValue: {
+        if (hov >= 0)
+            return main_window.catOn[hov] ? str.hintOff : str.hintOn
+        if (ctr && !run && !done)
+            return str.hintGo
+        if (run) {
+            var c = ring ? ring.curCat() : -1
+            return c >= 0 ? main_window.catNames[c] : str.cleaning
         }
+        if (done)
+            return str.freed + " " + main_window.freedLast.toFixed(1) + " MB"
+        return main_window.activeCount + " / " + main_window.catCount + " " + str.categories
     }
 
-    onWidthChanged: handleResize()
-    onHeightChanged: handleResize()
+    Item {
+        id: num
+        width: 360
+        height: lbl.height + 12 + odo.height + 14 + sub.height
+        x: (parent.width - width) / 2
+        y: parent.height * 0.46 - height / 2
+        opacity: main_window.finVisible ? 0 : 1
+        scale: main_window.finVisible ? 0.92 : (page.ctr && !page.run && !page.done ? 1.04 : 1)
 
-    Timer {
-        id: resizeTimer
-        interval: 300
-        repeat: false
-        onTriggered: resizeAnimationProgressBar = false
-    }
+        Behavior on opacity { NumberAnimation { duration: 500; easing.type: Easing.InOutCubic } }
+        Behavior on scale {
+            enabled: quanta_settings.settings_animation
+            NumberAnimation { duration: 800; easing.type: Easing.OutQuint }
+        }
 
-    function handleResize() {
-        resizeAnimationProgressBar = true
-        resizeTimer.restart()
-    }
+        SwapText {
+            id: lbl
+            width: parent.width
+            text: page.lblText
+            pixelSize: 13
+            weight: Font.Medium
+        }
 
-    Component.onCompleted: {
-        Qt.callLater(() => initialLoadComplete = true)
-    }
+        Row {
+            id: odoRow
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: lbl.height + 12
+            spacing: 8
 
-    Rectangle {
-        id: myCheck
-        anchors.top: parent.top
-        anchors.topMargin: 12
-        width: parent.width - 242
-        height: mainpage.isOverrideMain ? 75 : 45
-        color: quanta_settings.settings_theme === 2 ? "#111111" : "#F0F0F0"
-        radius: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 227
-        z: 5
-
-        Rectangle {
-            id: progressBackground
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            width: parent.width - 120
-            height: 25
-            color: "#29211E"
-            radius: 10
-
-            Rectangle {
-                id: progressBar
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                height: parent.height
-                radius: 10
-                color: "#66E8A3"
-                width: (quanta_settings.global_functions > 0)
-                    ? ((main_window.taskCompleted / quanta_settings.global_functions) * (progressBackground.width - 10)) + 10
-                    : 0
-
-                Behavior on width {
-                    NumberAnimation {
-                        duration: !animationEnabled ? 0 : fastRespawnProgressBar ? 0 : (resizeAnimationProgressBar ? 0 : 300)
-                        easing.type: Easing.OutCubic
-                    }
-                }
+            Odometer {
+                id: odo
+                value: page.odoValue
+                fontSize: Math.max(44, Math.min(96, page.ring ? page.ring.baseRadius * 0.5 : 80))
+            }
+            Txt {
+                text: "MB"
+                color: theme.txt2
+                font.pixelSize: 20
+                anchors.top: parent.top
+                anchors.topMargin: 13
             }
         }
 
-        Text {
-            id: dltText
-            anchors.top: parent.top
-            anchors.topMargin: 45
-            anchors.right: parent.right
-            anchors.rightMargin: 14
-            text: deleteText
-            color: theme.text
-            font.family: cleanerFontRegular.name
-            font.pixelSize: 16
-            font.bold: true
-            opacity: parent.width < 460 ? 0 : (mainpage.isOverrideMain ? 0.9 : 0)
-        }
-
-        Text {
-            id: progressText
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.right: parent.right
-            anchors.rightMargin: 65
-            text: cleanedText
-            color: theme.text
-            font.family: cleanerFontRegular.name
-            font.pixelSize: 18
-            font.bold: true
-            font.letterSpacing: -2
-        }
-
-        Text {
-            id: progressFunction
-            anchors.top: parent.top
-            anchors.topMargin: 45
-            anchors.left: parent.left
-            anchors.leftMargin: 14
-            text: cleanFunctions
-            color: theme.text
-            font.family: cleanerFontRegular.name
-            font.pixelSize: 16
-            font.bold: true
-            opacity: mainpage.isOverrideMain ? 0.9 : 0
-        }
-
-        Rectangle {
-            id: overrideToggleMain
-            color: "transparent"
-            width: 43
-            height: 43
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 14
-            radius: 6
-
-            property real angle: mainpage.isOverrideMain ? 0 : -90
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    quanta_settings.radioMainMenuBlock = !quanta_settings.radioMainMenuBlock
-                    overrideToggleMain.angle = mainpage.isOverrideMain ? 0 : -90
-                }
-            }
-
-            Image {
-                id: chevronImageMain
-                source: quanta_settings.settings_theme === 2 ? "assets/images/parametrs/chevron.png" : "assets/images/parametrs/chevron_black.png"
-                width: 32
-                height: 32
-                anchors.centerIn: parent
-
-                transform: Rotation {
-                    id: rotationMain
-                    origin.x: chevronImageMain.width / 2
-                    origin.y: chevronImageMain.height / 2
-                    angle: overrideToggleMain.angle
-                }
-            }
+        SwapText {
+            id: sub
+            width: parent.width
+            y: lbl.height + 12 + odo.height + 14
+            text: page.subTextValue
+            pixelSize: 13
+            weight: Font.Normal
         }
     }
 
-    function getActiveBlockCount() {
-        let count = 0;
-        for (let i = 1; i <= 9; i++) {
-            if (quanta_settings["parametr_block" + i + "_active"] === false) {
-                count++;
-            }
-        }
-        return count;
+    DoneBadge {
+        x: (parent.width - width) / 2
+        y: parent.height * 0.46 - height / 2
+        shown: main_window.finVisible
+        value: main_window.freedLast.toFixed(1) + " MB"
+        caption: str.freed
     }
 
-    Rectangle {
-        anchors.fill: parent
-        gradient: Gradient {
-            orientation: Gradient.Horizontal
-            GradientStop { position: 0.3; color: "#111110" }
-            GradientStop { position: 0.78; color: "#5F2020" }
-            GradientStop { position: 1.0; color: "#5F2020" }
-        }
-    }
-
-    ParticleSystem {
-        id: particleSystem
-        anchors.fill: parent
-        z: -1
-        visible: quanta_settings.settings_animation
-        running: quanta_settings.settings_animation
-    }
-
-    Emitter {
-        system: particleSystem
-        visible: quanta_settings.settings_animation
-        emitRate: 20
-        lifeSpan: 75000
-        size: 8
-        sizeVariation: 4
-        width: 2
-        height: 2
-        z: -1
-        startTime: 70000
-        anchors.left: parent.left
+    CtaButton {
+        id: cta
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-
-        velocity: AngleDirection {
-            angle: -45
-            angleVariation: 100
-            magnitude: 35
-            magnitudeVariation: 15
-        }
-    }
-
-    ImageParticle {
-        system: particleSystem
-        visible: quanta_settings.settings_animation
-        anchors.fill: parent
-        source: "assets/images/circle.png"
-        color: "gold"
-        colorVariation: 0.25
-        z: 2
-        entryEffect: ImageParticle.None
-
-        opacity: 0.9
-        alphaVariation: 0.25
-    }
-
-    Rectangle {
-        property bool buttonMainHovered: false
-        id: button
-        width: Math.min(Math.max(Window.width * 0.3, 200), 285)
-        height: width
-        radius: width / 2
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: mainpage.isOverrideMain ? 45 : 25
-        anchors.horizontalCenterOffset: 105
-        color: buttonMainHovered ? "#5E3233" : "#29211E"
-        z: 5
-
-        Image {
-            id: trashImage
-            source: "assets/images/mainpage/trash.png"
-            anchors.centerIn: parent
-            width: Math.max(button.width - 140 , 100)
-            height: width
-            fillMode: Image.PreserveAspectFit
-            visible: true
-        }
-
-        function isInsideCircle(x, y) {
-            var centerX = button.width / 2
-            var centerY = button.height / 2
-            var radius = button.width / 2
-            var distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2))
-            return distance <= radius
-        }
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: button.buttonMainHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-
-            onPositionChanged: {
-                button.buttonMainHovered = button.isInsideCircle(mouseX, mouseY)
-            }
-
-            onEntered: {
-                button.buttonMainHovered = button.isInsideCircle(mouseX, mouseY)
-            }
-
-            onExited: {
-                button.buttonMainHovered = false
-            }
-
-            onClicked: {
-                if (button.isInsideCircle(mouse.x, mouse.y)) {
-                    if (!quanta_settings.running_clean) {
-                        var settings_count = getActiveBlockCount()
-                        quanta_settings.global_functions = settings_count
-                        quanta_settings.running_clean = true
-                        mainpage.fastRespawnProgressBar = true
-                        progressBar.width = 0
-                        quanta_settings.cleanTextCome = true
-                        mainpage.fastRespawnProgressBar = false
-                        main_window.clearTotalSize()
-
-                        if (quanta_settings.debugMode) {
-                            if (!quanta_settings.parametr_block1_active) {
-                                tmp.clearTempFolder(2, false)
-                            }
-                            if (!quanta_settings.parametr_block2_active) {
-                                winsxs.cleanWinSXS(2, false)
-                            }
-                            if (!quanta_settings.parametr_block3_active) {
-                                wintemp.cleanWinTemp(2, false)
-                            }
-                            if (!quanta_settings.parametr_block4_active) {
-                                fontQ.fontCacheClean(2, false)
-                            }
-                            if (!quanta_settings.parametr_block5_active) {
-                                binclear.cleanRecycleBin(2, false)
-                            }
-                            if (!quanta_settings.parametr_block6_active) {
-                                updateQ.updateClean(2, false)
-                            }
-                            if (!quanta_settings.parametr_block7_active) {
-                                eventQ.cleanEventLogs(2, false)
-                            }
-                            if (!quanta_settings.parametr_block8_active) {
-                                dmp.cleanCrashDumps(2, false)
-                            }
-                            if (!quanta_settings.parametr_block9_active) {
-                                pointQ.cleanRestorePoints(2, false)
-                            }
-                            if (settings_count === 0) {
-                                quanta_settings.running_clean = false
-                            }
-                        } else {
-                            if (!quanta_settings.parametr_block1_active) {
-                                tmp.clearTempFolder(0, false)
-                            }
-                            if (!quanta_settings.parametr_block2_active) {
-                                winsxs.cleanWinSXS(0, false)
-                            }
-                            if (!quanta_settings.parametr_block3_active) {
-                                wintemp.cleanWinTemp(0, false)
-                            }
-                            if (!quanta_settings.parametr_block4_active) {
-                                fontQ.fontCacheClean(0, false)
-                            }
-                            if (!quanta_settings.parametr_block5_active) {
-                                binclear.cleanRecycleBin(0, false)
-                            }
-                            if (!quanta_settings.parametr_block6_active) {
-                                updateQ.updateClean(0, false)
-                            }
-                            if (!quanta_settings.parametr_block7_active) {
-                                eventQ.cleanEventLogs(0, false)
-                            }
-                            if (!quanta_settings.parametr_block8_active) {
-                                dmp.cleanCrashDumps(0, false)
-                            }
-                            if (!quanta_settings.parametr_block9_active) {
-                                pointQ.cleanRestorePoints(0, false)
-                            }
-                            if (settings_count === 0) {
-                                quanta_settings.running_clean = false
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        Label {
-            id: quanta_text
-            text: "Quanta"
-            font.pixelSize: 40
-            font.bold: true
-            color: "#66E8A3"
-            anchors.centerIn: parent
-            visible: false
-        }
+        anchors.bottomMargin: 92
+        text: page.done ? str.allClean : (page.run ? str.cleaning : str.clean)
+        busy: page.run || page.done
+        progress: page.run ? main_window.prog : 0
+        opacity: page.shown ? 1 : 0
+        onClicked: main_window.startClean()
     }
 }

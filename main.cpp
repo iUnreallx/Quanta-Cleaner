@@ -35,6 +35,9 @@ int main(int argc, char *argv[])
 
     AppController appController;
     engine.rootContext()->setContextProperty("app", &appController);
+    // при смене языка пересчитываем все qsTr() в интерфейсе
+    QObject::connect(&appController, &AppController::languageVersionChanged,
+                     &engine, &QQmlEngine::retranslate);
 
     WinTempClean wintemp;
     engine.rootContext()->setContextProperty("wintemp", &wintemp);
