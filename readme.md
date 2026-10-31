@@ -76,7 +76,7 @@ The project is useful for:
 
 1. Go to the [**Releases**](https://github.com/iUnreallx/Quanta-Cleaner/releases) section.
 2. Download the latest archive for Windows.
-3. Unpack it and run `appQuantaCleaner.exe`.
+3. Unpack it and run `QuantaCleaner.exe`.
 
 > Some categories (WinSxS, Windows Update cache, restore points) need administrator rights. Run the app as administrator to clean them.
 
